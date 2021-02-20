@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.SearchResults" Title="Results">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="+" Clicked="AddProductButton" />
+    </ContentPage.ToolbarItems>
+
+    <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
+    IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True"> 
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell Text="{Binding Title}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Data, 
+                    Converter={StaticResource ByteArrayToImageSourceConverter}}"/>  
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

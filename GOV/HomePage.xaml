@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.HomePage" Title="Home">
+
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center"  HorizontalOptions="Center">
+
+            <Frame x:Name="Example" BackgroundColor="Accent">
+                <Grid ColumnDefinitions="*,*">
+                    <Label TextColor="Black" Text="{Binding Human.ID}" Grid.Column="0"
+                    HeightRequest="100" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="UserAccount" Text="{Binding Human.Username}" TextColor="Black" Grid.Column="1"
+                    HeightRequest="100" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </Frame>
+
+            <Button Text="View Products" Clicked="ViewButton" />
+            <Button Text="My Profile" Clicked="MyProfileButton" />
+            <Button Text="Leaderboard" Clicked="LeaderboardButton" />
+            <Button Text="Swipe test" Clicked="SwipetestButton" />
+            <Button Text="Hash test" Clicked="HashTestButton" />
+            <Button Text="Chart test" Clicked="ChartTestButton" />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

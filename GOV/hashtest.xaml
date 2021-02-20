@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.hashtest">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,15,*,*,*,*,*,*,*,10,*">
+                <Entry x:Name="InputString" Placeholder="Enter a string" Grid.Row="0" Grid.Column="1"/>
+
+                <Label Text="Inputted string:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="1" Grid.Column="0"/>
+                <Label Text="{Binding A}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="1" Grid.Column="1"/>
+                <Button Text="Genrate hash" Clicked="ButtonPressed" Grid.Row="2" Grid.Column="1"/>
+
+                <Label Text="Generated hash:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="0"/>
+                <Label Text="{Binding B}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="1"/>
+
+
+                <Entry x:Name="InputString2" Grid.Row="4" Grid.Column="1"/>
+                <Label Text="{Binding C}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="5" Grid.Column="1"/>
+                <Label Text="{Binding D}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="6" Grid.Column="1"/>
+                <Label Text="Hash verification:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="7" Grid.Column="0"/>
+                <Label Text="{Binding E}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="7" Grid.Column="1"/>
+                <Button Text="Check Hash" Clicked="ButtonPressed2" Grid.Row="8" Grid.Column="1"/>
+            </Grid>
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

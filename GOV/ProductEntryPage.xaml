@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.ProductEntryPage">
+    <ScrollView>
+        <StackLayout Margin="5">
+            <Grid ColumnDefinitions = "*,*,*,*,*" RowDefinitions="*,*,*" Margin="10">
+                <Editor Text="{Binding Name}" Placeholder="Product Name" PlaceholderColor="black" 
+                        MaxLength="18" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" HeightRequest="50"/>
+
+                <Entry Text="{Binding ReleaseYear}" Keyboard="Numeric" Placeholder="Year" PlaceholderColor="black"
+                        MaxLength="4" Grid.Column="5" Grid.Row="0" HeightRequest="50"/>
+
+                <Editor Text="{Binding Description}" Placeholder="Description" PlaceholderColor="black" MaxLength="150"
+                        AutoSize="TextChanges" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" HeightRequest="50"/>
+
+                <Editor Text="{Binding Score}" Keyboard="Numeric" Placeholder="Score" PlaceholderColor="black"
+                        MaxLength="4" Grid.Column="5" Grid.Row="2"  HeightRequest="50"/>
+
+            </Grid>
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+            <Grid ColumnDefinitions = "100,30,200" RowDefinitions="40,40,40,40" Margin="10">
+                <Button Text="Take Photo" Clicked="TakePictureButton" Grid.Column="0" Grid.Row="0"  Grid.RowSpan="2"/>
+                <Button Text="Choose Photo" Clicked="ChoosePictureButton" Grid.Column="0" Grid.Row="2"  Grid.RowSpan="2"/>
+
+                <Image Source="{Binding Image.Data, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                 Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" VerticalOptions="StartAndExpand"/>
+
+            </Grid>
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+            <Grid ColumnDefinitions = "*" RowDefinitions="*,*" Margin="10">
+
+                <Editor Text="{Binding PRef}" Placeholder="Barcode" PlaceholderColor="black" Grid.Row="0"/>
+                <Button Text="Scan Barcode" Clicked="BarcodeScan" Grid.Row="1"/>
+            </Grid>
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+            <Grid ColumnDefinitions = "*,*" Margin="10">
+                <Button Text="Delete" Clicked="DeleteButton" Grid.Column="0" />
+                <Button Text="Save" Clicked="SaveButton" Grid.Column="1"/>
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

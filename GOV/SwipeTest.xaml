@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="GOV.SwipeTest">
+    <ContentPage.Content>
+        <Grid>
+            <SwipeView>
+                <SwipeView.LeftItems>
+                    <SwipeItemView>
+                        <Grid
+                            BackgroundColor="LightPink"
+                            WidthRequest="200">
+                            <Button Clicked="button1"/>
+                            <Label
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Text="This is the LefItems Content"
+                                Margin="12"/>
+                        </Grid>
+                    </SwipeItemView>
+                </SwipeView.LeftItems>
+        </SwipeView>
+    </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.App"
+             xmlns:converters="clr-namespace:GOV.Helpers">
+    <Application.Resources>
+        <ResourceDictionary>
+            <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+                    <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="Accent" />
+            <Setter Property="BarTextColor" Value="White"/>
+                        
+        </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

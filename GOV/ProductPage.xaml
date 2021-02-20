@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.ProductPage"  Title="Product Page">
+<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Edit" Clicked="EditProductButton" />
+</ContentPage.ToolbarItems>
+    
+    <ScrollView>
+        <StackLayout Margin="5">
+            <Grid ColumnDefinitions = "*,*,*,*,*,*" RowDefinitions="*,*,*,*,*" Margin="10">
+
+                <Frame BackgroundColor="lightGray" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
+                <Label Text="Name:" Grid.Column="0" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" HeightRequest="50" VerticalTextAlignment="Center" />
+
+                
+                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Label Text="Year:" Grid.Column="4" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding ReleaseYear}" Grid.Column="5" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+
+                <Frame BackgroundColor="lightGray" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3"/>
+                <Label Text="  Description:" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+                <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="4" HeightRequest="50"/>
+
+                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Label Text="Score:" Grid.Column="4" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Score}" Grid.Column="5" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+
+                <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                       Background="Black" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Grid.RowSpan="5" />
+
+                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <Label Text="Barcode ID:" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding PRef}" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+
+            </Grid>
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+                <Grid ColumnDefinitions = "*" RowDefinitions="70" Margin="10">
+                <Button Text="Reviews" Clicked="ReviewButton" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
