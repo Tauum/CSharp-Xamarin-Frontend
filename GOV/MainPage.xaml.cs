@@ -58,25 +58,30 @@ namespace GOV
                 PlaySound("ding98");
                 await DisplayAlert("Login", "Missing Field/s", "X");
             }
-            else
+            else 
             {
-                var users = await App.DataService.GetAllAsync<User>();
-                Debug.WriteLine(">>>>> Userlist Ammount:" + users.Count);
+                //var users = await App.DataService.GetAllAsync<User>();
+                var users = await App.DataService.GetAsync<User>();
+                var secondtry = await App.DataService.GetAsync<User>();
+                var BoolLoginGUID = await App.DataService.LogIn<User>(EmailEntry.Text, PasswordEntry.Text);
 
-                if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && u.Password == PasswordEntry.Text) is User user)
+
+                if (LoginGUID != Guid.Empty) { }
+
+                else { }    
+
+                    string Hashword = Hashing.GetHash(PasswordEntry.Text);
+
+                //Hashing.CheckHash(Hashword, u.Password);
+
+                // if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && u.Password == Hashword) is User user)
+                if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(Hashword, u.Password) == true) is User user)
                 {
                     Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { user.ID} Email: {user.Email}  Password:  {user.Password}");
                     PlaySound("bell");
                     await DisplayAlert("Login", "Login Success", "X");
                     await Navigation.PushAsync(new HomePage(user));
                 }
-
-                //if(users.FirstOrDefault(u => u.Email == EmailEntry.Text) is User user)
-                //{
-                //    string passwordHash = BCrypt.Net.BCrypt.HashPassword("Pa$$w0rd");
-                //    bool verified = BCrypt.Net.BCrypt.Verify("Pa$$w0rd", passwordHash);
-                //    if (verified) { Debug.Write($">>>>>>>>>>>>>>> HASH TEST - CORRECT - {passwordHash}"); }
-                //}
 
                 else
                 {
@@ -125,7 +130,7 @@ namespace GOV
             else
             {
                 var users = await App.DataService.GetAllAsync<User>();
-                bool foundEmail = users.Any(x => x.Email == EmailEntry.Text.ToLower());
+                bool foundEmail = users.Any(x => x.Email.ToLower() == EmailEntry.Text.ToLower());
 
                 if (foundEmail)
                 {
@@ -135,7 +140,8 @@ namespace GOV
                 }
                 else
                 {
-                    var user = new User (EmailEntry.Text.ToLower(), PasswordEntry.Text);
+                    string Hashword = Hashing.GetHash(PasswordEntry.Text);
+                    var user = new User (EmailEntry.Text, Hashword);
                     await App.DataService.InsertAsync(user);
 
                     Debug.WriteLine($"ID: { user.ID} Email: {user.Email} Password: {user.Password} >>>>>>>>>>>>  SIGN UP - CORRECT");
@@ -144,7 +150,6 @@ namespace GOV
                 }
             }
         }
-
         private void PlaySound(string mp3)
         {
             Player.Load($"{mp3}.mp3");

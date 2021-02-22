@@ -8,11 +8,13 @@ namespace GOV.Helpers
     {
         public static string GetHash(string InputString) 
         {
-            string OutputString = BCrypt.Net.BCrypt.HashPassword(InputString);
-            return OutputString; 
+            string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
+            string OutputString = BCrypt.Net.BCrypt.HashPassword(InputString, salt);
+            return OutputString;
         }
         public static bool CheckHash(string InputString, string SecondInputString)
         {
+            string salt = BCrypt.Net.BCrypt.GenerateSalt(6);
             bool Verified = BCrypt.Net.BCrypt.Verify(InputString, SecondInputString);
             return Verified;
         }

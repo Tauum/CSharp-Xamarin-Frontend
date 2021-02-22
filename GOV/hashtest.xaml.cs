@@ -14,8 +14,6 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class hashtest : ContentPage
     {
-        string a { get; set; }
-        string c { get; set; } = "dog";
         public hashtest()
         {
             var model = new Model();
@@ -35,8 +33,7 @@ namespace GOV
             model.B = Hashing.GetHash(model.A);
 
             model.C = InputString2.Text;
-            model.D = Hashing.GetHash(model.C);
-            model.E = Hashing.CheckHash(model.B, model.D); //this doesnt work? maybe using different salt????
+            model.D = Hashing.CheckHash(model.C, model.B); //this doesnt work? maybe using different salt????
         }
         /// <summary>
         //i hate this shit. I have no fucking idea why this has to be done
@@ -48,8 +45,7 @@ namespace GOV
             public string a;
             public string b;
             public string c;
-            public string d;
-            public bool e;
+            public bool d;
 
             public string A
             {
@@ -61,21 +57,15 @@ namespace GOV
                 get => b;
                 set => Setter(value, ref b, nameof(B));
             }
-
             public string C
             {
                 get => c;
                 set => Setter(value, ref c, nameof(C));
             }
-            public string D
+            public bool D
             {
                 get => d;
                 set => Setter(value, ref d, nameof(D));
-            }
-            public bool E
-            {
-                get => e;
-                set => Setter(value, ref e, nameof(E));
             }
 
             public void Setter<T>(T value, ref T field, string name)
