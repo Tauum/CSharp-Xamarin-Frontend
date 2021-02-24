@@ -107,6 +107,11 @@ namespace GOV
                     product.Image = image;
                 }
             }
+            
+        }
+        public async void ReviewButton(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ReviewPage());
         }
     }
 }
