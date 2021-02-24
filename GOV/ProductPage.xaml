@@ -10,29 +10,28 @@
         <StackLayout Margin="5">
             <Grid ColumnDefinitions = "*,*,*,*,*,*" RowDefinitions="*,*,*,*,*" Margin="10">
 
-                <Frame BackgroundColor="lightGray" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
+                <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
                 <Label Text="Name:" Grid.Column="0" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" HeightRequest="50" VerticalTextAlignment="Center" />
 
-                
-                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Frame Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2"/>
                 <Label Text="Year:" Grid.Column="4" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding ReleaseYear}" Grid.Column="5" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
-                <Frame BackgroundColor="lightGray" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3"/>
-                <Label Text="  Description:" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
-                <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="4" HeightRequest="50"/>
+                <Frame Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3"/>
+                <Label Text="  Description:" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="4" HeightRequest="50" Margin="8,0,8,0" VerticalTextAlignment="Start"/>
 
-                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Frame Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <Label Text="Score:" Grid.Column="4" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding Score}" Grid.Column="5" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
                 <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
                        Background="Black" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Grid.RowSpan="5" />
 
-                <Frame BackgroundColor="lightGray" Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                <Label Text="Barcode ID:" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding PRef}" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Frame Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                <Label Text="Barcode:" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding PRef}" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="8,0,8,0"/>
 
             </Grid>
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
