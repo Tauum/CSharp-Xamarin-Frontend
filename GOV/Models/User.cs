@@ -26,9 +26,10 @@ namespace GOV
             Admin = admin;
         }
 
-        public User(string email, string password)
+        public User(string email, string username, string password)
         {
             Email = email;
+            Username = username;
             Password = password;
         }
 

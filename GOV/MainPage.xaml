@@ -44,7 +44,7 @@
                        VerticalOptions="Center" HorizontalOptions="Fill" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" />
 
                 <Entry
-                    x:Name="EmailEntry" TextColor="White" Placeholder="Email" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
+                    x:Name="EmailNameEntry" TextColor="White" Placeholder="Email" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
                     VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="3"
                     Grid.ColumnSpan="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 

@@ -21,7 +21,7 @@ namespace GOV
         {
             Player = CrossSimpleAudioPlayer.Current;
             InitializeComponent();
-            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental" });
+            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental", "CarouselView_Experimental", "IndicatorView_Experimental" });
             Task.Run(AnimateBackground);
         }
 
@@ -53,47 +53,41 @@ namespace GOV
 
         private async void LoginButton(object sender, EventArgs e)
         {
-            if (EmailEntry.Text.IsNullOrEmpty() || PasswordEntry.Text.IsNullOrEmpty())
+            if (EmailNameEntry.Text.IsNullOrEmpty() || PasswordEntry.Text.IsNullOrEmpty())
             {
                 PlaySound("ding98");
                 await DisplayAlert("Login", "Missing Field/s", "X");
             }
             else 
             {
-                //var users = await App.DataService.GetAllAsync<User>();
-                var users = await App.DataService.GetAsync<User>();
-                var secondtry = await App.DataService.GetAsync<User>();
-                var BoolLoginGUID = await App.DataService.LogIn<User>(EmailEntry.Text, PasswordEntry.Text);
+                var users = await App.DataService.GetAllAsync<User>();
 
-
-                if (LoginGUID != Guid.Empty) { }
-
-                else { }    
-
-                    string Hashword = Hashing.GetHash(PasswordEntry.Text);
+                string Hashword = Hashing.GetHash(PasswordEntry.Text);
 
                 //Hashing.CheckHash(Hashword, u.Password);
 
-                // if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && u.Password == Hashword) is User user)
-                if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(Hashword, u.Password) == true) is User user)
-                {
-                    Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { user.ID} Email: {user.Email}  Password:  {user.Password}");
-                    PlaySound("bell");
-                    await DisplayAlert("Login", "Login Success", "X");
-                    await Navigation.PushAsync(new HomePage(user));
-                }
+               // if (users.FirstOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && u.Password == Hashword) is User user)
 
-                else
-                {
-                    await DisplayAlert("Login", "Incorrect Field/s", "X");
-                    Debug.WriteLine($" Email: {EmailEntry.Text} >>>>>>>>>>>>  LOGIN - INCORRECT FIELDS");
-                }
+                    //if (users.FirstOrDefault(u => u.Email.ToLower() == EmailNameEntry.Text.ToLower() || u.Username.ToLower() == EmailNameEntry.Text.ToLower() && Hashing.CheckHash(Hashword, u.Password) == true) is User user)
+                    if (users.SingleOrDefault(u => u.Email.ToLower() == EmailNameEntry.Text.ToLower() || u.Username.ToLower() == EmailNameEntry.Text.ToLower() && Hashing.CheckHash(Hashword, u.Password) == true) is User user)
+                    {
+                        Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { user.ID} Email: {user.Email}  Password:  {user.Password}");
+                        PlaySound("bell");
+                        await DisplayAlert("Login", "Login Success", "X");
+                        await Navigation.PushAsync(new HomePage(user));
+                    }
+
+                    else
+                    {
+                        await DisplayAlert("Login", "Incorrect Field/s", "X");
+                        Debug.WriteLine($" Email: {EmailNameEntry.Text} >>>>>>>>>>>>  LOGIN - INCORRECT FIELDS");
+                    }
             }
         }
 
         private async void ResetButton(object sender, EventArgs e)
         {
-            if (EmailEntry.Text.IsNullOrEmpty())
+            if (EmailNameEntry.Text.IsNullOrEmpty())
             {
                 PlaySound("ding98");
                 await DisplayAlert("Login", "Missing Field/s", "X");
@@ -101,11 +95,11 @@ namespace GOV
             else
             {
                 var Users = await App.DataService.GetAllAsync<User>();
-                bool FoundEmail = Users.Any(x => x.Email == EmailEntry.Text.ToLower());
+                bool FoundEmail = Users.Any(x => x.Email == EmailNameEntry.Text.ToLower());
 
                 if (FoundEmail)
                 {
-                    User user = Users.First(x => x.Email == EmailEntry.Text.ToLower());
+                    User user = Users.First(x => x.Email == EmailNameEntry.Text.ToLower());
                     Debug.WriteLine($"ID: { user.ID} Email: {user.Email} >>>>>>>>>>>>  RESET - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Reset", "Reset Success", "X");
@@ -122,7 +116,7 @@ namespace GOV
 
         private async void SignUpButton(object sender, EventArgs e)
         {
-            if (EmailEntry.Text.IsNullOrEmpty() || PasswordEntry.Text.IsNullOrEmpty())
+            if (EmailNameEntry.Text.IsNullOrEmpty() || PasswordEntry.Text.IsNullOrEmpty())
             {
                 PlaySound("ding98");
                 await DisplayAlert("Login", "Missing Field/s", "X");
@@ -130,7 +124,9 @@ namespace GOV
             else
             {
                 var users = await App.DataService.GetAllAsync<User>();
-                bool foundEmail = users.Any(x => x.Email.ToLower() == EmailEntry.Text.ToLower());
+                
+                //bool foundEmail = users.Any(x => x.Email.ToLower() == EmailEntry.Text.ToLower());
+                bool foundEmail = users.Any(u => u.Email.ToLower() == EmailNameEntry.Text.ToLower() || u.Username.ToLower() == EmailNameEntry.Text.ToLower());
 
                 if (foundEmail)
                 {
@@ -140,8 +136,9 @@ namespace GOV
                 }
                 else
                 {
+                    
                     string Hashword = Hashing.GetHash(PasswordEntry.Text);
-                    var user = new User (EmailEntry.Text, Hashword);
+                    var user = new User(EmailNameEntry.Text, EmailNameEntry.Text.Split('@')[0], Hashword) ;
                     await App.DataService.InsertAsync(user);
 
                     Debug.WriteLine($"ID: { user.ID} Email: {user.Email} Password: {user.Password} >>>>>>>>>>>>  SIGN UP - CORRECT");
