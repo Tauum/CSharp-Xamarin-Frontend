@@ -19,10 +19,10 @@ namespace GOV
         {
             for (int i = 1; i < 15; i++)
             {
-                Entry x = new Entry(50)
+                Entry x = new Entry(5)
                 {
-                    //Color = SKColor.Parse($"#{(i*3).ToString().PadLeft(2,'0')}25"),
-                    Color = SKColor.Parse("#328ba8"),
+                    Color = SKColor.Parse($"#{(i*3).ToString().PadLeft(2,'0')}25"),
+                    //Color = SKColor.Parse("#328ba8"),
                     Label = i.ToString(),
                     ValueLabel = i.ToString()
                 };

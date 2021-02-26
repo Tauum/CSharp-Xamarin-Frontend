@@ -19,9 +19,9 @@ namespace GOV
                     dataService =
                     new DataService("https://192.168.0.101:5001")  //change this if ip address changes
                     .AddEntityModelEndpoint<Product>("api/Products")
-                    .AddEntityModelEndpoint<Models.Image>("api/Images")
+                    .AddEntityModelEndpoint<Models.Image>("api/Images") //naming violation boycotted
                     .AddEntityModelEndpoint<User>("api/Users")
-                    .AddEntityModelEndpoint<Review>("api/Reviews");
+                    .AddEntityModelEndpoint<Review>("api/Reviews"); //these are obvious
                 }
                 return dataService;
             }
@@ -30,7 +30,7 @@ namespace GOV
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage()); // load main page
         }
 
         protected override void OnStart()

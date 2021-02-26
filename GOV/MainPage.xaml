@@ -44,7 +44,7 @@
                        VerticalOptions="Center" HorizontalOptions="Fill" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" />
 
                 <Entry
-                    x:Name="EmailNameEntry" TextColor="White" Placeholder="Email" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
+                    x:Name="EmailEntry" TextColor="White" Placeholder="Email" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
                     VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="3"
                     Grid.ColumnSpan="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
 
@@ -54,7 +54,7 @@
                 <Entry
                     x:Name="PasswordEntry" TextColor="White" Placeholder="Password" PlaceholderColor="White" IsPassword="True" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
                     VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" 
-                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15"/>
 
             <Frame WidthRequest="120" HeightRequest="90" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
                        VerticalOptions="End" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="2" CornerRadius="8.5" >

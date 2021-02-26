@@ -8,7 +8,7 @@ namespace GOV
 {
     public class User : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged; //this does event things
         public int ID { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
@@ -26,7 +26,7 @@ namespace GOV
             Admin = admin;
         }
 
-        public User(string email, string username, string password)
+        public User(string email, string username, string password) //used for login because ID, score and admin shouldnt be generated front end
         {
             Email = email;
             Username = username;
@@ -39,7 +39,7 @@ namespace GOV
 
         public void Total()
         {
-            Console.WriteLine("${UID} + {Username} + {ScoreTotal} + {Review} + {Review2}");
+            Console.WriteLine("${UID} + {Username} + {ScoreTotal} + {Review} + {Review2}"); //used within list view
         }
     }
 }

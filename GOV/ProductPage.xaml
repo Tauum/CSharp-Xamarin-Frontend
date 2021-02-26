@@ -26,12 +26,13 @@
                 <Label Text="Score:" Grid.Column="4" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding Score}" Grid.Column="5" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
-                <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
-                       Background="Black" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Grid.RowSpan="5" />
-
                 <Frame Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
                 <Label Text="Barcode:" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding PRef}" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="8,0,8,0"/>
+
+                <Frame Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Grid.RowSpan="5"/>
+                <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                        Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Grid.RowSpan="5" HorizontalOptions="Center"/>
 
             </Grid>
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />

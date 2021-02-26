@@ -6,6 +6,6 @@ namespace GOV.Models
 {
     class Constraints
     {
-        public static bool IsDev = true;
+        public static bool IsDev = true; // sets developer mode
     }
 }

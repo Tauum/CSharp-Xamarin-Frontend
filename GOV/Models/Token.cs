@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GOV.Models
 {
-    public class Token
+    public class Token // potentially for implementing a GIUD based interface
     {
         public int ID { set; get; }
         public string access_token { set; get; }

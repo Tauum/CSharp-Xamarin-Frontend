@@ -7,10 +7,12 @@
         <StackLayout VerticalOptions="Center"  HorizontalOptions="Center">
 
             <Frame x:Name="Example" BackgroundColor="Accent">
-                <Grid ColumnDefinitions="*,*">
-                    <Label TextColor="Black" Text="{Binding Human.ID}" Grid.Column="0"
+                <Grid ColumnDefinitions="*,*,*">
+                    <Label TextColor="Black" Text="{Binding User.ID}" Grid.Column="0"
                     HeightRequest="100" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                    <Label x:Name="UserAccount" Text="{Binding Human.Username}" TextColor="Black" Grid.Column="1"
+                    <Label x:Name="UserAccount" Text="{Binding User.Username}" TextColor="Black" Grid.Column="1"
+                    HeightRequest="100" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="UserScore" Text="{Binding User.ScoreTotal}" TextColor="Black" Grid.Column="2"
                     HeightRequest="100" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 </Grid>
             </Frame>

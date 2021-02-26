@@ -6,18 +6,18 @@ using Xamarin.Forms;
 
 namespace GOV.Helpers
 {
-    public class ByteArrayToImageSourceConverter : IValueConverter
+    public class ByteArrayToImageSourceConverter : IValueConverter //this is uses to convert binary
     {
         #region IValueConverter implementation
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value != null)
+            if (value != null) // null check
             {
-                byte[] byteStream = (byte[])value;
+                byte[] byteStream = (byte[])value; //generates a byte stream locally
                 ImageSource retImageSource = ImageSource.FromStream(() => new MemoryStream(byteStream));
                 return retImageSource;
             }
-            if (parameter != null)
+            if (parameter != null)// null check
             {
                 string fillerIcon = (string)parameter;
                 ImageSource retImageSource = ImageSource.FromFile(fillerIcon);
