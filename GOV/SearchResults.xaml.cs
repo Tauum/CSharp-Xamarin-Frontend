@@ -24,13 +24,13 @@ namespace GOV
             IsRefreshing = false;
         });
 
-        private bool isRefreshing = false;
+        private bool _isRefreshing = false;
         public bool IsRefreshing
         {
-            get => isRefreshing;
+            get => _isRefreshing;
             set
             {
-                isRefreshing = value;
+                _isRefreshing = value;
                 OnPropertyChanged(nameof(IsRefreshing));
             }
         }
@@ -38,8 +38,8 @@ namespace GOV
         public string SearchMan { get; private set; }
         public SearchResults(string searchTerm, bool isQR)
         {
-            if (isQR) SearchQR = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed");//this set true by calling method
-            else SearchMan = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> qr code search haspassed");
+            if (isQR) { SearchQR = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed"); } //this set true by calling method
+            else { SearchMan = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> qr code search passed"); }
             InitializeComponent();
             BindingContext = this;
         }
@@ -56,7 +56,7 @@ namespace GOV
             BindingContext = this;
         }
 
-        private async Task RefreshProducts() // just put load lsit in here???
+        private async Task RefreshProducts() // just put load list in here???
         { 
             listView.ItemsSource = await App.DataService.GetAllAsync<Product>(); 
         }
@@ -73,13 +73,11 @@ namespace GOV
 
             else ProductList = await App.DataService.GetAllAsync<Product>();
 
-
             //ProductList = await ((SearchQR != null)
             //? App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQR))
             //: (SearchMan != null)
             //? App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan))
             //: App.DataService.GetAllAsync<Product>());
-
 
             //string SearchQr;
             //ProductList = await App.DataService.GetAllAsync<Product>(

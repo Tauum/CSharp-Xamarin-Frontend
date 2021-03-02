@@ -1,16 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="GOV.LeaderboardPage" Title="Leaderboard">
 <ContentPage.Content>
-        <ScrollView>
-            <ListView x:Name="listView" Margin="20">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell x:Name="Username" Text="{Binding Username}" Detail="{Binding ScoreTotal}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+        <StackLayout>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,50" Margin="5">
+                <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
+                    <ScrollView  >
+                    <ListView x:Name="listView" Margin="20" RefreshCommand="{Binding RefreshCommand}"
+                IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell x:Name="Username" Text="{Binding Username}" Detail="{Binding ScoreTotal}" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                    </Frame>
+                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
+                    <ScrollView Orientation="Horizontal" >
+                    
+                    <forms:ChartView x:Name="Chart1"  MinimumWidthRequest="250"  MinimumHeightRequest="200" BackgroundColor="Yellow"/>
+                
+                    </ScrollView>
+                    </Frame>
+                
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

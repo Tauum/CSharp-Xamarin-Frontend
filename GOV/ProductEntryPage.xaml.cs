@@ -55,7 +55,6 @@ namespace GOV
             var result = await scanner.Scan();
 
             if (result != null) product.PRef = result.Text;
-
         }
         async void TakePictureButton(object sender, EventArgs e) //obviouis
         {

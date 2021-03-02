@@ -19,21 +19,19 @@ namespace GOV
 
         async void BarcodeScan(object sender, EventArgs e) // using an external nuget package
         {
-            var SearchQR = BindingContext;
-            var scanner = new ZXing.Mobile.MobileBarcodeScanner();
+            //var SearchQR = BindingContext; // dont think i need this??
+            var scanner = new ZXing.Mobile.MobileBarcodeScanner(); // localising external nuget package
             var result = await scanner.Scan(); //this links the barcode scan to the variable for searching with
-            var ManualSearch = ProductInput.Text;
+
             if (result != null)
             {
-                SearchQR = result.Text;
-                await Navigation.PushAsync(new SearchResults(ManualSearch, true)); // this pushes the manual search and a bool through too to check version
+                await Navigation.PushAsync(new SearchResults(result.Text, true)); // this pushes the manual search and a bool through too to check version
             }
         }
         private async void ManualSearch(object sender, EventArgs e) // using a search string or nothing to next page
         {
-            string SearchMan = ProductInput.Text;
-            if (SearchMan.IsNullOrEmpty()) await Navigation.PushAsync(new SearchResults()); // global functionto check contents
-            else await Navigation.PushAsync(new SearchResults(SearchMan, false)); // this pushes the manual search and a bool through too to check version
+            if (ProductInput.Text.IsNullOrEmpty()) await Navigation.PushAsync(new SearchResults()); // global function to check contents
+            else await Navigation.PushAsync(new SearchResults(ProductInput.Text, false)); // this pushes the manual search and a bool through too to check version
         }
     }
 }
