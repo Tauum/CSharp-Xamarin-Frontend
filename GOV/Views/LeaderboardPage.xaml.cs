@@ -20,19 +20,20 @@ namespace GOV
     {
         public User User; //instanciate user object
         List<Entry> entries = new List<Entry>(); //prevent referencing error
-        public async List<Entry> GenerateElements() 
+        public async Task<List<Entry>> GenerateElements()
         {
-            var users = await App.DataService.GetAllAsync<User>(); // grabs all users from data service
-            
-            foreach (User User in users) // obvious
-            {
-                Entry user = new Entry(User.ScoreTotal) // generate user entry within list with value being their score total
-                {
-                    Color = SKColor.Parse($"#{(User.ScoreTotal * 3).ToString().PadLeft(2, '0')}25"), // sets the color of the bar
-                    Label = User.Username.ToString(), // sets the label to match users username
-                    ValueLabel = User.ScoreTotal.ToString() // sets the value label to match users score total
-                };
-            }
+           // var users = await App.DataService.GetAllAsync<User>(); // grabs all users from data service
+
+            //foreach (User User in users) // obvious
+            //{
+            //    Entry user = new Entry(User.ScoreTotal) // generate user entry within list with value being their score total
+            //    {
+            //        Color = SKColor.Parse($"#{(User.ScoreTotal * 3).ToString().PadLeft(2, '0')}25"), // sets the color of the bar
+            //        Label = User.Username.ToString(), // sets the label to match users username
+            //        ValueLabel = User.ScoreTotal.ToString() // sets the value label to match users score total
+            //    };
+            //    entries.Add(user);
+            //}
 
             for (int i = 1; i < 5; i++)
             {
@@ -49,7 +50,7 @@ namespace GOV
 
         public LeaderboardPage()
         {
-            entries = GenerateElements(); // calls the generate elements function
+            entries = GenerateElements().Result; // calls generate elements function
             InitializeComponent();
             BindingContext = this; // binding needed for the chart
             Chart1.Chart = new BarChart // decleration for the chart is done
@@ -62,7 +63,7 @@ namespace GOV
         }
         protected override async void OnAppearing()
         {
-            base.OnAppearing(); 
+            base.OnAppearing();
             await LoadList(); // calls load list method on opening page
         }
 
@@ -70,7 +71,7 @@ namespace GOV
         {
             var UserList = await App.DataService.GetAllAsync<User>(); //grabbing all users on load
             listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); // assigning users to list on liad
-            GenerateElements(); // calling generate elements on load
+            await GenerateElements(); // calling generate elements on load
         }
         public ICommand RefreshCommand => new Command(async () => // obvious refreshing screen and list contents function
         {

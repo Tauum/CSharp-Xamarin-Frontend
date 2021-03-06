@@ -57,11 +57,10 @@
                     HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15"/>
 
             <Frame WidthRequest="120" HeightRequest="90" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
-                       VerticalOptions="End" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="2" CornerRadius="8.5" >
-             
-            <SwipeView Grid.Column="1" Grid.Row="4" Grid.RowSpan="4">
+                       VerticalOptions="End" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="2" CornerRadius="8.5" Margin="0,90,0,0">
+                <SwipeView>
                 <Grid WidthRequest="120" RowDefinitions = "*,*" BackgroundColor="Accent">
-                    <Path Stroke="White" StrokeThickness="2.5" Aspect="Uniform" Scale="0.4" Grid.Row="1"
+                    <Path Stroke="White" StrokeThickness="2.5" Aspect="Uniform" Scale="0.3" Grid.Row="1" Fill="White"
                                     VerticalOptions="End" HorizontalOptions="Center" Data="m272.99835,212.00455l62.33219,-51.50013l0,25.75l90.33565,0l0,-25.75l62.33216,51.50013l-62.33216,51.49986l0,-25.74993l-90.33565,0l0,25.74993l-62.33219,-51.49986z" />
                             <Button Clicked="LoginButton" Text="Login" TextColor="White" BackgroundColor="Transparent" Grid.Row="0" Grid.RowSpan="2"/>
                 </Grid>
@@ -80,7 +79,8 @@
                             </SwipeItemView>
                         </SwipeView.RightItems>
                     </SwipeView> 
-                </Frame>
+            </Frame>
+
             </Grid>
         </StackLayout>
     </ContentPage.Content>

@@ -13,12 +13,13 @@
                 <Frame Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3">
                     <Entry Text="{Binding ReleaseYear}" Keyboard="Numeric" Placeholder="Year" PlaceholderColor="black" MaxLength="4" HorizontalTextAlignment="Center"/>
                 </Frame>
+                <ScrollView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="6" HeightRequest="100">
+                    <Frame>
+                    <Editor Text="{Binding Description}" Placeholder="Description" PlaceholderColor="black" MaxLength="300" AutoSize="TextChanges" FontSize="16" />
+                    </Frame>
+                </ScrollView>
 
-                <Frame Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="6">
-                    <Editor Text="{Binding Description}" Placeholder="Description" PlaceholderColor="black" MaxLength="150" AutoSize="TextChanges" FontSize="16"/>
-                </Frame>
-
-                <Frame Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2" >
+                        <Frame Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2" >
                     <Entry Text="{Binding Score}" Keyboard="Numeric" Placeholder="Score" PlaceholderColor="black" MaxLength="4" HorizontalTextAlignment="Center"/>
                 </Frame>
             </Grid>

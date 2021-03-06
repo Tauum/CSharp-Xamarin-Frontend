@@ -18,9 +18,14 @@
                 <Label Text="Year:" Grid.Column="4" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 <Label Text="{Binding ReleaseYear}" Grid.Column="5" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
 
-                <Frame Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3"/>
-                <Label Text="  Description:" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="4" HeightRequest="50" Margin="8,0,8,0" VerticalTextAlignment="Start"/>
+
+                <ScrollView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3" >
+                    <Grid ColumnDefinitions="*" Grid.RowDefinitions="30,*">
+                         <Frame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+                        <Label Text="  Description:" Grid.Column="0" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="1" Margin="8,0,8,0" VerticalTextAlignment="Start"/>
+                    </Grid>
+                </ScrollView>
 
                 <Frame Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
                 <Label Text="Score:" Grid.Column="4" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>

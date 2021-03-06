@@ -13,8 +13,9 @@ namespace GOV
         public int ProductID { get; set; }
         public Product Product { get; set; } // foreign key  this points to the product but is not used
         public string Description { get; set; }
+        public int Visible { get; set; }
 
-        public Review(int ID, string UserID, User User, int ProductID, Product Product, string Description)//constructor 
+        public Review(int ID, string UserID, User User, int ProductID, Product Product, string Description, int Visible)//constructor 
         {
             ID = ID;
             UserID = UserID;
@@ -22,6 +23,7 @@ namespace GOV
             ProductID = ProductID;
             Product = Product;
             Description = Description;
+            Visible = Visible;
         }
     }
 }
