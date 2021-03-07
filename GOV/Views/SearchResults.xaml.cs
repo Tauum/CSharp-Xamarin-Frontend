@@ -34,11 +34,11 @@ namespace GOV
                 OnPropertyChanged(nameof(IsRefreshing));
             }
         }
-        public string SearchQR { get; private set; }
+        public string SearchQr { get; private set; }
         public string SearchMan { get; private set; }
-        public SearchResults(string searchTerm, bool isQR)
+        public SearchResults(string searchTerm, bool isQr)
         {
-            if (isQR) { SearchQR = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed"); } //this set true by calling method
+            if (isQr) { SearchQr = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed"); } //this set true by calling method
             else { SearchMan = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> qr code search passed"); }
             InitializeComponent();
             BindingContext = this;
@@ -65,7 +65,7 @@ namespace GOV
         {
             List<Product> ProductList;
 
-            if (SearchQR != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQR));
+            if (SearchQr != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr));
             else if (SearchMan != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan)); //this doesnt work
 
            // else if (SearchMan != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan));
@@ -73,8 +73,8 @@ namespace GOV
 
             else ProductList = await App.DataService.GetAllAsync<Product>();
 
-            //ProductList = await ((SearchQR != null)
-            //? App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQR))
+            //ProductList = await ((SearchQr != null)
+            //? App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr))
             //: (SearchMan != null)
             //? App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan))
             //: App.DataService.GetAllAsync<Product>());
@@ -82,7 +82,7 @@ namespace GOV
             //string SearchQr;
             //ProductList = await App.DataService.GetAllAsync<Product>(
             //SearchQr is not null
-            //? x => x.PRef.Contains(SearchQR)
+            //? x => x.PRef.Contains(SearchQr)
             //: SearchMan != null
             //? x => x.Name.Contains(SearchMan)
             //: x => true
@@ -93,7 +93,7 @@ namespace GOV
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadList();
+            listView.BeginRefresh();
         }
 
         async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)

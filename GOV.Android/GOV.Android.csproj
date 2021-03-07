@@ -66,8 +66,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\IndieFlower-Regular.ttf" />
-    <AndroidAsset Include="Assets\Staatliches-Regular.ttf" />
+    <EmbeddedResource Include="Assets\IndieFlower-Regular.ttf" />
+    <EmbeddedResource Include="Assets\Staatliches-Regular.ttf" />
+    <EmbeddedResource Include="Assets\FjallaOne-Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

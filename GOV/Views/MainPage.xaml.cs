@@ -19,29 +19,29 @@ namespace GOV
         private ISimpleAudioPlayer Player { get; }
         public MainPage()
         {
-            Player = CrossSimpleAudioPlayer.Current; // binds mp3 player to tyoe ISimpleAudioPlayer
+            Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
             InitializeComponent();
-            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental", "CarouselView_Experimental", "IndicatorView_Experimental" }); // these need to be assigned to do xamarin stuff
+            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental", "CarouselView_Experimental", "IndicatorView_Experimental" }); //need to be assigned to do other stuff
             Task.Run(AnimateBackground); //this is enabling the background
         }
 
-        private async void AnimateBackground() // dynamic background
+        private async void AnimateBackground() //obvious
         {
-            Action<double> forward = input => bgGradient.AnchorY = input; //it complains about these being local //sets the forwards transition
+            Action<double> forward = input => bgGradient.AnchorY = input; //sets the forwards transition
             Action<double> backward = input => bgGradient.AnchorY = input; // sets the backwards transition
 
             while (true) // obvious
             {
-                bgGradient.Animate(name: "forward", callback: forward, start: 0, end: 1, length: 10000, easing: Easing.SinIn); //modifys gradient with action 
-                await Task.Delay(10000);//this puts a delay between the forward to backwards
-                bgGradient.Animate(name: "backward", callback: backward, start: 1, end: 0, length: 10000, easing: Easing.SinIn); //this puts a delay between backwards and forwards
-                await Task.Delay(10000);//this puts a delay on backwards to forwards
+                bgGradient.Animate(name: "forward", callback: forward, start: 0, end: 1, length: 9000, easing: Easing.SinIn); //modify gradient with action 
+                await Task.Delay(10000);//delay on forward to backwards
+                bgGradient.Animate(name: "backward", callback: backward, start: 1, end: 0, length: 9000, easing: Easing.SinIn); //modify gradient with action 
+                await Task.Delay(10000);//delay on backwards to forwards
             }
         }
 
         public void PlugClick(object sender, System.EventArgs e) //change opacity of a path in a button
         {
-            var buttonClicked = (Button)sender; //this binds the button to a local variable xaml
+            var buttonClicked = (Button)sender; //bind button to local variable xaml
             var frameBtn = buttonClicked.FindByName("PlugBtn") as Path; //plugBtn button named in xaml into a type
             if (frameBtn.Opacity == 0)
             {
@@ -91,11 +91,11 @@ namespace GOV
 
                 if (FoundEmail)//windex clean boys
                 {
-                    User User = Users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st protect against error?
+                    User User = Users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st because only 1 entry is needed
                     Debug.WriteLine($"ID: { User.ID} Email: {User.Email} >>>>>>>>>>>>  RESET - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Reset", "Reset Success", "X");
-                    //put something here to send reset email!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    //something here to send reset email!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace GOV
 
                 bool FoundEmail = Users.Any(u => u.Email.ToLower() == EmailEntry.Text.ToLower()); //nice reduce using global
 
-                if (FoundEmail) //clean bool check
+                if (FoundEmail) //windex clean boys
                 {
                     PlaySound("ding98");
                     await DisplayAlert("Sign up", "Email Taken", "X");

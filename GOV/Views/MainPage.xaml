@@ -21,39 +21,27 @@
 
                 <Frame x:Name="GameOfVirtueTitle" WidthRequest="200" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
                        VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5" CornerRadius="8.5"  >
-                    <Label Text="Game of Virtue" TextColor="White" FontFamily="Staat" HorizontalTextAlignment="Center" FontSize="30"/>
+                    <Label Text="Game of Virtue" TextColor="White" FontFamily="thick" HorizontalTextAlignment="Center" FontSize="30" TextTransform="Uppercase"/>
                 </Frame>
-
-                <Path Fill="transparent" Stroke="white" StrokeThickness="3" Opacity="0.15" Aspect="Fill" Rotation=" 180"
-                       Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z" 
-                      Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="7" />
 
                 <Path Stroke="white" StrokeThickness="2.8" 
                       HorizontalOptions="Center" VerticalOptions="Center" Aspect="Uniform" Scale="0.9" Grid.Column="3" Grid.Row="2" Opacity="0.7"
                       Data="m427.99923,271.32221l-13.82796,-4.8435l11.13909,-24.7661c0.99456,-2.21014 -0.22733,-4.7181 -2.7386,-5.59588c-2.51127,-0.87779 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-17.33379,-6.0724l11.13554,-24.7661c0.99811,-2.21327 -0.22733,-4.72123 -2.73504,-5.59902c-2.50772,-0.87465 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-13.82085,-4.84036l-5.73294,12.7467l7.63681,2.67725l-9.01144,20.03546c-2.16672,4.82782 0.50794,10.29204 5.97802,12.21063l5.77556,2.02518l-3.11511,6.91883c-1.44567,3.21332 0.33744,6.85927 3.98535,8.13833l3.30336,1.1568c3.64436,1.27906 7.77179,-0.29782 9.22101,-3.51428l3.11511,-6.91883l6.59963,2.31046c5.47009,1.91545 11.66479,-0.44516 13.83861,-5.27298l9.00433,-20.03546l6.81275,2.3857l5.72938,-12.7467z" />
 
-                <Path x:Name="PlugBtn" Fill="Accent" Stroke="white" StrokeThickness="2.8" 
+                <Path x:Name="PlugBtn" Fill="Accent" Stroke="white" StrokeThickness="2.8" Opacity="0"
                       HorizontalOptions="Center" VerticalOptions="Center" Aspect="Uniform" Scale="0.9" Grid.Column="3" Grid.Row="2" 
-                      Data="m427.99923,271.32221l-13.82796,-4.8435l11.13909,-24.7661c0.99456,-2.21014 -0.22733,-4.7181 -2.7386,-5.59588c-2.51127,-0.87779 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-17.33379,-6.0724l11.13554,-24.7661c0.99811,-2.21327 -0.22733,-4.72123 -2.73504,-5.59902c-2.50772,-0.87465 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-13.82085,-4.84036l-5.73294,12.7467l7.63681,2.67725l-9.01144,20.03546c-2.16672,4.82782 0.50794,10.29204 5.97802,12.21063l5.77556,2.02518l-3.11511,6.91883c-1.44567,3.21332 0.33744,6.85927 3.98535,8.13833l3.30336,1.1568c3.64436,1.27906 7.77179,-0.29782 9.22101,-3.51428l3.11511,-6.91883l6.59963,2.31046c5.47009,1.91545 11.66479,-0.44516 13.83861,-5.27298l9.00433,-20.03546l6.81275,2.3857l5.72938,-12.7467z" 
-                      Opacity="0"/>
+                      Data="m427.99923,271.32221l-13.82796,-4.8435l11.13909,-24.7661c0.99456,-2.21014 -0.22733,-4.7181 -2.7386,-5.59588c-2.51127,-0.87779 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-17.33379,-6.0724l11.13554,-24.7661c0.99811,-2.21327 -0.22733,-4.72123 -2.73504,-5.59902c-2.50772,-0.87465 -5.34932,0.20377 -6.34033,2.41705l-11.13909,24.7661l-13.82085,-4.84036l-5.73294,12.7467l7.63681,2.67725l-9.01144,20.03546c-2.16672,4.82782 0.50794,10.29204 5.97802,12.21063l5.77556,2.02518l-3.11511,6.91883c-1.44567,3.21332 0.33744,6.85927 3.98535,8.13833l3.30336,1.1568c3.64436,1.27906 7.77179,-0.29782 9.22101,-3.51428l3.11511,-6.91883l6.59963,2.31046c5.47009,1.91545 11.66479,-0.44516 13.83861,-5.27298l9.00433,-20.03546l6.81275,2.3857l5.72938,-12.7467z" />
 
-                <Button VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" Grid.Row="2"
-                            Clicked="PlugClick" BackgroundColor="Transparent"/>
-
-                <Frame WidthRequest="150" HeightRequest="35" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
-                       VerticalOptions="Center" HorizontalOptions="Fill" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" />
+                <Button VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="3" Grid.Row="2" Clicked="PlugClick" BackgroundColor="Transparent"/>
 
                 <Entry
-                    x:Name="EmailEntry" TextColor="White" Placeholder="Email" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
-                    VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="3"
-                    Grid.ColumnSpan="5" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-
-                <Frame WidthRequest="150" HeightRequest="35" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
-                       VerticalOptions="Center" HorizontalOptions="Fill" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5"/>
+                    x:Name="EmailEntry" TextColor="White" Placeholder="EMAIL" PlaceholderColor="White" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
+                    VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2" Grid.Row="3"
+                    Grid.ColumnSpan="3" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15"/>
 
                 <Entry
-                    x:Name="PasswordEntry" TextColor="White" Placeholder="Password" PlaceholderColor="White" IsPassword="True" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
-                    VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" 
+                    x:Name="PasswordEntry" TextColor="White" Placeholder="PASSWORD" PlaceholderColor="White" IsPassword="True" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
+                    VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="3" 
                     HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15"/>
 
             <Frame WidthRequest="120" HeightRequest="90" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
@@ -61,9 +49,10 @@
                 <SwipeView>
                 <Grid WidthRequest="120" RowDefinitions = "*,*" BackgroundColor="Accent">
                     <Path Stroke="White" StrokeThickness="2.5" Aspect="Uniform" Scale="0.3" Grid.Row="1" Fill="White"
-                                    VerticalOptions="End" HorizontalOptions="Center" Data="m272.99835,212.00455l62.33219,-51.50013l0,25.75l90.33565,0l0,-25.75l62.33216,51.50013l-62.33216,51.49986l0,-25.74993l-90.33565,0l0,25.74993l-62.33219,-51.49986z" />
-                            <Button Clicked="LoginButton" Text="Login" TextColor="White" BackgroundColor="Transparent" Grid.Row="0" Grid.RowSpan="2"/>
+                        VerticalOptions="End" HorizontalOptions="Center" Data="m272.99835,212.00455l62.33219,-51.50013l0,25.75l90.33565,0l0,-25.75l62.33216,51.50013l-62.33216,51.49986l0,-25.74993l-90.33565,0l0,25.74993l-62.33219,-51.49986z" />
+                        <Button Clicked="LoginButton" Text="Login" TextColor="White" BackgroundColor="Transparent" Grid.Row="0" Grid.RowSpan="2"/>
                 </Grid>
+
                          <SwipeView.LeftItems>
                             <SwipeItemView>
                                 <Grid WidthRequest="120" BackgroundColor="LightBlue">
@@ -80,6 +69,10 @@
                         </SwipeView.RightItems>
                     </SwipeView> 
             </Frame>
+
+                <Path Fill="transparent" Stroke="white" StrokeThickness="3" Opacity="0.15" Aspect="Fill" Rotation=" 180"
+                      Data="m126.8675,108.63527l343,0l0,147.02589c-128.5,-58 -207.5,41.01956 -343,24.19026l0,-171.21615z" 
+                      Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="7" />
 
             </Grid>
         </StackLayout>

@@ -9,7 +9,7 @@
                 <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
                     <ScrollView>
                     <ListView x:Name="listView" Margin="20" RefreshCommand="{Binding RefreshCommand}"
-                 IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True" ItemsSource="{Binding U}">
+                     IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell x:Name="Username" Text="{Binding Username}" Detail="{Binding ScoreTotal}" />
@@ -17,14 +17,13 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </ScrollView>
-                    </Frame>
+                </Frame>
+
                 <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
                     <ScrollView Orientation="Horizontal" >
-                    
-                    <forms:ChartView x:Name="Chart1"  MinimumWidthRequest="250"  MinimumHeightRequest="200" BackgroundColor="Yellow"/>
-                
+                        <forms:ChartView x:Name="Chart1"  MinimumWidthRequest="250"  MinimumHeightRequest="200" BackgroundColor="Yellow"/>
                     </ScrollView>
-                    </Frame>
+                </Frame>
                 
             </Grid>
         </StackLayout>

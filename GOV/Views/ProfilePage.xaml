@@ -6,35 +6,36 @@
         <StackLayout Margin="5">
 
             <Frame>
-                <Button Text="My Products" Clicked="MyProductsButton" Grid.Column="1"/>
+                <Button Text="My Products" Clicked="MyProductsButton"/>
             </Frame>
-            
+
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+
             <Frame >
-                    <Grid ColumnDefinitions="*,*">
-                        <Label Text="Username:" Grid.Column="0" HeightRequest="40"/>
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="Username:" Grid.Column="0" HeightRequest="40"/>
                     <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}" PlaceholderColor="black" MaxLength="18" Grid.Column="1" />
-                    </Grid>
-                </Frame>
-                        
-                <Frame>
-                    <Grid>
-                        <Label Text="Password:" Grid.Column="0" HeightRequest="40"/>
-                    <Entry x:Name="PasswordInput" Text="{Binding User.Password}" Placeholder="{Binding User.Password}" 
-                           IsPassword="True" PlaceholderColor="black" Grid.Column="1" MaxLength="15"/>
-                    </Grid>
-                </Frame>
+                </Grid>
+            </Frame>
+
+            <Frame>
+                <Grid>
+                    <Label Text="Password:" Grid.Column="0" HeightRequest="40"/>
+                    <Entry x:Name="PasswordInput" Text="{Binding User.Password}" Placeholder="{Binding User.Password}" IsPassword="True" Grid.Column="1" MaxLength="15"/>
+                </Grid>
+            </Frame>
 
             <Frame>
                 <Grid ColumnDefinitions="*,*">
                     <Label Text="Confirm Password:" Grid.Column="0"/>
-                    <Entry x:Name="PasswordConfirmInput" IsPassword="True" PlaceholderColor="black"
+                    <Entry x:Name="PasswordConfirmInput" IsPassword="True"
                         Grid.Column="1" MaxLength="15"/>
                 </Grid>
             </Frame>
 
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
             <Frame>
-                <Button Text="Save" Clicked="SaveButton" Grid.Column="1"/>
+                <Button Text="Save" Clicked="SaveButton"/>
             </Frame>
         </StackLayout>
     </ScrollView>

@@ -11,8 +11,10 @@
     IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True"> 
         <ListView.ItemTemplate>
             <DataTemplate>
-                <ImageCell Text="{Binding Title}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Data, 
+
+                <ImageCell Text="{Binding Name}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Information, 
                     Converter={StaticResource ByteArrayToImageSourceConverter}}"/>  
+
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

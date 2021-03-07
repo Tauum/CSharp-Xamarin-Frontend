@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GOV.ReviewPage">
+             x:Class="GOV.ReviewPage" Title="Reviews" >
 
-    <Grid RowDefinitions="20,180,20,10,375" ColumnDefinitions="20,*,20">
+    <Grid RowDefinitions="20,180,20,32,230,90" ColumnDefinitions="20,*,20">
         <Frame Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
         <CarouselView x:Name="MainCarousel" IndicatorView="indicatorView" IsBounceEnabled="True" >
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                         <ScrollView>
-                            <Grid  RowDefinitions="20,220" ColumnDefinitions="70,165,40,20">
+                            <Grid  RowDefinitions="20,250" ColumnDefinitions="75,*" Margin="15,0,25,0">
                                 <Label Text="Username:" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Start" />
                                 <Label Text="{Binding Username}" FontSize="15" Grid.Row="0" Grid.Column="1"  HorizontalTextAlignment="Start" />
-                                <Label Text="Points:" Grid.Row="0" Grid.Column="2" HorizontalTextAlignment="End" />
-                                <Label Text="{Binding PointGiven}" FontSize="15" Grid.Row="0" Grid.Column="3" HorizontalTextAlignment="End" />
                                 <Label Text="{Binding Description}" FontSize="15" HorizontalTextAlignment="Start" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                             </Grid>
                         </ScrollView>
@@ -22,13 +20,18 @@
         </CarouselView>
         </Frame>
 
-        <Frame Grid.Row="3" Grid.Column="1"/>
         <IndicatorView x:Name="indicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" HorizontalOptions="Center"  Grid.Row="3" Grid.Column="1"/>
-        <Frame Grid.Row="4" Grid.Column="1">
-            <Grid RowDefinitions="270,40" ColumnDefinitions="*,*" >
-                <Editor Placeholder="Enter Review Here" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14"/>
-                <Button Text="Save" Clicked="SaveButton" Grid.Row="1" Grid.Column="0"/>
-                <Button Text="Delete" Clicked="DeleteButton" Grid.Row="1" Grid.Column="1"/>
+
+            <Frame Grid.Row="4" Grid.Column="1">
+                <Grid RowDefinitions="240,40" ColumnDefinitions="*,*" >
+                    <Editor x:Name="ReviewInput" Text="{Binding Description}"  Placeholder="Enter Review Here" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="14" MaxLength="300"/>
+                </Grid>
+            </Frame>
+
+        <Frame Grid.Row="5" Grid.Column="1" Margin="0,10,0,0">
+            <Grid ColumnDefinitions="*,*" >
+                <Button Text="Save" Clicked="SaveButton" Grid.Column="0"/>
+                <Button Text="Delete" Clicked="DeleteButton" Grid.Column="1"/>
             </Grid>
         </Frame>
     </Grid>

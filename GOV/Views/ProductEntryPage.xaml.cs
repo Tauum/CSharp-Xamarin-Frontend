@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,7 +63,6 @@ namespace GOV
             {
                 var photo = await MediaPicker.CapturePhotoAsync(); //makes phone function to local variable
                 await LoadPhotoAsync(photo);
-
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace GOV
         {
             if (photo == null) return;
 
-            var product = (Product)BindingContext; //bind select local
+            Product product = (Product)BindingContext; //bind select local
             using (var memoryStream = new MemoryStream()) //makes a memory stream
             {
                 using (var inputStream = await photo.OpenReadAsync()) //this does other stuff
@@ -106,11 +106,11 @@ namespace GOV
                     product.Image = image; //sets local object image
                 }
             }
-            
         }
         public async void ReviewButton(object sender, System.EventArgs e) //obvious
         {
             await Navigation.PushAsync(new ReviewPage());
         }
+
     }
 }

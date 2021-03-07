@@ -15,18 +15,11 @@ namespace GOV
         {
             InitializeComponent();
             Device.SetFlags(new[] { "CarouselView_Experimental", "IndicatorView_Experimental" }); // this is needed to do special xamarin stuff
-
-
-            var test0 = new List<string>// basic test
-            {
-                "abc","def","ghi"
-            };
-
-
+            
             List<test> fuckit = new List<test>(); //basic test slightly more advanced
-            fuckit.Add(new test { ID = 1, Username = "aaa", ProductID = 1, Description = "desc1", PointGiven = 15 });
-            fuckit.Add(new test { ID = 2, Username = "bbb", ProductID = 1, Description = "desc2", PointGiven = 30 });
-            fuckit.Add(new test { ID = 3, Username = "ccc", ProductID = 1, Description = "desc3", PointGiven = 45 });
+            fuckit.Add(new test { ID = 1, Username = "aaa", ProductID = 1, Description = "desc1"});
+            fuckit.Add(new test { ID = 2, Username = "bbb", ProductID = 1, Description = "desc2"});
+            fuckit.Add(new test { ID = 3, Username = "ccc", ProductID = 1, Description = "desc3"});
             MainCarousel.ItemsSource = fuckit; //ensures the carousels item list is based from this c# list
         }
 

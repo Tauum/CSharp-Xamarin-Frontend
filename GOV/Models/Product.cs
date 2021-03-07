@@ -30,11 +30,24 @@ namespace GOV
         public Image Image
         {
             get => image;
-            set => Setter(value, ref image, nameof(Image));//reduces line-age
+            set
+            {
+                this.image = value;
+                if (this.Image != null)
+                {
+                    this.ImageId = this.Image.ID;
+                }
+                else
+                {
+                    this.ImageId = null;
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
+              // Setter(value, ref image, nameof(Image));
+            }
         }
 
         [JsonIgnore]
-        public string BasicInfo => $"{Name} - {ReleaseYear} - {Score}"; //
+        public string BasicInfo => $"{Name} - {ReleaseYear} - {Score}"; 
 
         public Product(int id, string name, int releaseYear, string description, int score, string pref)// this is a full product
         {

@@ -12,14 +12,14 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        public User User { get; set; } //needed to recieve user object from preious page
-        public HomePage(User user)//this is when a user is passed in
+        public User User { get; set; } //recieve user object from preious page
+        public HomePage(User user)//instanciate passing in user
         {
             User = user;
             BindingContext = this;
             InitializeComponent();
         }
-        public HomePage() // default to prevent crash if a user is not passed, maybe smart or dumb considering if a user escaped passing in
+        public HomePage() // default
         {
             InitializeComponent();
         }
