@@ -17,7 +17,7 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
-        public User User { set;  get; }
+        public User User { set; get; }
         private ISimpleAudioPlayer Player { get; }
         public ProfilePage(User user)
         {
@@ -48,6 +48,8 @@ namespace GOV
                 if (User.ID != 0)
                 {
                     User.Password = Hashing.GetHash(PasswordInput.Text);
+                    User.Username = UsernameInput.Text;
+
                     await App.DataService.UpdateAsync(User, User.ID);
                     PlaySound("bell");
                     await DisplayAlert("Profile", "Update Success", "X");
@@ -59,6 +61,11 @@ namespace GOV
         async void MyProductsButton(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SearchResults(User));
+        }
+
+        async void MyReviewsButton(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ReviewPage(User));
         }
 
         async void PlaySound(string mp3)

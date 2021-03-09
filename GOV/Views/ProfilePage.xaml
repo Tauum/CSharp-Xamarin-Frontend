@@ -3,33 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.ProfilePage"  Title="Profile">
     <ScrollView>
-        <StackLayout Margin="5">
-
-            <Frame>
-                <Button Text="My Products" Clicked="MyProductsButton"/>
-            </Frame>
+        <StackLayout Margin="15,10,15,10">
 
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
 
             <Frame >
                 <Grid ColumnDefinitions="*,*">
-                    <Label Text="Username:" Grid.Column="0" HeightRequest="40"/>
-                    <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}" PlaceholderColor="black" MaxLength="18" Grid.Column="1" />
+                    <Label Text="Username:" Grid.Column="0" HeightRequest="40" VerticalTextAlignment="Center"/>
+                    <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}"
+                           PlaceholderColor="black" MaxLength="18" Grid.Column="1" />
                 </Grid>
             </Frame>
 
             <Frame>
                 <Grid>
-                    <Label Text="Password:" Grid.Column="0" HeightRequest="40"/>
-                    <Entry x:Name="PasswordInput" Text="{Binding User.Password}" Placeholder="{Binding User.Password}" IsPassword="True" Grid.Column="1" MaxLength="15"/>
+                    <Label Text="Password:" VerticalTextAlignment="Center" Grid.Column="0" HeightRequest="40"/>
+                    <Entry x:Name="PasswordInput" Placeholder="Password"
+                           IsPassword="True" Grid.Column="1" MaxLength="15"/>
                 </Grid>
             </Frame>
 
             <Frame>
                 <Grid ColumnDefinitions="*,*">
-                    <Label Text="Confirm Password:" Grid.Column="0"/>
-                    <Entry x:Name="PasswordConfirmInput" IsPassword="True"
-                        Grid.Column="1" MaxLength="15"/>
+                    <Label Text="Confirm Password:" Grid.Column="0" VerticalTextAlignment="Center"/>
+                    <Entry x:Name="PasswordConfirmInput" IsPassword="True" Completed="SaveButton" Placeholder="Password Confirm"  Grid.Column="1" MaxLength="15"/>
                 </Grid>
             </Frame>
 
@@ -37,6 +34,15 @@
             <Frame>
                 <Button Text="Save" Clicked="SaveButton"/>
             </Frame>
+
+            <Frame>
+                <Button Text="My Products" Clicked="MyProductsButton"/>
+            </Frame>
+
+            <Frame>
+                <Button Text="My Reviews" Clicked="MyReviewsButton"/>
+            </Frame>
+
         </StackLayout>
     </ScrollView>
 </ContentPage>

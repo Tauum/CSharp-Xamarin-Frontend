@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOV.Android", "GOV.Android\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOV.iOS", "GOV.iOS\GOV.iOS.csproj", "{7EBE704C-395A-40AB-8EC0-0C0D841498F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOV", "GOV\GOV.csproj", "{C734B4F4-7AAF-4ED7-B522-47E0E9AEAF64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GOV", "GOV\GOV.csproj", "{C734B4F4-7AAF-4ED7-B522-47E0E9AEAF64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

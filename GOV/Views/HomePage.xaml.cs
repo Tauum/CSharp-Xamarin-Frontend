@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GOV.Models;// know how to build object
+using GOV.Views;
 
 namespace GOV
 {
@@ -47,5 +48,11 @@ namespace GOV
         {
             await Navigation.PushAsync(new hashtest());
         }
+        private async void ToolBarTestButton(object sender, EventArgs e)//obvious
+        {
+            await Navigation.PushAsync(new ToolBarTest(User));
+        }
+
+        
     }
 }

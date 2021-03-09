@@ -4,12 +4,16 @@
              x:Class="GOV.SearchMethod" Title="Search Method">
 
     <ContentPage.Content>
-        <Grid ColumnDefinitions = "*,*,*,*,*" RowDefinitions="*,*,*,*,*,*,*,*"  Padding="15" VerticalOptions="Center"  HorizontalOptions="Center">
+        <StackLayout Margin="15" VerticalOptions="Center">
 
-            <Button Text="QR Scan" Clicked="BarcodeScan" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"/>
-            <Entry x:Name="ProductInput" Placeholder="Name" Grid.Column="2" Grid.Row="3" WidthRequest="120" HeightRequest="50"/>
-            <Button Text="Manual Search" Clicked="ManualSearch" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3"/>
+            <Button Text="QR Scan" Clicked="BarcodeScan"/>
 
-        </Grid>
+            <Frame >
+                <Entry x:Name="ProductInput" Placeholder="Name" WidthRequest="90" HeightRequest="90" Completed="ManualSearch"/>
+            </Frame>
+            
+            <Button Text="Manual Search" Clicked="ManualSearch"/>
+
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

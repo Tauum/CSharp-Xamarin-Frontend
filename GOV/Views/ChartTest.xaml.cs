@@ -17,16 +17,15 @@ namespace GOV
         List<Entry> entries = new List<Entry>();
         public List<Entry> GenerateElements()
         {
-            for (int i = 1; i < 15; i++)
+            for (int i = 1; i < 9; i++)
             {
-                Entry x = new Entry(5)
+                Entry x = new Entry(i)
                 {
                     Color = SKColor.Parse($"#{(i*3).ToString().PadLeft(2,'0')}25"),
                     //Color = SKColor.Parse("#328ba8"),
-                    Label = i.ToString(),
+                    Label = "user" + i.ToString() , // why this not work?????????????????????????
                     ValueLabel = i.ToString()
                 };
-
                 entries.Add(x);
             }
             return entries;

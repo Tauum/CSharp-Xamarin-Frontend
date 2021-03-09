@@ -20,13 +20,13 @@ namespace GOV
             BindingContext = model;
             InitializeComponent();
         }
-        private async void ButtonPressed(object sender, EventArgs e)
+        private void ButtonPressed(object sender, EventArgs e)
         {
             var model = BindingContext as Model;
             model.A = InputString.Text;
             model.B = Hashing.GetHash(model.A);
         }
-        private async void ButtonPressed2(object sender, EventArgs e)
+        private void ButtonPressed2(object sender, EventArgs e)
         {
             var model = BindingContext as Model;
             model.A = InputString.Text;

@@ -11,7 +11,7 @@
                         <ScrollView>
                             <Grid  RowDefinitions="20,250" ColumnDefinitions="75,*" Margin="15,0,25,0">
                                 <Label Text="Username:" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Start" />
-                                <Label Text="{Binding Username}" FontSize="15" Grid.Row="0" Grid.Column="1"  HorizontalTextAlignment="Start" />
+                                <Label Text="{Binding User.Username}" FontSize="15" Grid.Row="0" Grid.Column="1"  HorizontalTextAlignment="Start" />
                                 <Label Text="{Binding Description}" FontSize="15" HorizontalTextAlignment="Start" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                             </Grid>
                         </ScrollView>

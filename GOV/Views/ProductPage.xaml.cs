@@ -17,7 +17,8 @@ namespace GOV
         }
         public async void ReviewButton(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new ReviewPage()); // goes to review page
+            var product = (Product) BindingContext;
+            await Navigation.PushAsync(new ReviewPage(product)); // goes to review page
         }
         public async void EditProductButton(object sender, EventArgs e)
         {

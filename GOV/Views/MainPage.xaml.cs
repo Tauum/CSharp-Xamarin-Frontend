@@ -60,13 +60,13 @@ namespace GOV
             }
             else
             {
-                var Users = await App.DataService.GetAllAsync<User>(); //using data servic to request all users ||||||   V From user objct list only grab 1 result where an email AND password matches
-                if (Users.SingleOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(PasswordEntry.Text, u.Password) == true) is User User) // <<< pass user into the loop
+                var users = await App.DataService.GetAllAsync<User>(); //using data servic to request all users ||||||   V From user objct list only grab 1 result where an email AND password matches
+                if (users.SingleOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(PasswordEntry.Text, u.Password) == true) is User user) // <<< pass user into the loop
                 {
-                    Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { User.ID} Email: {User.Email}  Password:  {User.Password}");
+                    Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { user.ID} Email: {user.Email}  Password:  {user.Password}");
                     PlaySound("bell");
                     await DisplayAlert("Login", "Login Success", "X");
-                    await Navigation.PushAsync(new HomePage(User));//pass User from loop into homePage
+                    await Navigation.PushAsync(new HomePage(user));//pass User from loop into homePage
                 }
 
                 else
@@ -86,13 +86,13 @@ namespace GOV
             }
             else
             {
-                var Users = await App.DataService.GetAllAsync<User>(); //get all users from data service
-                bool FoundEmail = Users.Any(x => x.Email == EmailEntry.Text.ToLower()); //nice line-age reduce
+                var users = await App.DataService.GetAllAsync<User>(); //get all users from data service
+                bool foundEmail = users.Any(x => x.Email == EmailEntry.Text.ToLower()); //nice line-age reduce
 
-                if (FoundEmail)//windex clean boys
+                if (foundEmail)//windex clean boys
                 {
-                    User User = Users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st because only 1 entry is needed
-                    Debug.WriteLine($"ID: { User.ID} Email: {User.Email} >>>>>>>>>>>>  RESET - CORRECT");
+                    User user = users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st because only 1 entry is needed
+                    Debug.WriteLine($"ID: { user.ID} Email: {user.Email} >>>>>>>>>>>>  RESET - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Reset", "Reset Success", "X");
                     //something here to send reset email!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -115,11 +115,11 @@ namespace GOV
             }
             else
             {
-                var Users = await App.DataService.GetAllAsync<User>(); //grab all users from data service
+                var users = await App.DataService.GetAllAsync<User>(); //grab all users from data service
 
-                bool FoundEmail = Users.Any(u => u.Email.ToLower() == EmailEntry.Text.ToLower()); //nice reduce using global
+                bool foundEmail = users.Any(u => u.Email.ToLower() == EmailEntry.Text.ToLower()); //nice reduce using global
 
-                if (FoundEmail) //windex clean boys
+                if (foundEmail) //windex clean boys
                 {
                     PlaySound("ding98");
                     await DisplayAlert("Sign up", "Email Taken", "X");
@@ -127,10 +127,10 @@ namespace GOV
                 }
                 else
                 {
-                    string Hashword = Hashing.GetHash(PasswordEntry.Text);// nice global class for generating & checking Bcrypt package hash
-                    User User = new User(EmailEntry.Text, EmailEntry.Text.Split('@')[0], Hashword); //nice split to set username same as email on default but can be changed in profile
-                    await App.DataService.InsertAsync(User);//obvious
-                    Debug.WriteLine($"ID: { User.ID} Email: {User.Email} Password: {User.Password} >>>>>>>>>>>>  SIGN UP - CORRECT");
+                    string hashword = Hashing.GetHash(PasswordEntry.Text);// nice global class for generating & checking Bcrypt package hash
+                    User user = new User(EmailEntry.Text, EmailEntry.Text.Split('@')[0], hashword); //nice split to set username same as email on default but can be changed in profile
+                    await App.DataService.InsertAsync(user);//obvious
+                    Debug.WriteLine($"ID: { user.ID} Email: {user.Email} Password: {user.Password} >>>>>>>>>>>>  SIGN UP - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Sign up", "Sign up Success", "X");
                 }

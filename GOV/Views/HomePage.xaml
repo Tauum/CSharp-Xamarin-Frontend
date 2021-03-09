@@ -4,7 +4,7 @@
              x:Class="GOV.HomePage" Title="Home">
 
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center"  HorizontalOptions="Center">
+        <StackLayout VerticalOptions="Center"  HorizontalOptions="Center" Margin="15,0,15,0">
 
             <Frame x:Name="Example" BackgroundColor="Accent">
                 <Grid ColumnDefinitions="*,*,*">
@@ -20,6 +20,7 @@
             <Button Text="Swipe test" Clicked="SwipetestButton" />
             <Button Text="Hash test" Clicked="HashTestButton" />
             <Button Text="Chart test" Clicked="ChartTestButton" />
+            <Button Text="ToolBar test" Clicked="ToolBarTestButton" />
 
         </StackLayout>
     </ContentPage.Content>

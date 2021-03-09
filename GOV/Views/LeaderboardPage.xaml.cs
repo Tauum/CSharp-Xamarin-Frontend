@@ -58,7 +58,7 @@ namespace GOV
                 Entries = entries,  // specifying chart will consist of above information
                 IsAnimated = true, // makes the chart loading animated
                 LabelTextSize = 45, // sets the font size because its unreadable
-                AnimationDuration = TimeSpan.FromSeconds(2) // lenghtens the animation duration\
+                AnimationDuration = TimeSpan.FromSeconds(2) // lenghtens the animation duration
             };
         }
         protected override async void OnAppearing()

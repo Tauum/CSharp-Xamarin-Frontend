@@ -7,7 +7,6 @@ using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Windows.Input;
-using Xamarin.Forms;
 using GOV.Models;
 using GOV.Helpers;
 using System.Diagnostics;
@@ -34,8 +33,8 @@ namespace GOV
                 OnPropertyChanged(nameof(IsRefreshing));
             }
         }
-        public string SearchQr { get; private set; }
-        public string SearchMan { get; private set; }
+        public string SearchQr { get; set; }
+        public string SearchMan { get; set; }
         public SearchResults(string searchTerm, bool isQr)
         {
             if (isQr) { SearchQr = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed"); } //this set true by calling method
@@ -43,7 +42,7 @@ namespace GOV
             InitializeComponent();
             BindingContext = this;
         }
-        public SearchResults(User Human)
+        public SearchResults(User user)
         {
             //somehow check if calling function has inputed a user??
             Debug.WriteLine(">>>>>>>>>>>>>>> user has been passed");
@@ -63,15 +62,15 @@ namespace GOV
 
         async Task LoadList()
         {
-            List<Product> ProductList;
+            List<Product> productList;
 
-            if (SearchQr != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr));
-            else if (SearchMan != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan)); //this doesnt work
+            if (SearchQr != null) productList = await App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr));
+            else if (SearchMan != null) productList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan)); //this doesnt work
 
            // else if (SearchMan != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan));
            // loaded with a user??? //grab all products contained in reviewes where = to userid
 
-            else ProductList = await App.DataService.GetAllAsync<Product>();
+            else productList = await App.DataService.GetAllAsync<Product>();
 
             //ProductList = await ((SearchQr != null)
             //? App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr))
@@ -88,9 +87,9 @@ namespace GOV
             //: x => true
             //);
 
-            listView.ItemsSource = ProductList;
+            listView.ItemsSource = productList;
         }
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             listView.BeginRefresh();

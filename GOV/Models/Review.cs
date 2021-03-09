@@ -15,15 +15,16 @@ namespace GOV
         public string Description { get; set; }
         public int Visible { get; set; }
 
-        public Review(int ID, string UserID, User User, int ProductID, Product Product, string Description, int Visible)//constructor 
+        public Review(int id, int userID, User user, int productID, Product product, string description, int visible)//constructor 
         {
-            ID = ID;
-            UserID = UserID;
-            User = User;
-            ProductID = ProductID;
-            Product = Product;
-            Description = Description;
-            Visible = Visible;
+            ID = id;
+            UserID = userID;
+            User = user;
+            ProductID = productID;
+            Product = product;
+            Description = description;
+            Visible = visible;
         }
+        public Review(){ }
     }
 }

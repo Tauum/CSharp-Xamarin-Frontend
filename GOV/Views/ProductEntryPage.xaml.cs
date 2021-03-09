@@ -109,7 +109,8 @@ namespace GOV
         }
         public async void ReviewButton(object sender, System.EventArgs e) //obvious
         {
-            await Navigation.PushAsync(new ReviewPage());
+            var product = (Product)BindingContext;
+            await Navigation.PushAsync(new ReviewPage(product));
         }
 
     }

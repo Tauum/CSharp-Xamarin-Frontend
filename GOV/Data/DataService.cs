@@ -37,7 +37,6 @@ namespace GOV.Data
         }
         public async Task<List<TEntity>> GetAllAsync<TEntity>(Expression<Func<TEntity, bool>> filter = null) where TEntity : new() // setup for grab list request
         {
-            
             var endpoint = GetEntityEndpoint<TEntity>();//set endpoint URI webservice GET request
             var url = $"{baseUrlAddress}/{endpoint}?searchExpression={filter}";
             var uri = new Uri(string.Format(url));

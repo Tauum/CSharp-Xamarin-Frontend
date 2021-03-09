@@ -31,7 +31,8 @@ namespace GOV
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new MainPage()); // load main page
+           // MainPage = new NavigationPage(new MainPage()); // load main page
+             MainPage = new NavigationPage(new HomePage(new User(1, "a", "a", "a",500,1)));
         }
 
         protected override void OnStart()

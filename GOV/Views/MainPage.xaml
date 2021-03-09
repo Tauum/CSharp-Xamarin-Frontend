@@ -42,7 +42,7 @@
                 <Entry
                     x:Name="PasswordEntry" TextColor="White" Placeholder="PASSWORD" PlaceholderColor="White" IsPassword="True" FontSize="20" WidthRequest="800" HeightRequest="50" BackgroundColor="Transparent"
                     VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="3" 
-                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15"/>
+                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center" MaxLength="15" Completed="LoginButton"/>
 
             <Frame WidthRequest="120" HeightRequest="90" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
                        VerticalOptions="End" HorizontalOptions="Center" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="5" Grid.RowSpan="2" CornerRadius="8.5" Margin="0,90,0,0">
