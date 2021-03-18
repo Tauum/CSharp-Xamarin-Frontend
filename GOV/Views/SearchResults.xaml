@@ -4,10 +4,10 @@
              x:Class="GOV.SearchResults" Title="Results">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="+" Clicked="AddProductButton" />
+        <ToolbarItem x:Name="MenuItem1" Text="+" Clicked="AddProductButton" />
     </ContentPage.ToolbarItems>
-
-    <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
+    <StackLayout Margin="10">
+        <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
     IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True"> 
         <ListView.ItemTemplate>
             <DataTemplate>
@@ -18,4 +18,5 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+    </StackLayout>
 </ContentPage>

@@ -11,22 +11,28 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductPage : ContentPage
     {
-        public ProductPage() //default 
+        public User User { get; set; } //recieve user object from preious page
+        public ProductPage(User user) //default 
         {
-            InitializeComponent(); 
+            User = user;
+            InitializeComponent();
+            BindingContext = this;
+        }
+        public ProductPage() { }
+        protected override void OnAppearing()
+        {
+            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // this works but half loads the visual element??????????????????????????????
+            else { MenuItem1.IsEnabled = true; }
+            base.OnAppearing();
         }
         public async void ReviewButton(object sender, System.EventArgs e)
         {
-            var product = (Product) BindingContext;
-            await Navigation.PushAsync(new ReviewPage(product)); // goes to review page
+            var product = (Product)BindingContext;
+            await Navigation.PushAsync(new ReviewPage(User, product)); // goes to review page
         }
-        public async void EditProductButton(object sender, EventArgs e)
+        public async void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProductEntryPage()  // goes to product entry page
-            { 
-                BindingContext = BindingContext // obvious
-            });
+            await Navigation.PushAsync(new ProductEntryPage() { BindingContext = BindingContext });
         }
     }
 }
-

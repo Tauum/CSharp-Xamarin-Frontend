@@ -50,12 +50,6 @@
 
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
 
-            <Frame Margin="10">
-                <Button Text="Reviews" Clicked="ReviewButton"/>
-            </Frame>
-
-                <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
-
             <Frame Margin="10" HeightRequest="90">
                 <Grid ColumnDefinitions ="*,*" RowDefinitions="*,*">
                     <Button Text="Delete" Clicked="DeleteButton" Grid.Column="0" Grid.Row="0" />

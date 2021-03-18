@@ -6,11 +6,12 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="Center"  HorizontalOptions="Center" Margin="15,0,15,0">
 
-            <Frame x:Name="Example" BackgroundColor="Accent">
-                <Grid ColumnDefinitions="*,*,*">
+            <Frame x:Name="Example">
+                <Grid ColumnDefinitions="*,*,*,*">
                     <Label x:Name="UserID" Text="{Binding User.ID}" Grid.Column="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                     <Label x:Name="UserAccount" Text="{Binding User.Username}" Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                     <Label x:Name="UserScore" Text="{Binding User.ScoreTotal}" Grid.Column="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="UserAdmin" Text="{Binding User.Admin}" Grid.Column="3" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
                 </Grid>
             </Frame>
 
@@ -20,7 +21,6 @@
             <Button Text="Swipe test" Clicked="SwipetestButton" />
             <Button Text="Hash test" Clicked="HashTestButton" />
             <Button Text="Chart test" Clicked="ChartTestButton" />
-            <Button Text="ToolBar test" Clicked="ToolBarTestButton" />
 
         </StackLayout>
     </ContentPage.Content>

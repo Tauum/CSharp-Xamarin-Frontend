@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.ProductPage"  Title="Product">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Edit" Clicked="EditProductButton" />
+        <ToolbarItem  x:Name="MenuItem1" Text="Edit" Clicked="MenuItem_OnClicked" IsEnabled="{Binding VisVal}"/>
     </ContentPage.ToolbarItems>
 
     <ScrollView>

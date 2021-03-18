@@ -15,10 +15,7 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductEntryPage : ContentPage
     {
-        public ProductEntryPage() //default
-        {
-            InitializeComponent();
-        }
+        public ProductEntryPage(){ InitializeComponent(); }
 
         async void SaveButton(object sender, EventArgs e) //obvious
         {
@@ -107,11 +104,5 @@ namespace GOV
                 }
             }
         }
-        public async void ReviewButton(object sender, System.EventArgs e) //obvious
-        {
-            var product = (Product)BindingContext;
-            await Navigation.PushAsync(new ReviewPage(product));
-        }
-
     }
 }

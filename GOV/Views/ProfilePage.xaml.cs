@@ -19,6 +19,7 @@ namespace GOV
     {
         public User User { set; get; }
         private ISimpleAudioPlayer Player { get; }
+        public ProfilePage() { InitializeComponent(); }
         public ProfilePage(User user)
         {
             User = user;
@@ -26,13 +27,9 @@ namespace GOV
             BindingContext = this;
             InitializeComponent();
         }
-        public ProfilePage()
-        {
-            InitializeComponent();
-        }
+
         async void SaveButton(object sender, EventArgs e)
         {
-
             if (UsernameInput.Text.IsNullOrEmpty() || PasswordInput.Text.IsNullOrEmpty() || PasswordConfirmInput.Text.IsNullOrEmpty())
             {
                 PlaySound("ding98");
@@ -49,24 +46,17 @@ namespace GOV
                 {
                     User.Password = Hashing.GetHash(PasswordInput.Text);
                     User.Username = UsernameInput.Text;
-
                     await App.DataService.UpdateAsync(User, User.ID);
                     PlaySound("bell");
                     await DisplayAlert("Profile", "Update Success", "X");
                 }
-                else { await DisplayAlert("Error", "An error occured.\n Please try again later", "X"); }
+                else { await DisplayAlert("Error", "An error occured.", "X"); }
             }
         }
 
-        async void MyProductsButton(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new SearchResults(User));
-        }
+        async void MyProductsButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchResults(User)); }
 
-        async void MyReviewsButton(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ReviewPage(User));
-        }
+        async void MyReviewsButton(object sender, EventArgs e) { await Navigation.PushAsync(new ReviewPage(User)); }
 
         async void PlaySound(string mp3)
         {

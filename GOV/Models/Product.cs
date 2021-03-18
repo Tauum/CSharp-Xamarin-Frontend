@@ -10,29 +10,28 @@ namespace GOV
     public class Product : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        //basic info
         public int ID { get; set; }
         public string Name { get; set; }
         public int ReleaseYear { get; set; }
         public string Description { get; set; }
         public int Score { get; set; }
 
-        private string pRef;//need for below
+        private string _pRef;//need for below
         public string PRef // this is for setting the product reference 
         {
-            get => pRef;
-            set => Setter(value, ref pRef, nameof(PRef));//reduces line-age
+            get => _pRef;
+            set => Setter(value, ref _pRef, nameof(PRef));//reduces line-age
         }
 
         public int? ImageId { get; set; }// this can be null. Prevent crash
 
-        private Image image; //need for below
+        private Image _image; //need for below
         public Image Image
         {
-            get => image;
+            get => _image;
             set
             {
-                this.image = value;
+                this._image = value;
                 if (this.Image != null)
                 {
                     this.ImageId = this.Image.ID;

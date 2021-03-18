@@ -27,14 +27,14 @@ namespace GOV
 
         private async void AnimateBackground() //obvious
         {
-            Action<double> forward = input => bgGradient.AnchorY = input; //sets the forwards transition
-            Action<double> backward = input => bgGradient.AnchorY = input; // sets the backwards transition
+            Action<double> forward = input => BgGradient.AnchorY = input; //sets the forwards transition
+            Action<double> backward = input => BgGradient.AnchorY = input; // sets the backwards transition
 
             while (true) // obvious
             {
-                bgGradient.Animate(name: "forward", callback: forward, start: 0, end: 1, length: 9000, easing: Easing.SinIn); //modify gradient with action 
+                BgGradient.Animate(name: "forward", callback: forward, start: 0, end: 1, length: 9000, easing: Easing.SinIn); //modify gradient with action 
                 await Task.Delay(10000);//delay on forward to backwards
-                bgGradient.Animate(name: "backward", callback: backward, start: 1, end: 0, length: 9000, easing: Easing.SinIn); //modify gradient with action 
+                BgGradient.Animate(name: "backward", callback: backward, start: 1, end: 0, length: 9000, easing: Easing.SinIn); //modify gradient with action 
                 await Task.Delay(10000);//delay on backwards to forwards
             }
         }
@@ -63,17 +63,12 @@ namespace GOV
                 var users = await App.DataService.GetAllAsync<User>(); //using data servic to request all users ||||||   V From user objct list only grab 1 result where an email AND password matches
                 if (users.SingleOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(PasswordEntry.Text, u.Password) == true) is User user) // <<< pass user into the loop
                 {
-                    Debug.WriteLine($" >>>>>>>>>>>>  LOGIN - CORRECT - ID: { user.ID} Email: {user.Email}  Password:  {user.Password}");
                     PlaySound("bell");
                     await DisplayAlert("Login", "Login Success", "X");
                     await Navigation.PushAsync(new HomePage(user));//pass User from loop into homePage
                 }
 
-                else
-                {
-                    await DisplayAlert("Login", "Incorrect Field/s", "X");
-                    Debug.WriteLine($" Email: {EmailEntry.Text} >>>>>>>>>>>>  LOGIN - INCORRECT FIELDS");
-                }
+                else { await DisplayAlert("Login", "Incorrect Field/s", "X"); }
             }
         }
 
@@ -92,7 +87,6 @@ namespace GOV
                 if (foundEmail)//windex clean boys
                 {
                     User user = users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st because only 1 entry is needed
-                    Debug.WriteLine($"ID: { user.ID} Email: {user.Email} >>>>>>>>>>>>  RESET - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Reset", "Reset Success", "X");
                     //something here to send reset email!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -101,7 +95,6 @@ namespace GOV
                 {
                     PlaySound("ding98");
                     await DisplayAlert("Reset", "Incorrect Email", "X");
-                    Debug.WriteLine($" >>>>>>>>>>>>  RESET - FAIL");
                 }
             }
         }
@@ -116,26 +109,24 @@ namespace GOV
             else
             {
                 var users = await App.DataService.GetAllAsync<User>(); //grab all users from data service
-
                 bool foundEmail = users.Any(u => u.Email.ToLower() == EmailEntry.Text.ToLower()); //nice reduce using global
 
                 if (foundEmail) //windex clean boys
                 {
                     PlaySound("ding98");
                     await DisplayAlert("Sign up", "Email Taken", "X");
-                    Debug.WriteLine($" >>>>>>>>>>>>  SIGN UP - FAIL");
                 }
                 else
                 {
                     string hashword = Hashing.GetHash(PasswordEntry.Text);// nice global class for generating & checking Bcrypt package hash
                     User user = new User(EmailEntry.Text, EmailEntry.Text.Split('@')[0], hashword); //nice split to set username same as email on default but can be changed in profile
                     await App.DataService.InsertAsync(user);//obvious
-                    Debug.WriteLine($"ID: { user.ID} Email: {user.Email} Password: {user.Password} >>>>>>>>>>>>  SIGN UP - CORRECT");
                     PlaySound("bell");
                     await DisplayAlert("Sign up", "Sign up Success", "X");
                 }
             }
         }
+
         private void PlaySound(string mp3) //mp3 fucntions reference this 2 line reduce
         {
             Player.Load($"{mp3}.mp3");

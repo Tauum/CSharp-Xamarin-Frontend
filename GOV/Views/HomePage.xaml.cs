@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using GOV.Models;// know how to build object
-using GOV.Views;
+//using GOV.Views;
 
 namespace GOV
 {
@@ -20,39 +20,12 @@ namespace GOV
             BindingContext = this;
             InitializeComponent();
         }
-        public HomePage() // default
-        {
-            InitializeComponent();
-        }
-        private async void ViewButton(object sender, EventArgs e) //obvious
-        {
-            await Navigation.PushAsync(new SearchMethod());
-        }
-        private async void MyProfileButton(object sender, EventArgs e)//obvious
-        {
-             await Navigation.PushAsync(new ProfilePage(User));
-        }
-        private async void LeaderboardButton(object sender, EventArgs e)//obvious
-        {
-            await Navigation.PushAsync(new LeaderboardPage());
-        }
-        private async void SwipetestButton(object sender, EventArgs e)//obvious
-        {
-            await Navigation.PushAsync(new SwipeTest());
-        }
-        private async void ChartTestButton(object sender, EventArgs e)//obvious
-        {
-            await Navigation.PushAsync(new ChartTest());
-        }
-        private async void HashTestButton(object sender, EventArgs e)//obvious
-        {
-            await Navigation.PushAsync(new hashtest());
-        }
-        private async void ToolBarTestButton(object sender, EventArgs e)//obvious
-        {
-            await Navigation.PushAsync(new ToolBarTest(User));
-        }
-
-        
+        public HomePage() { }
+        private async void ViewButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchMethod(User));}
+        private async void MyProfileButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProfilePage(User)); }
+        private async void LeaderboardButton(object sender, EventArgs e) { await Navigation.PushAsync(new LeaderboardPage());}
+        private async void SwipetestButton(object sender, EventArgs e) { await Navigation.PushAsync(new SwipeTest()); }
+        private async void ChartTestButton(object sender, EventArgs e) { await Navigation.PushAsync(new ChartTest()); }
+        private async void HashTestButton(object sender, EventArgs e) { await Navigation.PushAsync(new hashtest()); }
     }
 }

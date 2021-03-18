@@ -14,9 +14,9 @@ namespace GOV
         public string Username { get; set; }
         public string Password { get; set; }
         public int ScoreTotal { get; set; }
-        public int Admin { get; set; }
+        public bool Admin { get; set; }
 
-        public User(int id, string email, string username, string password, int scoreTotal, int admin)
+        public User(int id, string email, string username, string password, int scoreTotal, bool admin)
         {
             ID = id;
             Email = email;

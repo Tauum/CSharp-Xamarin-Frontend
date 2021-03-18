@@ -3,41 +3,46 @@ using Xamarin.Forms.Xaml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using GOV.Helpers;
 
 namespace GOV
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewPage : ContentPage
     {
-        public enum ReviewType //gives constants as numbers
-        {
-            Product, //this would be 0
-            User, // this would be 1
-            None // this would be 2
-        }
+        //public bool EnableHideButton
+        //{
+        //    get
+        //    {
+        //        if (User.Admin == 0) {return false; }
+        //        else { return true; }
+        //    }
+        //}
 
-        public Product Product { get; set; }
-        public User User { get; set; }
-        public ReviewType InputMethod { get; set; } //needed to check the type and input into loadlist
-
-        public ReviewPage(User user)
+        public Product Product { get; set; } //recieve user object from preious page
+        public User User { get; set; } //recieve user object from preious page
+        public ReviewType ReviewType { get; set; } //needed to check the type and input into loadlist
+        public Review Review { get; set; }
+        public ReviewPage(User user) // instanciates calling user
         {
             User = user;
-            InputMethod = ReviewType.User;
+            ReviewType = ReviewType.User;
             InitializeComponent();
             Device.SetFlags(new[] { "CarouselView_Experimental", "IndicatorView_Experimental" }); // this is needed to do special xamarin stuff
             BindingContext = this;
         }
-
-        public ReviewPage(Product product)
+        public ReviewPage(User user, Product product) // instanciates calling user and product
         {
+            User = user;
             Product = product;
-            InputMethod = ReviewType.Product;
+            ReviewType = ReviewType.Product;
             InitializeComponent();
             Device.SetFlags(new[] { "CarouselView_Experimental", "IndicatorView_Experimental" }); // this is needed to do special xamarin stuff
             BindingContext = this;
@@ -45,6 +50,8 @@ namespace GOV
 
         protected override async void OnAppearing()
         {
+            //if (User.Admin == 0) { HideButtonRef.IsEnabled = false; } // this doesnt work for some reason
+            //else {HideButtonRef.IsEnabled = true; }
             base.OnAppearing();
             await LoadList();
         }
@@ -52,77 +59,90 @@ namespace GOV
         async Task LoadList()
         {
             List<Review> reviewList;
+            Expression<Func<Review, bool>> searchLambda = null; // instanciate searchLambda
+            
+            if (ReviewType == ReviewType.User) { searchLambda = x => x.UserID.ToString().Equals("SearchTerm"); }
 
-            if (InputMethod == ReviewType.User) // equal to 0
-            {
-                ParameterExpression param = Expression.Parameter(typeof(Review), "x");
-                Expression boby = Expression.Equal(Expression.PropertyOrField(param, "UserID"),
-                    Expression.Constant(User.ID, typeof(int)));
-                Expression<Func<Review, bool>> filter = Expression.Lambda<Func<Review, bool>>(boby, param);
-                reviewList = await App.DataService.GetAllAsync<Review>(filter);
+            else if (ReviewType == ReviewType.Product) { searchLambda = x => x.ProductID.ToString().Equals("SearchTerm"); }
 
-                //reviewList = await App.DataService.GetAllAsync<Review>(x => x.UserID.Equals(User.ID));
-                
-            }
-            else if (InputMethod == ReviewType.Product) // equal to 1
+            if (searchLambda != null)
             {
-
-                ParameterExpression param = Expression.Parameter(typeof(Review), "x");
-                Expression boby = Expression.Equal(Expression.PropertyOrField(param, "ProductID"),
-                    Expression.Constant(Product.ID, typeof(int)));
-                Expression<Func<Review, bool>> filter = Expression.Lambda<Func<Review, bool>>(boby, param);
-                reviewList = await App.DataService.GetAllAsync<Review>(filter);
-            }
-            else // equal to 2
-            {
-                throw new Exception("ReviewType is null."); //prevent crash
+                var searchID = ReviewType == ReviewType.Product ? Product.ID : User.ID;
+                var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{searchID}");
+                searchLambda = DynamicExpressionParser.ParseLambda<Review, bool>(new ParsingConfig(), true, stringLambda);
+                reviewList = await App.DataService.GetAllAsync<Review>(searchLambda);
             }
 
-            //  if (ReferenceEquals(typeof(User), InputMethod)) { reviewList = await App.DataService.GetAllAsync<Review>(x => x.UserID.Equals(InputMethod)); }
-            //  else if (ReferenceEquals(typeof(Product), InputMethod)) { reviewList = await App.DataService.GetAllAsync<Review>(x => x.ProductID.ToString().Contains(InputMethod.ToString())); }
-
-            //   if (InputMethod != null) reviewList = await App.DataService.GetAllAsync<Review>(x => x.UserID.Equals(CallingUser)); //potentially sneaky way to get around single type limiter?
-            //  else if InputMethod != null) reviewList = await App.DataService.GetAllAsync<Review>(x => x.ProductID.ToString().Contains(CallingProduct.ToString()));
+            else { reviewList = await App.DataService.GetAllAsync<Review>(); }
 
             MainCarousel.ItemsSource = reviewList;
         }
 
-        private async void SaveButton(object sender, EventArgs e) // obvious
+        async void SaveButton(object sender, EventArgs e) // obvious
         {
-            Console.WriteLine("fucking shoot double");
-            //get all reviews for single product
+            var selectedProduct = (Product)BindingContext; // maybe this is the error but needed for here >>>>>>>>>>>>>>>>>>>VVVVVVVV
+            var revList = await App.DataService.GetAllAsync<Review>(x => x.ProductID.Equals(selectedProduct.ID));
+            // this seems stupid double loading ^^^^^^^^
+            bool foundReview = revList.Any(x => x.UserID == User.ID);
 
-            var selectedReview = (Review)BindingContext;
-           
-            var revList = await App.DataService.GetAllAsync<Review>(reviewSearch => reviewSearch.ProductID.Equals(selectedReview.ProductID));
-
-            if (revList.Any(x => x.UserID == User.ID))
+            if (foundReview)
             {
-             //   review.Description = ReviewInput.Text;
-
+                Review.Description = ReviewInput.Text;
                 //something here to add score to scoretotal from product to user object
-
-             //   await App.DataService.UpdateAsync(review, review.ID);
+                await App.DataService.UpdateAsync(Review, Review.ID);
+                await DisplayAlert("Done", "updated existing review", "X");
             }
             else
             {
-                User user = new User();
-                Product product = new Product();
-                var id = 1; // do i need aditional constructor to negate this?
-                var userid = 1;
-                var productid = 1;
-                var desc = "blah";
-                var vis = 1;
-                await App.DataService.InsertAsync(new Review(id, userid, user, productid, product, desc, vis));
+                BindingContext = new Review();
+                Review.Description = ReviewInput.Text;
+                Review.User = User;
+                Review.UserID = User.ID;
+                Review.Product = Product;
+                Review.ProductID = Product.ID;
+                await App.DataService.InsertAsync(Review);
+                await DisplayAlert("Done", "Inserted new review", "X");
             }
-
         }
+
         private async void DeleteButton(object sender, EventArgs e) // obvious
         {
-            Console.WriteLine("shoot me");
-            // check if a review already exists from the user
-            // if not dont do anything
+            var selectedReview = (Review)BindingContext;
+            var revList = await App.DataService.GetAllAsync<Review>(x => x.ProductID.Equals(selectedReview.ProductID));
+            bool foundReview = revList.Any(x => x.UserID == User.ID);
+
+            if (foundReview)
+            {
+                var review = (Review)BindingContext; //binds product object to local variable
+                await App.DataService.DeleteAsync(review, review.ID);
+                //something here to remove score
+                await Navigation.PopAsync();
+            }
+            else { await DisplayAlert("Error", "A review for this user does not exist", "X"); }
         }
+
+        private async void HideButton(object sender, EventArgs e)
+        {
+            var btn = sender as Button;
+            var Review = (Review)BindingContext;
+            if (btn != null)
+            {
+                if (Review.Visible)
+                {
+                    await App.DataService.UpdateAsync(Review, Review.ID);
+                    btn.Text = "Show";
+                }
+                else
+                {
+                    await App.DataService.UpdateAsync(Review, Review.ID);
+                    btn.Text = "Hide";
+                }
+
+                Review.Visible = !Review.Visible;
+            }
+        }
+
     }
 }
+
 

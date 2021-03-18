@@ -9,10 +9,16 @@
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                         <ScrollView>
-                            <Grid  RowDefinitions="20,250" ColumnDefinitions="75,*" Margin="15,0,25,0">
+                            <Grid  RowDefinitions="20,200" ColumnDefinitions="75,*" Margin="15,0,25,0">
                                 <Label Text="Username:" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="Start" />
                                 <Label Text="{Binding User.Username}" FontSize="15" Grid.Row="0" Grid.Column="1"  HorizontalTextAlignment="Start" />
                                 <Label Text="{Binding Description}" FontSize="15" HorizontalTextAlignment="Start" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                                <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" >
+                                    <Button x:Name="HideButtonRef" Clicked="HideButton" Text="{Binding stringVal}" 
+                                            IsEnabled="{Binding EnableHideButton}" HeightRequest="50" />
+                                </Frame>
+
                             </Grid>
                         </ScrollView>
                 </DataTemplate>

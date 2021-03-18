@@ -5,7 +5,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Grid ColumnDefinitions = "*,*,*,*,*" RowDefinitions="50,*,*,60,60,*,*">
-                <BoxView x:Name="bgGradient" Scale="6" AnchorX="1" AnchorY="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="7">
+                <BoxView x:Name="BgGradient" Scale="6" AnchorX="1" AnchorY="0" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="7">
                     <BoxView.Background>
                         <LinearGradientBrush>
                             <GradientStop Color="#C5519E" Offset="0.5" />
@@ -15,7 +15,7 @@
                     </BoxView.Background>
                 </BoxView>
 
-                <Path x:Name="bgTint" Fill="black"  Aspect="Fill" Rotation="180"
+                <Path x:Name="BgTint" Fill="black"  Aspect="Fill" Rotation="180"
                       Data="m226.3675,498.90586l0,-389l356,389l-356,0z" 
                       Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Grid.RowSpan="6" Opacity="0.075"/>
 

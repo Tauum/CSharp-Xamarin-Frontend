@@ -20,11 +20,11 @@ namespace GOV
     {
         public User User; //instanciate user object
         List<Entry> entries = new List<Entry>(); //prevent referencing error
-        public async Task<List<Entry>> GenerateElements()
+        public List<Entry> GenerateElements()
         {
-           // var users = await App.DataService.GetAllAsync<User>(); // grabs all users from data service
+            var users = App.DataService.GetAllAsync<User>(); // grabs all users from data service
 
-            //foreach (User User in users) // obvious
+            //foreach (User User in users.Result) // obvious
             //{
             //    Entry user = new Entry(User.ScoreTotal) // generate user entry within list with value being their score total
             //    {
@@ -50,7 +50,7 @@ namespace GOV
 
         public LeaderboardPage()
         {
-            entries = GenerateElements().Result; // calls generate elements function
+            entries = GenerateElements(); // calls generate elements function
             InitializeComponent();
             BindingContext = this; // binding needed for the chart
             Chart1.Chart = new BarChart // decleration for the chart is done
@@ -61,6 +61,7 @@ namespace GOV
                 AnimationDuration = TimeSpan.FromSeconds(2) // lenghtens the animation duration
             };
         }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -71,8 +72,9 @@ namespace GOV
         {
             var UserList = await App.DataService.GetAllAsync<User>(); //grabbing all users on load
             listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); // assigning users to list on liad
-            await GenerateElements(); // calling generate elements on load
+            GenerateElements(); // calling generate elements on load
         }
+
         public ICommand RefreshCommand => new Command(async () => // obvious refreshing screen and list contents function
         {
             IsRefreshing = true;
@@ -81,6 +83,7 @@ namespace GOV
         });
 
         private bool isRefreshing = false;
+
         public bool IsRefreshing // more refreshing contents
         {
             get => isRefreshing;

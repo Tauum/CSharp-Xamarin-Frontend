@@ -10,12 +10,64 @@ using System.Windows.Input;
 using GOV.Models;
 using GOV.Helpers;
 using System.Diagnostics;
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 
 namespace GOV
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchResults : ContentPage
     {
+        public User User { set; get; }
+        public string SearchTerm { get; set; }
+        private SearchType SearchType { get; set; } //setting the seach type
+
+        public SearchResults() { }
+
+        public SearchResults(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
+        {
+            InitializeComponent();
+            User = user;
+            SearchType = searchType; // setting input as local
+            SearchTerm = searchTerm; // setting input as local
+            BindingContext = this;
+        }
+
+        protected override void OnAppearing()
+        {
+            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // obvious
+            else { MenuItem1.IsEnabled = true; }
+
+            base.OnAppearing();
+            listView.BeginRefresh();
+        }
+
+        async Task LoadList()
+        {
+            List<Product> productList;
+            Expression<Func<Product, bool>> searchLambda = null; // instanciate searchLambda
+
+            if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
+
+            else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
+
+            if (searchLambda != null)
+            {
+                var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{SearchTerm}");
+                searchLambda = DynamicExpressionParser.ParseLambda<Product, bool>(new ParsingConfig(), true, stringLambda);
+                productList = await App.DataService.GetAllAsync<Product>(searchLambda);
+            }
+            else { productList = await App.DataService.GetAllAsync<Product>(); }
+
+            listView.ItemsSource = productList;
+        }
+
+        async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem != null) await Navigation.PushAsync(new ProductPage(User) { BindingContext = e.SelectedItem as Product });
+        }
+        async void AddProductButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProductEntryPage { BindingContext = new Product() }); }
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
@@ -24,6 +76,7 @@ namespace GOV
         });
 
         private bool _isRefreshing = false;
+
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -32,76 +85,6 @@ namespace GOV
                 _isRefreshing = value;
                 OnPropertyChanged(nameof(IsRefreshing));
             }
-        }
-        public string SearchQr { get; set; }
-        public string SearchMan { get; set; }
-        public SearchResults(string searchTerm, bool isQr)
-        {
-            if (isQr) { SearchQr = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> manual search passed"); } //this set true by calling method
-            else { SearchMan = searchTerm; Debug.WriteLine(">>>>>>>>>>>>>>> qr code search passed"); }
-            InitializeComponent();
-            BindingContext = this;
-        }
-        public SearchResults(User user)
-        {
-            //somehow check if calling function has inputed a user??
-            Debug.WriteLine(">>>>>>>>>>>>>>> user has been passed");
-            InitializeComponent();
-            BindingContext = this;
-        }
-        public SearchResults()
-        {
-            InitializeComponent();
-            BindingContext = this;
-        }
-
-        private async Task RefreshProducts() // just put load list in here???
-        { 
-            listView.ItemsSource = await App.DataService.GetAllAsync<Product>(); 
-        }
-
-        async Task LoadList()
-        {
-            List<Product> productList;
-
-            if (SearchQr != null) productList = await App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr));
-            else if (SearchMan != null) productList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan)); //this doesnt work
-
-           // else if (SearchMan != null) ProductList = await App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan));
-           // loaded with a user??? //grab all products contained in reviewes where = to userid
-
-            else productList = await App.DataService.GetAllAsync<Product>();
-
-            //ProductList = await ((SearchQr != null)
-            //? App.DataService.GetAllAsync<Product>(x => x.PRef.Contains(SearchQr))
-            //: (SearchMan != null)
-            //? App.DataService.GetAllAsync<Product>(x => x.Name.Contains(SearchMan))
-            //: App.DataService.GetAllAsync<Product>());
-
-            //string SearchQr;
-            //ProductList = await App.DataService.GetAllAsync<Product>(
-            //SearchQr is not null
-            //? x => x.PRef.Contains(SearchQr)
-            //: SearchMan != null
-            //? x => x.Name.Contains(SearchMan)
-            //: x => true
-            //);
-
-            listView.ItemsSource = productList;
-        }
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            listView.BeginRefresh();
-        }
-
-        async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem != null) await Navigation.PushAsync(new ProductPage { BindingContext = e.SelectedItem as Product });
-        }
-        async void AddProductButton(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ProductEntryPage{ BindingContext = new Product()});
         }
     }
 }
