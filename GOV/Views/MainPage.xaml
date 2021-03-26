@@ -21,6 +21,7 @@
 
                 <Frame x:Name="GameOfVirtueTitle" WidthRequest="200" BorderColor="White" BackgroundColor="Transparent" Opacity="0.8"
                        VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5" CornerRadius="8.5"  >
+                    
                     <Label Text="Game of Virtue" TextColor="White" FontFamily="thick" HorizontalTextAlignment="Center" FontSize="30" TextTransform="Uppercase"/>
                 </Frame>
 

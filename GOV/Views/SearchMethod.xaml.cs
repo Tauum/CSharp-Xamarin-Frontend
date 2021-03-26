@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using GOV.Extensions;
-using GOV.Helpers;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using GOV.Extensions;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using GOV.Helpers;
 
 namespace GOV
 {

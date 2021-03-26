@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using GOV.Models;
 using Plugin.SimpleAudioPlayer; //play mp3
 using Xamarin.Forms.Shapes;
-using GOV.Models;
 using GOV.Helpers; //for hashing functionality and other stuff
 using GOV.Extensions; //used to check if strings contain stuff
 using System.Diagnostics; //debug menu?
@@ -21,7 +21,7 @@ namespace GOV
         {
             Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
             InitializeComponent();
-            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental", "CarouselView_Experimental", "IndicatorView_Experimental" }); //need to be assigned to do other stuff
+            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental"}); //need to be assigned to do other stuff
             Task.Run(AnimateBackground); //this is enabling the background
         }
 

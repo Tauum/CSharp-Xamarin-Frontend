@@ -17,9 +17,6 @@ namespace GOV.Models
         [JsonIgnore]
         public string Extension => Path.GetExtension(Name);
 
-        public Image() //construct
-        {
-            this.DateChanged = DateTime.Now;
-        }
+        public Image() { this.DateChanged = DateTime.Now; }
     }
 }

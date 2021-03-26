@@ -9,7 +9,7 @@
             <Button Text="QR Scan" Clicked="BarcodeScan"/>
 
             <Frame >
-                <Entry x:Name="ProductInput" Placeholder="Name" WidthRequest="90" HeightRequest="90" Completed="ManualSearch"/>
+                <Entry x:Name="ProductInput" Placeholder="Name" WidthRequest="90" HeightRequest="90" Completed="ManualSearch" HorizontalTextAlignment="Center"/>
             </Frame>
             
             <Button Text="Manual Search" Clicked="ManualSearch"/>

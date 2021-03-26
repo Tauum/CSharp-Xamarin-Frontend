@@ -3,42 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.ProductPage"  Title="Product">
     <ContentPage.ToolbarItems>
-        <ToolbarItem  x:Name="MenuItem1" Text="Edit" Clicked="MenuItem_OnClicked" IsEnabled="{Binding VisVal}"/>
+        <ToolbarItem  x:Name="MenuItem1" Text="Edit" Clicked="MenuItem_OnClicked"/>
     </ContentPage.ToolbarItems>
 
     <ScrollView>
         <StackLayout>
-            <Grid ColumnDefinitions = "*,*,*,*,*,*" RowDefinitions="*,35,*,30,230" Margin="10">
+            <Grid ColumnDefinitions = "*,*,*,*,*,*" RowDefinitions="*,35,35,*,30,230" Margin="10">
 
                 <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"/>
-                <Label Text="Name:" Grid.Column="0" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding Name}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" HeightRequest="50" VerticalTextAlignment="Center" />
+                <Label Text="Name:" Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Product.Name}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="4" HeightRequest="50" VerticalTextAlignment="Center" />
 
                 <Frame Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2"/>
-                <Label Text="Year:" Grid.Column="4" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding ReleaseYear}" Grid.Column="5" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                <Label Text="Category:" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" Margin="8,8,0,0"/>
+                <Label Text="{Binding Product.Category.Name}" Grid.Column="4" Grid.Row="0" Grid.ColumnSpan="2" VerticalTextAlignment="Start" Margin="8,35,8,0"/>
+
+                <Frame Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
+                <Label Text="Year:" Grid.Column="4" Grid.Row="1" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                <Label Text="{Binding Product.ReleaseYear}" Grid.Column="5" Grid.Row="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+
+                <Frame Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2"/>
+                <Label Text="Score:" Grid.Column="4" Grid.Row="2" VerticalTextAlignment="Center" Margin="8,0,0,0"/>
+                <Label Text="{Binding Product.Score}" Grid.Column="5" Grid.Row="2" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+
+                <Frame Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <Label Text="Barcode:" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" Margin="8,8,0,0"/>
+                <Label Text="{Binding Product.PRef}" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" VerticalTextAlignment="Start" Margin="8,35,8,0"/>
 
                 <ScrollView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Grid.RowSpan="3" >
                     <Grid ColumnDefinitions="*" Grid.RowDefinitions="30,*">
                         <Frame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
-                        <Label Text="  Description:" Grid.Column="0" Grid.Row="0" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
-                        <Label Text="{Binding Description}" Grid.Column="0" Grid.Row="1" Margin="8,0,8,0" VerticalTextAlignment="Start"/>
+                        <Label Text="  Description:" Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" />
+                        <Label Text="{Binding Product.Description}" Grid.Column="0" Grid.Row="1" Margin="8,0,8,0" VerticalTextAlignment="Start"/>
                     </Grid>
                 </ScrollView>
-
-                <Frame Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"/>
-                <Label Text="Score:" Grid.Column="4" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding Score}" Grid.Column="5" Grid.Row="1" HeightRequest="50" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-
-                <Frame Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                <Label Text="Barcode:" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Margin="8,8,0,0"/>
-                <Label Text="{Binding PRef}" Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" VerticalTextAlignment="Start" Margin="8,35,8,0"/>
-
-                <Frame Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6">
-                <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}" HorizontalOptions="Center"/>
+                
+                <Frame Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6">
+                <Image Source="{Binding Product.Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}" HorizontalOptions="Center"/>
                 </Frame>
 
-                <Frame Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6">
+                <Frame Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6">
                     <Button Text="Reviews" Clicked="ReviewButton" HeightRequest="40" />
                 </Frame>
 

@@ -16,38 +16,57 @@ namespace GOV
         public string Description { get; set; }
         public int Score { get; set; }
 
-        private string _pRef;//need for below
-        public string PRef // this is for setting the product reference 
+        private string _pRef;
+        public string PRef
         {
             get => _pRef;
-            set => Setter(value, ref _pRef, nameof(PRef));//reduces line-age
+            set
+            {
+                this._pRef = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PRef)));
+            }
         }
-
-        public int? ImageId { get; set; }// this can be null. Prevent crash
-
-        private Image _image; //need for below
+        public int? ImageID { get; set; } // this can be null
+        private Image _image;
         public Image Image
         {
             get => _image;
             set
             {
                 this._image = value;
-                if (this.Image != null)
-                {
-                    this.ImageId = this.Image.ID;
-                }
-                else
-                {
-                    this.ImageId = null;
-                }
+                if (this.Image != null) { this.ImageID = this.Image.ID; }
+                else { this.ImageID = null; }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Image)));
-              // Setter(value, ref image, nameof(Image));
+            }
+        }
+        public int? CategoryID => this.Category?.ID;
+
+        private Category _category;
+        public Category Category
+        {
+            get => _category;
+            set
+            {
+                this._category = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Category)));
             }
         }
 
         [JsonIgnore]
-        public string BasicInfo => $"{Name} - {ReleaseYear} - {Score}"; 
+        public string BasicInfo
+        {
+            get
+            {
+                var outputString = ReleaseYear.ToString() + " - " + Score.ToString();
+                string string1;
+                if (Category != null) { string1 = outputString + " - " + Category?.Name; } // doesnt even fucking work
+                else { string1 = outputString; }
 
+                return string1;
+            }
+        }
+
+        public Product() { } //default 
         public Product(int id, string name, int releaseYear, string description, int score, string pref)// this is a full product
         {
             ID = id;
@@ -56,18 +75,6 @@ namespace GOV
             Description = description;
             Score = score;
             PRef = pref;
-        }
-        public Product() // default
-        {
-        }
-
-        public void Setter<T>(T value, ref T field, string name) // nice setter to reduce line-age
-        {
-            if (!object.Equals(value, field))
-            {
-                field = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-            }
         }
     }
 }

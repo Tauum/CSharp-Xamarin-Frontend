@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GOV.Views.ReviewEntryPage">
+    
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+
+            <Frame>
+                <StackLayout>
+                    <Label Text="Description" />
+                    <Editor x:Name="DescrptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" />
+                </StackLayout>
+            </Frame>
+
+            <Frame>
+                <StackLayout>
+                    <Button x:Name="SaveButtonName" Clicked="SaveButton" Text="Save"/>
+                    <Button x:Name="DeleteButtonName" Clicked="DeleteButton" Text="Delete"/>
+                </StackLayout>
+            </Frame>
+            
+            <Frame>
+                <Button x:Name="ViewButtonName" Clicked="ViewButton" Text="{Binding ViewStatus}"/>
+            </Frame>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

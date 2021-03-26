@@ -1,10 +1,11 @@
-﻿using System;
+﻿using GOV.Views;
+using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace GOV
 {
@@ -12,9 +13,11 @@ namespace GOV
     public partial class ProductPage : ContentPage
     {
         public User User { get; set; } //recieve user object from preious page
-        public ProductPage(User user) //default 
+        public Product Product { get; set; }
+        public ProductPage(User user, Product product) //default 
         {
             User = user;
+            Product = product;
             InitializeComponent();
             BindingContext = this;
         }
@@ -27,12 +30,11 @@ namespace GOV
         }
         public async void ReviewButton(object sender, System.EventArgs e)
         {
-            var product = (Product)BindingContext;
-            await Navigation.PushAsync(new ReviewPage(User, product)); // goes to review page
+            await Navigation.PushAsync(new ReviewPage(User, Product)); // goes to review page
         }
         public async void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ProductEntryPage() { BindingContext = BindingContext });
+            await Navigation.PushAsync(new ProductEntryPage(Product) );
         }
     }
 }

@@ -5,23 +5,35 @@
     <ScrollView>
         <StackLayout Margin="5">
   
-            <Grid ColumnDefinitions = "*,*,*,*,*" RowDefinitions="80,*" Margin="5">
+            <Grid ColumnDefinitions = "*,*,*,*,*,*" RowDefinitions="80,*,*" Margin="5">
                 <Frame Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
-                    <Entry Text="{Binding Name}" Placeholder="Product Name" MaxLength="18" />
+                    <Entry Text="{Binding Product.Name}" Placeholder="Product Name" MaxLength="18" />
                 </Frame>
 
                 <Frame Grid.Column="5" Grid.Row="0" Grid.ColumnSpan="3">
-                    <Entry Text="{Binding ReleaseYear}" Keyboard="Numeric" Placeholder="Year" MaxLength="4" HorizontalTextAlignment="Center"/>
+                    <Picker Title="Category" ItemsSource="{Binding Categories}" SelectedItem="{Binding Product.Category}" ItemDisplayBinding="{Binding Name}" />
                 </Frame>
-
+                
                 <ScrollView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="6" HeightRequest="100">
                     <Frame>
-                        <Editor Text="{Binding Description}" Placeholder="Description" MaxLength="300" FontSize="16" />
+                        <Editor Text="{Binding Product.Description}" Placeholder="Description" MaxLength="300" FontSize="16" />
                     </Frame>
                 </ScrollView>
 
-                <Frame Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2" >
-                    <Entry Text="{Binding Score}" Keyboard="Numeric" Placeholder="Score" MaxLength="4" HorizontalTextAlignment="Center"/>
+                <Frame Grid.Column="6" Grid.Row="1" Grid.ColumnSpan="2">
+                    <Entry Text="{Binding Product.ReleaseYear}" Keyboard="Numeric" Placeholder="Year" MaxLength="4" HorizontalTextAlignment="Center"/>
+                </Frame>
+                
+                <Frame Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6">
+                    <Grid ColumnDefinitions="*,40">
+                        <Stepper x:Name="ScoreStepper" Minimum="0" Maximum="100" Increment="1" ValueChanged="ScoreStepper_ValueChanged" Scale="1" Grid.Column="0"/>
+                        <Label Text="Score" Grid.Column="1" WidthRequest="40" VerticalTextAlignment="Center" HorizontalTextAlignment="Start"/>
+                    </Grid>
+                </Frame>
+
+
+                <Frame Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2">
+                    <Label x:Name="lblDisplay" FontSize="15" Grid.Column="1"  Text="{Binding Product.Score}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </Frame>
             </Grid>
 
@@ -32,7 +44,7 @@
                         <Grid ColumnDefinitions = "100,30,200" RowDefinitions="42,42,42,42" Margin="15">
                             <Button Text="Take Photo" Clicked="TakePictureButton" Grid.Column="0" Grid.Row="0"  Grid.RowSpan="2"/>
                             <Button Text="Choose Photo" Clicked="ChoosePictureButton" Grid.Column="0" Grid.Row="2"  Grid.RowSpan="2"/>
-                            <Image Source="{Binding Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
+                            <Image Source="{Binding Product.Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}"
                                    Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Aspect="Fill"/>
                         </Grid>
                     </Frame>
@@ -42,7 +54,7 @@
 
             <Frame Margin="10">
                     <StackLayout>
-                        <Editor Text="{Binding PRef}" Placeholder="Barcode"/>
+                        <Editor Text="{Binding Product.PRef}" Placeholder="Barcode"/>
                         <Button Text="Scan Barcode" Clicked="BarcodeScan"/>
                         
                     </StackLayout>

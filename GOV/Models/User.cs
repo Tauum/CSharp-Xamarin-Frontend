@@ -33,9 +33,7 @@ namespace GOV
             Password = password;
         }
 
-        public User()
-        {
-        }
+        public User() { }
 
         public void Total()
         {

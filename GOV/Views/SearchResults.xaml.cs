@@ -48,25 +48,24 @@ namespace GOV
             Expression<Func<Product, bool>> searchLambda = null; // instanciate searchLambda
 
             if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
-
             else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
 
             if (searchLambda != null)
             {
                 var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{SearchTerm}");
                 searchLambda = DynamicExpressionParser.ParseLambda<Product, bool>(new ParsingConfig(), true, stringLambda);
-                productList = await App.DataService.GetAllAsync<Product>(searchLambda);
+                productList = await App.DataService.GetAllAsync<Product>(searchLambda, "GetProductsWithRelatedData");
             }
-            else { productList = await App.DataService.GetAllAsync<Product>(); }
+            else { productList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); }
 
             listView.ItemsSource = productList;
         }
 
         async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem != null) await Navigation.PushAsync(new ProductPage(User) { BindingContext = e.SelectedItem as Product });
+            if (e.SelectedItem != null) await Navigation.PushAsync(new ProductPage(User, e.SelectedItem as Product));
         }
-        async void AddProductButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProductEntryPage { BindingContext = new Product() }); }
+        async void AddProductButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProductEntryPage { Product = new Product() }); }
 
         public ICommand RefreshCommand => new Command(async () =>
         {
@@ -76,7 +75,6 @@ namespace GOV
         });
 
         private bool _isRefreshing = false;
-
         public bool IsRefreshing
         {
             get => _isRefreshing;
