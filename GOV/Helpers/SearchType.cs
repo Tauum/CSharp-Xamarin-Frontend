@@ -5,6 +5,7 @@
 
         None,
         Manual,
-        QrCode
+        QrCode,
+        User
     }
 }

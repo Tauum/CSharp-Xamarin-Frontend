@@ -131,7 +131,7 @@ namespace GOV
                     await inputStream.CopyToAsync(memoryStream);
                     var image = new Models.Image()
                     {
-                        Information = memoryStream.ToArray(),
+                        Data = memoryStream.ToArray(),
                         TypeUsed = photo.ContentType,
                         Name = photo.FileName
                     };

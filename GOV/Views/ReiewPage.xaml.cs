@@ -65,7 +65,7 @@ namespace GOV
                 searchLambda = DynamicExpressionParser.ParseLambda<Review, bool>(new ParsingConfig(), true, stringLambda);
                 reviewList = await App.DataService.GetAllAsync<Review>(searchLambda);
             }
-            else { reviewList = await App.DataService.GetAllAsync<Review>(); }
+            else { reviewList = await App.DataService.GetAllAsync<Review>(); } 
 
             return reviewList;
         }

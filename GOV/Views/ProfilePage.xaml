@@ -3,13 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.ProfilePage"  Title="Profile">
     <ScrollView>
-        <StackLayout Margin="15,10,15,10">
-
-            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+        <StackLayout Margin="15">
 
             <Frame >
                 <Grid ColumnDefinitions="*,*">
-                    <Label Text="Username:" Grid.Column="0" HeightRequest="40" VerticalTextAlignment="Center"/>
+                    <Label Text="Username:" Grid.Column="0" VerticalTextAlignment="Center"/>
                     <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}"
                            PlaceholderColor="black" MaxLength="18" Grid.Column="1" />
                 </Grid>
@@ -17,7 +15,7 @@
 
             <Frame>
                 <Grid>
-                    <Label Text="Password:" VerticalTextAlignment="Center" Grid.Column="0" HeightRequest="40"/>
+                    <Label Text="Password:" VerticalTextAlignment="Center" Grid.Column="0"/>
                     <Entry x:Name="PasswordInput" Placeholder="Password"
                            IsPassword="True" Grid.Column="1" MaxLength="15"/>
                 </Grid>
@@ -30,11 +28,21 @@
                 </Grid>
             </Frame>
 
+            <Frame>
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="Score Total:" Grid.Column="0"/>
+                    <Label Text="{Binding User.ScoreTotal}" Grid.Column="1"/>
+                </Grid>
+            </Frame>
+
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+            
             <Frame>
                 <Button Text="Save" Clicked="SaveButton"/>
             </Frame>
-
+            
+            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+            
             <Frame>
                 <Button Text="My Products" Clicked="MyProductsButton"/>
             </Frame>

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using GOV.Models;// know how to build object
-//using GOV.Views;
+using GOV.Models;
+using GOV.Views;
 
 namespace GOV
 {
@@ -20,12 +20,22 @@ namespace GOV
             BindingContext = this;
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            if (User.Admin == false) { UserManagement.IsEnabled = false; } // obvious
+            else { UserManagement.IsEnabled = true; }
+            base.OnAppearing();
+        }
+
         public HomePage() { }
-        private async void ViewButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchMethod(User));}
+        private async void ViewButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchMethodPage(User));}
         private async void MyProfileButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProfilePage(User)); }
         private async void LeaderboardButton(object sender, EventArgs e) { await Navigation.PushAsync(new LeaderboardPage());}
         private async void SwipetestButton(object sender, EventArgs e) { await Navigation.PushAsync(new SwipeTest()); }
-        private async void ChartTestButton(object sender, EventArgs e) { await Navigation.PushAsync(new ChartTest()); }
         private async void HashTestButton(object sender, EventArgs e) { await Navigation.PushAsync(new hashtest()); }
+        private async void UserManagemntButton(object sender, EventArgs e) { await Navigation.PushAsync(new UserManagementPage(User)); }
+
+
     }
 }

@@ -20,24 +20,31 @@ namespace GOV
             BindingContext = model;
             InitializeComponent();
         }
-        private void ButtonPressed(object sender, EventArgs e)
+        private async void ButtonPressed(object sender, EventArgs e)
         {
-            var model = BindingContext as Model;
-            model.A = InputString.Text;
-            model.B = Hashing.GetHash(model.A);
+            if (InputString.Text != null)
+            {
+                var model = BindingContext as Model;
+                model.A = InputString.Text;
+                model.B = Hashing.GetHash(model.A);
+            }
+            else { await DisplayAlert("Error", "Missing Field/s", "X"); }
         }
-        private void ButtonPressed2(object sender, EventArgs e)
+        private async void ButtonPressed2(object sender, EventArgs e)
         {
-            var model = BindingContext as Model;
-            model.A = InputString.Text;
-            model.B = Hashing.GetHash(model.A);
-
-            model.C = InputString2.Text;
-            model.D = Hashing.CheckHash(model.C, model.B); //this doesnt work? maybe using different salt????
+            if (InputString.Text != null && InputString2.Text != null)
+            {
+                var model = BindingContext as Model;
+                model.A = InputString.Text;
+                model.B = Hashing.GetHash(model.A);
+                model.C = InputString2.Text;
+                model.D = Hashing.CheckHash(model.C, model.B);
+            }
+            else { await DisplayAlert("Error", "Missing Field/s", "X"); }
         }
         /// <summary>
-        //i hate this shit. I have no fucking idea why this has to be done
-        // because this stupid fucking code doesnt bind without it
+        //i hate this shit. I have no fing idea why this has to be done
+        // because this stupid fing code doesnt bind without it
         /// </summary>
         public class Model : INotifyPropertyChanged
         {

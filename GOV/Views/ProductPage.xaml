@@ -39,7 +39,7 @@
                 </ScrollView>
                 
                 <Frame Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6">
-                <Image Source="{Binding Product.Image.Information, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}" HorizontalOptions="Center"/>
+                <Image Source="{Binding Product.Image.Data, Mode=OneWay, Converter={StaticResource ByteArrayToImageSourceConverter}}" HorizontalOptions="Center"/>
                 </Frame>
 
                 <Frame Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6">

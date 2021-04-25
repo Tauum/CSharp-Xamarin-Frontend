@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using GOV.Models;
+using Newtonsoft.Json;
 
 namespace GOV
 {
@@ -25,19 +26,29 @@ namespace GOV
             ScoreTotal = scoreTotal;
             Admin = admin;
         }
-
         public User(string email, string username, string password) //used for login because ID, score and admin shouldnt be generated front end
         {
             Email = email;
             Username = username;
             Password = password;
         }
-
         public User() { }
 
-        public void Total()
+        [JsonIgnore]
+        public string BasicInfo
         {
-            Console.WriteLine("${UID} + {Username} + {ScoreTotal} + {Review} + {Review2}"); //used within list view
+            get
+            {
+                var outputString = "ID: " + ID.ToString() + " - " + "Score Total: " + ScoreTotal.ToString();
+                string string1;
+
+                if (Admin != false) { string1 = outputString + " - " + "Type: " + "Admin"; } // doesnt even fucking work
+                else { string1 = outputString + " - " + "Type: " + "User"; }
+
+                return string1;
+            }
         }
+
+
     }
 }

@@ -11,7 +11,7 @@ namespace GOV.Models
     {
         public int ID { get; set; } 
         public string Name { get; set; }
-        public byte[] Information { get; set; } // creates a byte stream for the jpg
+        public byte[] Data { get; set; } // creates a byte stream for the jpg
         public string TypeUsed { get; set; }
         public DateTime DateChanged { get; set; } // for jpg info
         [JsonIgnore]

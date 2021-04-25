@@ -54,7 +54,7 @@ namespace GOV
             }
         }
 
-        async void MyProductsButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchResults(User)); }
+        async void MyProductsButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchResultsPage(User)); }
 
         async void MyReviewsButton(object sender, EventArgs e) { await Navigation.PushAsync(new ReviewPage(User)); }
 

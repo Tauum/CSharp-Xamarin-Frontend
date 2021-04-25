@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GOV.SearchResults" Title="Results">
+             x:Class="GOV.SearchResultsPage" Title="Results">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="MenuItem1" Text="+" Clicked="AddProductButton" />
     </ContentPage.ToolbarItems>
     <StackLayout Margin="10">
         <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
-    IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True"> 
-        <ListView.ItemTemplate>
-            <DataTemplate>
+    IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
 
-                <ImageCell Text="{Binding Name}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Information, 
-                    Converter={StaticResource ByteArrayToImageSourceConverter}}"/>  
+                    <ImageCell Text="{Binding Name}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Data, 
+                    Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
 
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>

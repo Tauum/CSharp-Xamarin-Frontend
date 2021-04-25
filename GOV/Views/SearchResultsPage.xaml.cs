@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Windows.Input;
 using GOV.Models;
+using GOV.Views;
 using GOV.Helpers;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -16,15 +17,15 @@ using System.Linq.Dynamic.Core;
 namespace GOV
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SearchResults : ContentPage
+    public partial class SearchResultsPage : ContentPage
     {
         public User User { set; get; }
         public string SearchTerm { get; set; }
         private SearchType SearchType { get; set; } //setting the seach type
 
-        public SearchResults() { }
+        public SearchResultsPage() { }
 
-        public SearchResults(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
+        public SearchResultsPage(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
         {
             InitializeComponent();
             User = user;
@@ -49,6 +50,7 @@ namespace GOV
 
             if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
             else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
+            else if (SearchType == SearchType.User) { } //searchLambda = x => x.} //CHANGE THIS TO GRAB ONLY PRODUCTS WHAT A USER OWNS???
 
             if (searchLambda != null)
             {
@@ -56,7 +58,7 @@ namespace GOV
                 searchLambda = DynamicExpressionParser.ParseLambda<Product, bool>(new ParsingConfig(), true, stringLambda);
                 productList = await App.DataService.GetAllAsync<Product>(searchLambda, "GetProductsWithRelatedData");
             }
-            else { productList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); }
+            else { productList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); } 
 
             listView.ItemsSource = productList;
         }

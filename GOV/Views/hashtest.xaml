@@ -3,23 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.hashtest">
     <ContentPage.Content>
-        <StackLayout>
-            <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,15,*,80,*,80,*,*,*,10,*">
-                <Entry x:Name="InputString" Placeholder="Enter a string" Grid.Row="0" Grid.Column="1"/>
+        <Grid ColumnDefinitions="*,*,*" RowDefinitions="50,50,40,80,50,40,*,*">
 
-                <Label Text="Inputted string:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="1" Grid.Column="0"/>
-                <Label Text="{Binding A}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="1" Grid.Column="1"/>
-                <Button Text="Genrate hash" Clicked="ButtonPressed" Grid.Row="2" Grid.Column="1"/>
-                <Label Text="Generated hash:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="0"/>
-                <Label Text="{Binding B}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="1"/>
+            <Entry x:Name="InputString" Placeholder="Enter str" HorizontalTextAlignment="Center" Grid.Row="1" Grid.Column="1"/>
 
-                <Entry x:Name="InputString2" Placeholder="Enter the same" Grid.Row="4" Grid.Column="1"/>
-                <Label Text="Hash verification:" HorizontalTextAlignment="Center"  Grid.Row="4" Grid.Column="0"/>
-                <Button Text="Check Hash" Clicked="ButtonPressed2" Grid.Row="5" Grid.Column="1"/>
+            <Button Text="Genrate hash" Clicked="ButtonPressed" Grid.Row="2" Grid.Column="1"/>
+            <Label Text="Generated hash:" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="0"/>
 
-                <Label Text="Result:" HorizontalTextAlignment="Center"  Grid.Row="6" Grid.Column="0"/>
-                <Label Text="{Binding D}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="6" Grid.Column="1" />
-            </Grid>
-        </StackLayout>
+            <Label Text="{Binding B}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="3" Grid.Column="1"/>
+
+            <Entry x:Name="InputString2" Placeholder="Comparison str" Grid.Row="4" Grid.Column="1"/>
+
+            <Label Text="Hash verification:" HorizontalTextAlignment="Center"  Grid.Row="4" Grid.Column="0"/>
+
+            <Button Text="Check Hash" Clicked="ButtonPressed2" Grid.Row="5" Grid.Column="1"/>
+
+            <Label Text="Result:" HorizontalTextAlignment="Center"  Grid.Row="6" Grid.Column="0"/>
+            <Label Text="{Binding D}" HorizontalTextAlignment="Center" HeightRequest="100" Grid.Row="6" Grid.Column="1" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
