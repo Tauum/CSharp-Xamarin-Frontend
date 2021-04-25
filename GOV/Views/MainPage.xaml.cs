@@ -67,7 +67,6 @@ namespace GOV
                     await DisplayAlert("Login", "Login Success", "X");
                     await Navigation.PushAsync(new HomePage(user));//pass User from loop into homePage
                 }
-
                 else { await DisplayAlert("Login", "Incorrect Field/s", "X"); }
             }
         }

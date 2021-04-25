@@ -29,13 +29,15 @@ namespace GOV.Views
             }
         }
         public ReviewEntryPage() { }
-        public ReviewEntryPage(User user, Product product)
+        public ReviewEntryPage(User user, Product product, Review review )
         {
             User = user;
             Product = product;
+            Review = review;
             InitializeComponent();
-            BindingContext = this;
+           // BindingContext = this;
         }
+
         protected override async void OnAppearing()
         {
             if (User.Admin == false) { ViewButtonName.IsEnabled = false; }
@@ -56,8 +58,6 @@ namespace GOV.Views
             { Review.Visible = true;
                 btn.Text = "Hide";
             }
-         //   if (Review.Visible) { Review.Visible = false; }
-          //  else { Review.Visible = true; }
         }
         async void SaveButton(object sender, EventArgs e) // obvious
         {       
@@ -65,17 +65,22 @@ namespace GOV.Views
 
             if (Review.ID == 0) 
             {
-                //Review.UserID = User.ID; // object reference is null
-                //Review.User = User;
-                //Review.ProductID = Product.ID;
-                //Review.Product = Product;
-                //Review.Description = DescrptionInput.Text;
-                //Review.Visible = true;
-                 Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()} userid: {Review.UserID.ToString()} user: {Review.User.ToString()} prodid: {Review.ProductID.ToString()} prod: {Review.Product.ToString()} ");
+                // object reference is not set to an instance here VVVVV
+                Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()}");
+                Console.WriteLine($"userid: { Review.UserID.ToString()}");
+                Console.WriteLine($"prodid: { Review.ProductID.ToString()}");
+
+                // set visability to true by default?
+
+                // VVVV object is not set to a reference of an object
+                
                 await App.DataService.InsertAsync(Review); // internal server error
             }
             else 
-            { 
+            {
+                Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()}");
+                Console.WriteLine($"userid: { Review.UserID.ToString()}");
+                Console.WriteLine($"prodid: { Review.ProductID.ToString()}");
                 await App.DataService.UpdateAsync(Review, Review.ID); 
             }
 
@@ -83,9 +88,13 @@ namespace GOV.Views
         }
         async void DeleteButton(object sender, EventArgs e) //obvious
         {
-            var review = (Review)BindingContext;//binds product object to local variable
-            await App.DataService.DeleteAsync(review, review.ID);
-            await Navigation.PopAsync();//kills page
+          //  var review = (Review)BindingContext;//binds product object to local variable
+            if (Review.ID != 0)
+            {
+                await App.DataService.DeleteAsync(Review, Review.ID);
+                await Navigation.PopAsync();//kills page }
+            }
+            else { await DisplayAlert("Error", "This review doesnt exist", "X"); }
         }
 
     }

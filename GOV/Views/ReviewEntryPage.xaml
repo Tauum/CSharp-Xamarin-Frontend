@@ -9,7 +9,7 @@
             <Frame>
                 <StackLayout>
                     <Label Text="Description" />
-                    <Editor x:Name="DescrptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" />
+                    <Editor x:Name="DescrptionInput" Text="{Binding Description}" Placeholder="Description" MaxLength="300" FontSize="16" />
                 </StackLayout>
             </Frame>
 

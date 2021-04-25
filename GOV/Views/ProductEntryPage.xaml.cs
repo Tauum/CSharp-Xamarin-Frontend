@@ -88,9 +88,13 @@ namespace GOV
 
         async void DeleteButton(object sender, EventArgs e) //obvious
         {
-            await App.DataService.DeleteAsync(Product, Product.ID);
-            await App.DataService.DeleteAsync(new Models.Image(), Product.ImageID);
-            await Navigation.PopAsync();//kills page
+            if (Product.ID != 0)
+            {
+                await App.DataService.DeleteAsync(Product, Product.ID);
+                await App.DataService.DeleteAsync(new Models.Image(), Product.ImageID);
+                await Navigation.PopAsync();//kills page
+            }
+            else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
         }
 
         async void BarcodeScan(object sender, EventArgs e)// this uses a nuget package to work [not xamarin]

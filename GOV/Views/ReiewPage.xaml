@@ -41,16 +41,12 @@
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
-
-                <Frame MinimumHeightRequest="50">
-                    <StackLayout>
-                        <IndicatorView x:Name="indicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" HorizontalOptions="Center"/>
-                    </StackLayout>
-                </Frame>
+                
+                <IndicatorView x:Name="indicatorView" IndicatorColor="LightGray" SelectedIndicatorColor="DarkGray" HorizontalOptions="Center"/>
                 
             </StackLayout>
         </Frame>
-        
+     
     </StackLayout>
 </ContentPage>
 
