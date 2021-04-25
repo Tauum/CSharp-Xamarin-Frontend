@@ -74,9 +74,12 @@ namespace GOV
 
         public async void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            if (reviewList.Any(x => x.UserID == User.ID)) { 
-                await DisplayAlert("Error", "Edit/Delete your existing review", "X"); }
-            else { await Navigation.PushAsync( new ReviewEntryPage(User, Product) { Review  = new Review() }); }
+            if (reviewList.Any(x => x.UserID == User.ID)) { await DisplayAlert("Error", "Edit/Delete your existing review", "X"); }
+            else
+            {
+                await Navigation.PushAsync(new ReviewEntryPage(User, Product, Review = new Review() ) );
+                //  await Navigation.PushAsync( new ReviewEntryPage(Review = new Review())); 
+            }
         }
 
         public async void EditReviewButton(object sender, EventArgs e)
@@ -85,7 +88,9 @@ namespace GOV
 
             if (clickedReview.UserID == User.ID || User.Admin) 
             {
-                await Navigation.PushAsync(new ReviewEntryPage(User, Product) { BindingContext = clickedReview as Review }); 
+                 await Navigation.PushAsync(new ReviewEntryPage(User, Product, clickedReview) );
+                //aaaaaa
+                //await Navigation.PushAsync(new ReviewEntryPage(clickedReview) { User = User, Product = Product });
             }
             else { await DisplayAlert("Error", "You do not have permission to edit this review", "X"); }
         }
