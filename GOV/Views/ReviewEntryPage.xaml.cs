@@ -12,9 +12,36 @@ namespace GOV.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewEntryPage : ContentPage
     {
-        public User User { get; set; }
-        public Review Review { get; set; }
-        public Product Product { get; set; }
+        private User _user;
+        public User User
+        {
+            get => _user;
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
+        private Review _review;
+        public Review Review
+        {
+            get => _review;
+            set
+            {
+                _review = value;
+                OnPropertyChanged(nameof(Review));
+            }
+        }
+        private Product _product;
+        public Product Product
+        {
+            get => _product;
+            set
+            {
+                _product = value;
+                OnPropertyChanged(nameof(Product));
+            }
+        }
 
         private string _viewStatus;
         public string ViewStatus
@@ -22,8 +49,7 @@ namespace GOV.Views
             get { return _viewStatus; } // equal to null on load??
             set
             {
-                if (Review.Visible) { ViewStatus = "Hide"; }
-                else { ViewStatus = "Show"; }
+               
                 this._viewStatus = value;
                 OnPropertyChanged(nameof(ViewStatus));
             }
@@ -35,20 +61,30 @@ namespace GOV.Views
             Product = product;
             Review = review;
             InitializeComponent();
-           // BindingContext = this;
         }
 
         protected override async void OnAppearing()
         {
+            base.OnAppearing();
+            if (Review.UserID == 0 || Review.UserID == null) { UsernameLabel.Text = User.Username.ToString(); }
+
+            if (Review.Visible)
+            {
+                _viewStatus = "Hide";
+            }
+            else
+            {
+                _viewStatus = "Show";
+            }
             if (User.Admin == false) { ViewButtonName.IsEnabled = false; }
             else { ViewButtonName.IsEnabled = true; }
             //something here to declare viewstatus????
-            base.OnAppearing();
+            BindingContext = this;
         }
         private void ViewButton(object sender, EventArgs e) //contents isnt working
         {
             var btn = (Button)sender;
-            if (Review.Visible) //error object reference not set to an instance of an object????
+            if (Review.Visible)//setting button text state depending on review status
             {
                 Review.Visible = false;
                 btn.Text = "Show";
@@ -60,11 +96,16 @@ namespace GOV.Views
             }
         }
         async void SaveButton(object sender, EventArgs e) // obvious
-        {       
+        {
             //var review = (Review)BindingContext; //review = null here?
 
-            if (Review.ID == 0) 
+            if (Review.ID == 0)
             {
+                Review.Product = Product;
+                Review.ProductID = Product.ID;
+                Review.User = User;
+                Review.UserID = User.ID;
+
                 // object reference is not set to an instance here VVVVV
                 Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()}");
                 Console.WriteLine($"userid: { Review.UserID.ToString()}");

@@ -28,13 +28,11 @@ namespace GOV
             //var QrSearch = BindingContext; //dont think i need this??
             var scanner = new ZXing.Mobile.MobileBarcodeScanner(); //localising nuget package
             var result = await scanner.Scan(); //link barcode scan to variable for searching
-
             if (result != null) { await Navigation.PushAsync(new SearchResultsPage(User, SearchType.QrCode, result.Text)); }//check if barcode scanning
         }
         private async void ManualSearch(object sender, EventArgs e) //search string or nothing to next page
         {
             if (ProductInput.Text.IsNullOrEmpty()) { await Navigation.PushAsync(new SearchResultsPage(User)); } //global function to check contents
-
             else { await Navigation.PushAsync(new SearchResultsPage(User, SearchType.Manual, ProductInput.Text)); } //pushes manual search & bool to check version
         }
     }

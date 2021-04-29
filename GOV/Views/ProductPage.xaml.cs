@@ -13,7 +13,16 @@ namespace GOV
     public partial class ProductPage : ContentPage
     {
         public User User { get; set; } //recieve user object from preious page
-        public Product Product { get; set; }
+        private Product _product;
+        public Product Product
+        {
+            get => _product; //after deleting product is still instanciated here
+            set
+            {
+                _product = value;
+                OnPropertyChanged(nameof(Product));
+            }
+        }
         public ProductPage(User user, Product product) //default 
         {
             User = user;
@@ -24,9 +33,10 @@ namespace GOV
         public ProductPage() { }
         protected override void OnAppearing()
         {
-            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // this works but half loads the visual element??????????????????????????????
-            else { MenuItem1.IsEnabled = true; }
             base.OnAppearing();
+            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // this works but half loads the visual element
+            else { MenuItem1.IsEnabled = true; }
+            
         }
         public async void ReviewButton(object sender, System.EventArgs e)
         {

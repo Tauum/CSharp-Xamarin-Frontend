@@ -1,26 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GOV.SearchResultsPage" Title="Results">
+             x:Class="GOV.Views.CategoriesPage"
+             Title="Categories">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem x:Name="MenuItem2" Text="Categories" Clicked="CategoriesButton" />
-        <ToolbarItem x:Name="MenuItem1" Text="Add Product" Clicked="AddProductButton" />
+        <ToolbarItem x:Name="MenuItem1" Text="Add Category" Clicked="AddCategoryButton" />
     </ContentPage.ToolbarItems>
 
     <StackLayout Margin="10">
         
         <Picker x:Name="SortBy" Title="Sort by" ItemsSource="{Binding Options}" SelectedItem="{Binding Option}" ItemDisplayBinding="{Binding Option}" HorizontalTextAlignment="Center" SelectedIndexChanged="SortByChanged" />
-        
+       
         <Frame Margin="10">
             <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
                         IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-
-                        <ImageCell Text="{Binding Name}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Data, 
-                        Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+                        <TextCell Text="{Binding Name}" Detail="{Binding ID}"/>
+                        <!--<ImageCell Text="{Binding Name}" Detail="{Binding BasicInfo}" ImageSource="{Binding Image.Data, 
+                    Converter={StaticResource ByteArrayToImageSourceConverter}}"/>-->
 
                     </DataTemplate>
                 </ListView.ItemTemplate>

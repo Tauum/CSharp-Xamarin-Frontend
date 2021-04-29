@@ -22,32 +22,47 @@ namespace GOV
         public User User { set; get; }
         public string SearchTerm { get; set; }
         private SearchType SearchType { get; set; } //setting the seach type
-
+        public string Selected { get; set; }
+        public List<Product> ProductList { get; set; }
         public SearchResultsPage() { }
 
         public SearchResultsPage(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
         {
             InitializeComponent();
+            SortBy.Items.Add("Title ASC"); //puts itms into sort by list in xaml
+            SortBy.Items.Add("Title DESC");
+            SortBy.Items.Add("Score ASC");
+            SortBy.Items.Add("Score DESC");
             User = user;
             SearchType = searchType; // setting input as local
             SearchTerm = searchTerm; // setting input as local
             BindingContext = this;
         }
-
         protected override void OnAppearing()
         {
-            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // obvious
-            else { MenuItem1.IsEnabled = true; }
+            MenuItem1.IsEnabled = User.Admin;
 
             base.OnAppearing();
             listView.BeginRefresh();
         }
-
-        async Task LoadList()
+        public void SortByChanged(object sender, EventArgs e) 
         {
-            List<Product> productList;
-            Expression<Func<Product, bool>> searchLambda = null; // instanciate searchLambda
+            Selected = SortBy.Items[SortBy.SelectedIndex]; //reads selected option
+            SortList(Selected);
+        }
 
+        public async void SortList(string Selected) //obvious
+        {
+            if (Selected == "Title ASC") { listView.ItemsSource = ProductList.OrderBy(x => x.Name); }
+            else if (Selected == "Title DESC") { listView.ItemsSource = ProductList.OrderByDescending(x => x.Name); }
+            else if (Selected == "Score ASC") { listView.ItemsSource = ProductList.OrderBy(x => x.Score); }
+            else if (Selected == "Score DESC") { listView.ItemsSource = ProductList.OrderByDescending(x => x.Score); }
+            else { listView.ItemsSource = ProductList; }
+        }
+
+        async Task LoadList(string Selected)
+        {
+            Expression<Func<Product, bool>> searchLambda = null; // instanciate searchLambda
             if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
             else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
             else if (SearchType == SearchType.User) { } //searchLambda = x => x.} //CHANGE THIS TO GRAB ONLY PRODUCTS WHAT A USER OWNS???
@@ -56,11 +71,12 @@ namespace GOV
             {
                 var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{SearchTerm}");
                 searchLambda = DynamicExpressionParser.ParseLambda<Product, bool>(new ParsingConfig(), true, stringLambda);
-                productList = await App.DataService.GetAllAsync<Product>(searchLambda, "GetProductsWithRelatedData");
+                ProductList = await App.DataService.GetAllAsync<Product>(searchLambda, "GetProductsWithRelatedData");
             }
-            else { productList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); } 
+            else { ProductList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); }
 
-            listView.ItemsSource = productList;
+            if (Selected != null) { SortList(Selected); } //calls sort function if element selected
+            else { listView.ItemsSource = ProductList; } //default loading list displayed
         }
 
         async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -69,10 +85,14 @@ namespace GOV
         }
         async void AddProductButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProductEntryPage { Product = new Product() }); }
 
+
+        async void CategoriesButton(object sender, EventArgs e) { await Navigation.PushAsync(new CategoriesPage(User)); }
+
+
         public ICommand RefreshCommand => new Command(async () =>
         {
             IsRefreshing = true;
-            await this.LoadList();
+            await this.LoadList(Selected);
             IsRefreshing = false;
         });
 

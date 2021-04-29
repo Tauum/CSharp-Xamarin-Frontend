@@ -36,7 +36,12 @@
             </Frame>
 
             <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
-            
+
+
+            <Frame>
+                <Button x:Name="AccountStatus" Clicked="AccountStatusButton" Text="{Binding ViewStatus}"/>
+            </Frame>
+
             <Frame>
                 <Button Text="Save" Clicked="SaveButton"/>
             </Frame>

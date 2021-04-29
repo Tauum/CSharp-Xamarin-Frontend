@@ -49,10 +49,7 @@ namespace GOV
                 OnPropertyChanged(nameof(Categories));
             }
         }
-        public ProductEntryPage()
-        {
-            InitializeComponent();
-        }
+        public ProductEntryPage() { InitializeComponent(); }
         public ProductEntryPage(Product product) 
         {
             Product = product; // this is null
@@ -90,11 +87,23 @@ namespace GOV
         {
             if (Product.ID != 0)
             {
+                try {
                 await App.DataService.DeleteAsync(Product, Product.ID);
-                await App.DataService.DeleteAsync(new Models.Image(), Product.ImageID);
-                await Navigation.PopAsync();//kills page
+
+                //await App.DataService.DeleteAsync()
+                //maybe make a deleteallasync like getallasync?
+                //or linq to grab all reviews associated to product then delete in forloop?
+                //then remove score from user accounts that have item
+
+                if (Product.ImageID != null) await App.DataService.DeleteAsync(new Models.Image(), Product.ImageID); 
+                }
+                catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
             }
             else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
+            await Navigation.PopAsync();//kills page
+
+            //await Navigation.RemovePage(ProductEntryPage, ProductPage); // this is apparently supposed to work but it doesnt
+            //https://forums.xamarin.com/discussion/21076/using-popasync-to-pop-two-or-more-pages-at-once - LeoRodri says this is how you do it
         }
 
         async void BarcodeScan(object sender, EventArgs e)// this uses a nuget package to work [not xamarin]
@@ -135,7 +144,6 @@ namespace GOV
                         TypeUsed = photo.ContentType,
                         Name = photo.FileName
                     };
-
                     Product.Image = image; //sets local object image
                 }
             }
@@ -143,9 +151,8 @@ namespace GOV
 
         private void ScoreStepper_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            lblDisplay.Text = ScoreStepper.Value.ToString();
-            Product.Score = Convert.ToInt32(ScoreStepper.Value);
-           // Console.WriteLine($" name: {Product.Name.ToString()} score: {Product.Score.ToString()} year: {Product.ReleaseYear.ToString()} Desc: {Product.Description.ToString()}");
+            lblDisplay.Text = ScoreStepper.Value.ToString(); //changing label to value of button
+            Product.Score = Convert.ToInt32(ScoreStepper.Value); //setting product score to value of button
         }
     }
 }

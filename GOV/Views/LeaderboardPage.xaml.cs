@@ -20,10 +20,12 @@ namespace GOV
     {
         public User User; //instanciate user object
         List<Entry> entries = new List<Entry>(); //prevent referencing error
+        public string Selected { get; set; }
+        public List<User> UserList { get; set; }
+
         public List<Entry> GenerateElements()
         {
-            var users = App.DataService.GetAllAsync<User>(); // grabs all users from data service
-
+            //var users = App.DataService.GetAllAsync<User>(); // grabs all users from data service
             //foreach (User User in users.Result) // obvious
             //{
             //    Entry user = new Entry(User.ScoreTotal) // generate user entry within list with value being their score total
@@ -52,6 +54,11 @@ namespace GOV
         {
             entries = GenerateElements(); // calls generate elements function
             InitializeComponent();
+            SortBy.Items.Add("Username ASC");
+            SortBy.Items.Add("Username DESC");
+            SortBy.Items.Add("Score ASC");
+            SortBy.Items.Add("Score DESC");
+
             BindingContext = this; // binding needed for the chart
             Chart1.Chart = new BarChart // decleration for the chart is done
             {
@@ -65,20 +72,46 @@ namespace GOV
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadList(); // calls load list method on opening page
+            listView.BeginRefresh();
         }
-
-        async Task LoadList() // obvously loading all seperate updates
+        
+        public void SortByChanged(object sender, EventArgs e)
         {
-            var UserList = await App.DataService.GetAllAsync<User>(); //grabbing all users on load
-            listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); // assigning users to list on liad
+            Selected = SortBy.Items[SortBy.SelectedIndex];
+            SortList(Selected);
+        }
+        
+        public async void SortList(string Selected)
+        {
+
+            foreach (User x in UserList) { Console.WriteLine(x.ID); }
+
+            if (Selected == "Username ASC") { listView.ItemsSource = UserList.OrderBy(x => x.Username); }//System.ArgumentNullException: 'Value cannot be null.Parameter name: source'
+            else if (Selected == "Username DESC") { listView.ItemsSource = UserList.OrderByDescending(x => x.Username); }
+            else if (Selected == "Score ASC") { listView.ItemsSource = UserList.OrderBy(x => x.ScoreTotal); }
+            else if (Selected == "Score DESC") { listView.ItemsSource = UserList.OrderByDescending(x => x.ScoreTotal); }  // user list is null here
+            else { listView.ItemsSource = UserList; }
+        }
+       
+        async Task LoadList(string Selected) // obvously loading all seperate updates
+        {
+            UserList = await App.DataService.GetAllAsync<User>(); //grabbing all users on load
+            if (Selected != null) 
+            {
+                SortList(Selected); 
+            }
+            else 
+            {
+                listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); 
+            }
             GenerateElements(); // calling generate elements on load
+            foreach (User x in UserList) { Console.WriteLine(x.ID); }
         }
 
         public ICommand RefreshCommand => new Command(async () => // obvious refreshing screen and list contents function
         {
             IsRefreshing = true;
-            await this.LoadList();
+            await this.LoadList(Selected);
             IsRefreshing = false;
         });
 

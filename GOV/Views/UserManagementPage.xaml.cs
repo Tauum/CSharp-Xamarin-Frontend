@@ -42,7 +42,7 @@ namespace GOV.Views
         {
             if (e.SelectedItem != null)
             {
-                await Navigation.PushAsync(new ProfilePage(e.SelectedItem as User));
+                await Navigation.PushAsync(new ProfilePage(User, e.SelectedItem as User));
             }
         }
 

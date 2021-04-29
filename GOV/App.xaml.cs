@@ -32,7 +32,9 @@ namespace GOV
         {
             InitializeComponent();
             MainPage = new NavigationPage(new MainPage()); // load main page
-            //MainPage = new NavigationPage(new SearchMethod(new User(3, "a", "a", "a", 500, true)));
+            //MainPage = new NavigationPage(new HomePage(new User(3, "a", "a", "a", 500, true)));
+
+            //MainPage = new NavigationPage(new HomePage(new User(3, "a", "a", "a", 500, false)));
         }
 
         protected override void OnStart() { }

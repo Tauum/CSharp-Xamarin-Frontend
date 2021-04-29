@@ -59,7 +59,7 @@ namespace GOV
             {
                 var outputString = ReleaseYear.ToString() + " - " + Score.ToString();
                 string string1;
-                if (Category != null) { string1 = outputString + " - " + Category?.Name; } // doesnt even fucking work
+                if (Category != null) { string1 = outputString + " - " + Category?.Name; } // appending string if category exists for item
                 else { string1 = outputString; }
 
                 return string1;

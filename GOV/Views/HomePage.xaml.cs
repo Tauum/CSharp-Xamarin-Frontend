@@ -36,6 +36,5 @@ namespace GOV
         private async void HashTestButton(object sender, EventArgs e) { await Navigation.PushAsync(new hashtest()); }
         private async void UserManagemntButton(object sender, EventArgs e) { await Navigation.PushAsync(new UserManagementPage(User)); }
 
-
     }
 }
