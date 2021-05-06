@@ -29,15 +29,26 @@ namespace GOV.Views
             InitializeComponent();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (Category == null) { Navigation.PopAsync(); }
+            else { BindingContext = this; }
+        }
+        
         async void SaveButton(object sender, EventArgs e) //obvious
         {
-
             Category.Name = CategoryNameInput.Text.ToString();
-
-            if (Category.ID == 0)  await App.DataService.InsertAsync(Category); //sends to data service 
-            else await App.DataService.UpdateAsync(Category, Category.ID);
-
-            await Navigation.PopAsync();//kills page
+            if (Category.ID == 0)
+            {
+                await App.DataService.InsertAsync(Category); //sends to data service 
+                Navigation.PopAsync(); // return to old page
+            }
+            else
+            {
+                await App.DataService.UpdateAsync(Category, Category.ID);
+                Navigation.PopAsync(); // return to old page
+            }
         }
 
         async void DeleteButton(object sender, EventArgs e) //obvious
@@ -55,8 +66,8 @@ namespace GOV.Views
                 }
                 catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
             }
-            else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
-            await Navigation.PopAsync();//kills page
+            else { await DisplayAlert("Error", "This category doesnt exist", "X"); }
+            Navigation.PopAsync(); // return to old page
         }
     }
 }

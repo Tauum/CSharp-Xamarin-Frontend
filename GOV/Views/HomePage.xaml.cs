@@ -14,6 +14,7 @@ namespace GOV
     public partial class HomePage : ContentPage
     {
         public User User { get; set; } //recieve user object from preious page
+        public HomePage() { }
         public HomePage(User user)//instanciate passing in user
         {
             User = user;
@@ -21,14 +22,16 @@ namespace GOV
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            if (User.Admin == false) { UserManagement.IsEnabled = false; } // obvious
-            else { UserManagement.IsEnabled = true; }
             base.OnAppearing();
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else
+            {
+                if (User.Admin == false) { UserManagement.IsEnabled = false; } // obvious
+            }
         }
 
-        public HomePage() { }
         private async void ViewButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchMethodPage(User));}
         private async void MyProfileButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProfilePage(User)); }
         private async void LeaderboardButton(object sender, EventArgs e) { await Navigation.PushAsync(new LeaderboardPage());}

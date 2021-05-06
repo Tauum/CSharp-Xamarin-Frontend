@@ -52,12 +52,13 @@ namespace GOV
         public ProductEntryPage() { InitializeComponent(); }
         public ProductEntryPage(Product product) 
         {
-            Product = product; // this is null
+            Product = product;
             InitializeComponent();
         }
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            if (Product == null) { Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); }
             if (Categories == null)
             {
                 var _categories = await App.DataService.GetAllAsync<Category>();
@@ -77,10 +78,17 @@ namespace GOV
                 Product.ImageID = image.ID;
             }
 
-            if (Product.ID == 0) await App.DataService.InsertAsync(Product); //sends to data service
-            else await App.DataService.UpdateAsync(Product, Product.ID); 
-            
-            await Navigation.PopAsync();//kills page
+            if (Product.ID == 0)
+            {
+                await App.DataService.InsertAsync(Product); //sends to data service
+                Navigation.PopAsync(); // return to old page
+            }
+            else
+            {
+                await App.DataService.UpdateAsync(Product, Product.ID);
+                Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
+                Navigation.PopAsync(); // return to old page
+            }
         }
 
         async void DeleteButton(object sender, EventArgs e) //obvious
@@ -100,10 +108,8 @@ namespace GOV
                 catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
             }
             else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
-            await Navigation.PopAsync();//kills page
-
-            //await Navigation.RemovePage(ProductEntryPage, ProductPage); // this is apparently supposed to work but it doesnt
-            //https://forums.xamarin.com/discussion/21076/using-popasync-to-pop-two-or-more-pages-at-once - LeoRodri says this is how you do it
+            Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
+            Navigation.PopAsync(); // return to old page
         }
 
         async void BarcodeScan(object sender, EventArgs e)// this uses a nuget package to work [not xamarin]
@@ -112,6 +118,7 @@ namespace GOV
             var result = await scanner.Scan();
             if (result != null) Product.PRef = result.Text;
         }
+
         async void TakePictureButton(object sender, EventArgs e) //obviouis
         {
             try
@@ -121,6 +128,7 @@ namespace GOV
             }
             catch (Exception ex) { Console.WriteLine($"TakePictureButton {ex.Message}"); } //prevent crash
         }
+
         async void ChoosePictureButton(object sender, EventArgs e)//obvious
         {
             try
@@ -130,6 +138,7 @@ namespace GOV
             }
             catch (Exception ex) { Console.WriteLine($"ChoosePictureButton {ex.Message}"); } //prevent crash
         }
+
         async Task LoadPhotoAsync(FileResult photo)//obvious
         {
             if (photo == null) return;

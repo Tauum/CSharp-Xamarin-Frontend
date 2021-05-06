@@ -31,11 +31,16 @@ namespace GOV
             BindingContext = this;
         }
         public ProductPage() { }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (User.Admin == false) { MenuItem1.IsEnabled = false; } // this works but half loads the visual element
-            else { MenuItem1.IsEnabled = true; }
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else if (Product == null) { await Navigation.PopAsync(); }
+            else
+            {
+                if (User.Admin == false) { MenuItem1.IsEnabled = false; } // this works but half loads the visual element
+                else { MenuItem1.IsEnabled = true; }
+            }
             
         }
         public async void ReviewButton(object sender, System.EventArgs e)

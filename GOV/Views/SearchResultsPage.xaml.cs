@@ -38,12 +38,15 @@ namespace GOV
             SearchTerm = searchTerm; // setting input as local
             BindingContext = this;
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            MenuItem1.IsEnabled = User.Admin;
-
             base.OnAppearing();
-            listView.BeginRefresh();
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else
+            {
+                MenuItem1.IsEnabled = User.Admin;
+                listView.BeginRefresh();
+            }
         }
         public void SortByChanged(object sender, EventArgs e) 
         {
@@ -66,6 +69,7 @@ namespace GOV
             if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
             else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
             else if (SearchType == SearchType.User) { } //searchLambda = x => x.} //CHANGE THIS TO GRAB ONLY PRODUCTS WHAT A USER OWNS???
+            // searchLambdaa = 
 
             if (searchLambda != null)
             {

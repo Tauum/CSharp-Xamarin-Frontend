@@ -2,61 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GOV.ProfilePage"  Title="Profile">
-    <ScrollView>
-        <StackLayout Margin="15">
 
-            <Frame >
-                <Grid ColumnDefinitions="*,*">
-                    <Label Text="Username:" Grid.Column="0" VerticalTextAlignment="Center"/>
-                    <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}"
-                           PlaceholderColor="black" MaxLength="18" Grid.Column="1" />
-                </Grid>
-            </Frame>
+    <StackLayout Margin="15" VerticalOptions="Center">
 
-            <Frame>
-                <Grid>
-                    <Label Text="Password:" VerticalTextAlignment="Center" Grid.Column="0"/>
-                    <Entry x:Name="PasswordInput" Placeholder="Password"
-                           IsPassword="True" Grid.Column="1" MaxLength="15"/>
-                </Grid>
-            </Frame>
+        <Frame>
+            <Grid ColumnDefinitions="80,165" HeightRequest="39">
+                <Label Text="Username:" Grid.Column="0" VerticalTextAlignment="Center"/>
+                <Entry x:Name="UsernameInput" Text="{Binding User.Username}" Placeholder="{Binding User.Username}" PlaceholderColor="black" MaxLength="15" Grid.Column="1" />
+            </Grid>
+        </Frame>
 
-            <Frame>
-                <Grid ColumnDefinitions="*,*">
-                    <Label Text="Confirm Password:" Grid.Column="0" VerticalTextAlignment="Center"/>
-                    <Entry x:Name="PasswordConfirmInput" IsPassword="True" Completed="SaveButton" Placeholder="Password Confirm"  Grid.Column="1" MaxLength="15"/>
-                </Grid>
-            </Frame>
+        <Frame>
+            <Grid ColumnDefinitions="80,110" HeightRequest="39">
+                <Label Text="Password:" VerticalTextAlignment="Center" Grid.Column="0"/>
+                <Entry x:Name="PasswordInput" Placeholder="Password" IsPassword="True" Grid.Column="1" MaxLength="15"/>
+            </Grid>
+        </Frame>
 
-            <Frame>
-                <Grid ColumnDefinitions="*,*">
-                    <Label Text="Score Total:" Grid.Column="0"/>
-                    <Label Text="{Binding User.ScoreTotal}" Grid.Column="1"/>
-                </Grid>
-            </Frame>
+        <Frame>
+            <Grid ColumnDefinitions="80,110" HeightRequest="39">
+                <Label Text="Confirm Password:" Grid.Column="0" VerticalTextAlignment="Center"/>
+                <Entry x:Name="PasswordConfirmInput" IsPassword="True" Completed="SaveButton" Placeholder="Password"  Grid.Column="1" MaxLength="15"/>
+            </Grid>
+        </Frame>
 
-            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
+        <Frame>
+            <Grid ColumnDefinitions="80,100,150" HeightRequest="50">
+                <Label Text="Score Total:" Grid.Column="0" VerticalTextAlignment="Center"/>
+                <Label Text="{Binding User.ScoreTotal}" Grid.Column="1" VerticalTextAlignment="Center"/>
+                <Button Text="My Reviews" Clicked="MyReviewsButton" Grid.Column="2"/>
+            </Grid>
+        </Frame>
 
+        <Frame>
+            <Grid ColumnDefinitions="150,30, 150">
 
-            <Frame>
-                <Button x:Name="AccountStatus" Clicked="AccountStatusButton" Text="{Binding ViewStatus}"/>
-            </Frame>
+                <Button x:Name="AccountStatus" Clicked="AccountStatusButton" Text="{Binding ViewStatus}" Grid.Column="0"/>
+                <Button Text="Save" Clicked="SaveButton" Grid.Column="2"/>
+            </Grid>
+        </Frame>
 
-            <Frame>
-                <Button Text="Save" Clicked="SaveButton"/>
-            </Frame>
-            
-            <BoxView HeightRequest="1" WidthRequest="100" Color="DimGray" />
-            
-            <Frame>
-                <Button Text="My Products" Clicked="MyProductsButton"/>
-            </Frame>
-
-            <Frame>
-                <Button Text="My Reviews" Clicked="MyReviewsButton"/>
-            </Frame>
-
-        </StackLayout>
-    </ScrollView>
+    </StackLayout>
 </ContentPage>
 

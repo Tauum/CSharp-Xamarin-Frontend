@@ -4,17 +4,21 @@
              x:Class="GOV.Views.CategoryEntryPage" 
              Title="Category Entry">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="15" VerticalOptions="Center">
+            <Frame Margin="15">
+                <StackLayout>
+                    
+                    <Label Text="ID" />
+                    <Label Text="{Binding Category.ID}" />
 
-            <Label Text="ID" />
-            <Label Text="{Binding ID}" />
+                    <Label Text="Name" />
+                    <Entry x:Name="CategoryNameInput" Text="{Binding Category.Name}" Placeholder="Category Name" MaxLength="20"/>
 
-            <Label Text="Name" />
-            <Entry x:Name="CategoryNameInput" Text="{Binding Catgory}" Placeholder="Category Name" />
-
-            <Button Text="Delete" Clicked="DeleteButton"/>
-            <Button Text="Save" Clicked="SaveButton" />
-
+                    <Button Text="Delete" Clicked="DeleteButton"/>
+                    <Button Text="Save" Clicked="SaveButton" />
+                    
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

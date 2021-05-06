@@ -22,6 +22,7 @@ namespace GOV.Views
                 OnPropertyChanged(nameof(User));
             }
         }
+
         private Review _review;
         public Review Review
         {
@@ -32,6 +33,7 @@ namespace GOV.Views
                 OnPropertyChanged(nameof(Review));
             }
         }
+
         private Product _product;
         public Product Product
         {
@@ -44,17 +46,18 @@ namespace GOV.Views
         }
 
         private string _viewStatus;
-        public string ViewStatus
+        public string ViewStatus // instanciate shown/hide button
         {
-            get { return _viewStatus; } // equal to null on load??
+            get { return _viewStatus; }
             set
             {
-               
-                this._viewStatus = value;
+                _viewStatus = value;
                 OnPropertyChanged(nameof(ViewStatus));
             }
         }
+
         public ReviewEntryPage() { }
+
         public ReviewEntryPage(User user, Product product, Review review )
         {
             User = user;
@@ -66,77 +69,71 @@ namespace GOV.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (Review.UserID == 0 || Review.UserID == null) { UsernameLabel.Text = User.Username.ToString(); }
-
-            if (Review.Visible)
-            {
-                _viewStatus = "Hide";
-            }
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else if (Review == null) { await Navigation.PopAsync(); }
             else
-            {
-                _viewStatus = "Show";
+            {                            //  <return type,input type>
+                if (Product == null) { Product = await App.DataService.GetAsync<Product, int>(Review.ProductID); } //needed if accessing via my reviews tab
+
+                if (Review.UserID == 0 || Review.UserID == null) { UsernameLabel.Text = User.Username.ToString(); } // if review doesnt exist show current username
+
+                if (Review.Visible) { ViewStatus = "Shown"; } //button to show if review is shown or hidden
+                else { ViewStatus = "Hidden"; }
+
+                if (User.Admin == false) { ViewButtonName.IsEnabled = false; }
+
+                BindingContext = this;
             }
-            if (User.Admin == false) { ViewButtonName.IsEnabled = false; }
-            else { ViewButtonName.IsEnabled = true; }
-            //something here to declare viewstatus????
-            BindingContext = this;
         }
+
         private void ViewButton(object sender, EventArgs e) //contents isnt working
         {
             var btn = (Button)sender;
-            if (Review.Visible)//setting button text state depending on review status
+            if (Review.Visible) //setting button text state depending on review status
             {
                 Review.Visible = false;
-                btn.Text = "Show";
+                btn.Text = "Hidden"; //change button text
             }
-
             else 
-            { Review.Visible = true;
-                btn.Text = "Hide";
+            {   
+                Review.Visible = true;
+                btn.Text = "Shown"; //change button text
             }
         }
+
         async void SaveButton(object sender, EventArgs e) // obvious
         {
-            //var review = (Review)BindingContext; //review = null here?
-
             if (Review.ID == 0)
             {
-                Review.Product = Product;
+                int productScore = Product.Score; 
                 Review.ProductID = Product.ID;
-                Review.User = User;
+                Review.Product = null; //needs to be null to prevent crash on webAPI end
+                Review.User = null;
                 Review.UserID = User.ID;
+                Review.Visible = true; //sets a new review to visable
 
-                // object reference is not set to an instance here VVVVV
-                Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()}");
-                Console.WriteLine($"userid: { Review.UserID.ToString()}");
-                Console.WriteLine($"prodid: { Review.ProductID.ToString()}");
-
-                // set visability to true by default?
-
-                // VVVV object is not set to a reference of an object
-                
                 await App.DataService.InsertAsync(Review); // internal server error
+                User.ScoreTotal += productScore;
+                await App.DataService.UpdateAsync(User, User.ID);
             }
-            else 
-            {
-                Console.WriteLine($" id: {Review.ID.ToString()} desc: {Review.Description.ToString()} Vis: {Review.Visible.ToString()}");
-                Console.WriteLine($"userid: { Review.UserID.ToString()}");
-                Console.WriteLine($"prodid: { Review.ProductID.ToString()}");
-                await App.DataService.UpdateAsync(Review, Review.ID); 
-            }
-
+            else  { await App.DataService.UpdateAsync(Review, Review.ID); }
             await Navigation.PopAsync();
         }
+
         async void DeleteButton(object sender, EventArgs e) //obvious
         {
-          //  var review = (Review)BindingContext;//binds product object to local variable
+            int productScore = Product.Score;
             if (Review.ID != 0)
             {
                 await App.DataService.DeleteAsync(Review, Review.ID);
+                if (User.ScoreTotal - productScore >= 0)
+                {
+                    User.ScoreTotal -= productScore;
+                    await App.DataService.UpdateAsync(User, User.ID);
+                }
                 await Navigation.PopAsync();//kills page }
             }
             else { await DisplayAlert("Error", "This review doesnt exist", "X"); }
         }
-
     }
 }

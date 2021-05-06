@@ -6,23 +6,22 @@
         <ToolbarItem  x:Name="MenuItem1" Text="Add Review" Clicked="MenuItem_OnClicked"/>
     </ContentPage.ToolbarItems>
     
-    <StackLayout Margin="10">
+    <StackLayout Margin="10" VerticalOptions="Center">
 
-        <Frame>
+        <Frame Margin="10">
             <StackLayout>
                 <CarouselView x:Name="MainCarousel" IndicatorView="indicatorView" IsBounceEnabled="True" HeightRequest="400">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <Grid  RowDefinitions="75,*" Margin="10">
+                            <Grid  RowDefinitions="30,30,*" ColumnDefinitions="*,*">
 
-                                <Frame Grid.Row="0" Margin="10">
-                                    <Grid ColumnDefinitions="*,*">
-                                        <Label Text="Username:" HorizontalTextAlignment="Start" Grid.Column="0" VerticalTextAlignment="Center"/>
-                                        <Label Text="{Binding User.Username}" HorizontalTextAlignment="Start" Grid.Column="1" VerticalTextAlignment="Center"  />
-                                    </Grid>
-                                </Frame>
+                                <Label Text="Product:" HorizontalTextAlignment="Start" Grid.Column="0" Grid.Row="0" VerticalTextAlignment="Center" Margin="50,0,0,0"/>
+                                <Label Text="{Binding Product.Name}" HorizontalTextAlignment="Start" Grid.Column="1" Grid.Row="0" VerticalTextAlignment="Center" Margin="50,0,0,0" />
+                                <Label Text="Username:" HorizontalTextAlignment="Start" Grid.Column="0" Grid.Row="1" VerticalTextAlignment="Center"  Margin="50,0,0,0"/>
+                                <Label Text="{Binding User.Username}" HorizontalTextAlignment="Start" Grid.Column="1" Grid.Row="1" VerticalTextAlignment="Center"  Margin="50,0,0,0" />
 
-                                <Frame Grid.Row="1" Margin="10">
+
+                                <Frame Grid.Row="2" Margin="10" Grid.Column="0" Grid.ColumnSpan="2">
                                     <ScrollView>
                                         <Grid RowDefinitions="25,200,100">
                                             

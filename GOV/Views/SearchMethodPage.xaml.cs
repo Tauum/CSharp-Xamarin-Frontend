@@ -18,6 +18,10 @@ namespace GOV
         public SearchMethodPage(User user)
         {
             User = user;
+
+            //User.Email = null;
+            //User.Password = null;
+
             BindingContext = this;
             InitializeComponent();
         }

@@ -33,11 +33,15 @@ namespace GOV.Views
             User = user;
             BindingContext = this;
         }
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            MenuItem1.IsEnabled = User.Admin;
             base.OnAppearing();
-            listView.BeginRefresh();
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else
+            {
+                MenuItem1.IsEnabled = User.Admin;
+                listView.BeginRefresh();
+            }
         }
 
         public void SortByChanged(object sender, EventArgs e)
@@ -58,12 +62,10 @@ namespace GOV.Views
         async Task LoadList(string Selected)
         {
             CategoriesList = await App.DataService.GetAllAsync<Category>();
-
-            SortList(Selected);                                         // this works but the below doesnt????????
-
-            //if (Selected != null) { SortList(Selected); }
-            //else { listView.ItemsSource = CategoriesList; }
-        } //specified cast was not valid
+          //  SortList(Selected);  // this works but the below doesnt????????
+            if (Selected != null) { SortList(Selected); }
+            else { listView.ItemsSource = CategoriesList; }
+        }
 
         async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

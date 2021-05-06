@@ -1,29 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GOV.Views.ReviewEntryPage">
+             x:Class="GOV.Views.ReviewEntryPage"
+             Title="Review Entry">
     
     <ContentPage.Content>
-        <StackLayout Margin="10">
+        <StackLayout Margin="10" VerticalOptions="Center">
 
-            <Frame>
+            <Frame Margin="10">
                 <StackLayout>
-
-                    <Label Text="Username" HeightRequest="30" />
+                    <Label Text="Product"/>
+                    <Label Text="{Binding Product.Name}" TextColor="Black" FontSize="16"/>
+                        <Label Text="Username" HeightRequest="30" />
                     <Label x:Name="UsernameLabel" Text="{Binding Review.User.Username}" HeightRequest="30" TextColor="Black" FontSize="16"/>
                     <Label Text="Description" />
-                    <Editor x:Name="DescrptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" TextColor="Black" />
+                    <Editor x:Name="DescriptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" TextColor="Black" />
                 </StackLayout>
             </Frame>
 
-            <Frame>
+            <Frame Margin="10">
                 <StackLayout>
                     <Button x:Name="SaveButtonName" Clicked="SaveButton" Text="Save"/>
                     <Button x:Name="DeleteButtonName" Clicked="DeleteButton" Text="Delete"/>
                 </StackLayout>
             </Frame>
-            
-            <Frame>
+
+            <Frame Margin="10">
                 <Button x:Name="ViewButtonName" Clicked="ViewButton" Text="{Binding ViewStatus}"/>
             </Frame>
             

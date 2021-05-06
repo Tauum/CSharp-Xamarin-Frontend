@@ -22,10 +22,11 @@ namespace GOV.Views
             BindingContext = this;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
-            listView.BeginRefresh(); //skips going to icommand refresh list
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else { listView.BeginRefresh(); }
         }
 
 

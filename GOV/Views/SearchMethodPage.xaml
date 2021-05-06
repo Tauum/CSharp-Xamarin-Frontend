@@ -4,16 +4,18 @@
              x:Class="GOV.SearchMethodPage" Title="Search Method">
 
     <ContentPage.Content>
-        <StackLayout Margin="15" VerticalOptions="Center">
 
-            <Button Text="QR Scan" Clicked="BarcodeScan"/>
+        <Frame VerticalOptions="Center" Margin="15">
+            <StackLayout Margin="15" VerticalOptions="Center">
+                
+                <Button Text="QR Scan" Clicked="BarcodeScan"/>
 
-            <Frame >
-                <Entry x:Name="ProductInput" Placeholder="Name" WidthRequest="90" HeightRequest="90" Completed="ManualSearch" HorizontalTextAlignment="Center"/>
-            </Frame>
+                <Entry x:Name="ProductInput" Placeholder="Product name" WidthRequest="90" Completed="ManualSearch" HorizontalTextAlignment="Center"/>
 
-            <Button Text="Manual Search" Clicked="ManualSearch"/>
+                <Button Text="Manual Search" Clicked="ManualSearch"/>
 
-        </StackLayout>
+            </StackLayout>
+        </Frame>
+        
     </ContentPage.Content>
 </ContentPage>

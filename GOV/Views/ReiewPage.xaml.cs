@@ -23,7 +23,9 @@ namespace GOV
         public User User { get; set; } //recieve user object from preious page
         public ReviewType ReviewType { get; set; } //needed to check the type and input into loadlist
         public Review Review { get; set; }
-        public List<Review> reviewList { get; set; }
+        public List<Review> ReviewList { get; set; }
+
+        public List<Review> FilterdReviewList { get; set; }
         public ReviewPage(User user) // instanciates calling user
         {
             User = user;
@@ -44,14 +46,16 @@ namespace GOV
 
         protected override async void OnAppearing()
         {
-            if (ReviewType == ReviewType.Product) { MenuItem1.IsEnabled = true; }
-            else { MenuItem1.IsEnabled = false; }
             base.OnAppearing();
-            await LoadList();
-            DisplayList();
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else
+            {
+                if (ReviewType != ReviewType.Product) { MenuItem1.IsEnabled = false; }
+                await LoadList();
+            }
         }
 
-        public async Task<List<Review>> LoadList()
+        public async Task LoadList()
         {
             Expression<Func<Review, bool>> searchLambda = null; // instanciate searchLambda
             
@@ -63,35 +67,28 @@ namespace GOV
                 var searchID = ReviewType == ReviewType.Product ? Product.ID : User.ID;
                 var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{searchID}");
                 searchLambda = DynamicExpressionParser.ParseLambda<Review, bool>(new ParsingConfig(), true, stringLambda);
-                reviewList = await App.DataService.GetAllAsync<Review>(searchLambda);
+                ReviewList = await App.DataService.GetAllAsync<Review>(searchLambda);
             }
-            else { reviewList = await App.DataService.GetAllAsync<Review>(); } 
+            else { ReviewList = await App.DataService.GetAllAsync<Review>(); } //getting all reviews
 
-            return reviewList;
+            if (User.Admin == false)
+            {
+                FilterdReviewList = ReviewList.Where(p => p.Visible == true || p.UserID == User.ID).ToList(); //dirty code
+                MainCarousel.ItemsSource = FilterdReviewList;
+            }
+            else { MainCarousel.ItemsSource = ReviewList; }
         }
-
-        public void DisplayList() { MainCarousel.ItemsSource = reviewList; }
 
         public async void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            if (reviewList.Any(x => x.UserID == User.ID)) { await DisplayAlert("Error", "Edit/Delete your existing review", "X"); }
-            else
-            {
-                await Navigation.PushAsync(new ReviewEntryPage(User, Product, Review = new Review() ) );
-                //  await Navigation.PushAsync( new ReviewEntryPage(Review = new Review())); 
-            }
+            if (ReviewList.Any(x => x.UserID == User.ID)) { await DisplayAlert("Error", "Edit/Delete your existing review", "X"); }
+            else { await Navigation.PushAsync(new ReviewEntryPage(User, Product, Review = new Review() ) ); }
         }
 
         public async void EditReviewButton(object sender, EventArgs e)
         {
             var clickedReview = (Review)((Button)sender).BindingContext;
-
-            if (clickedReview.UserID == User.ID || User.Admin) 
-            {
-                 await Navigation.PushAsync(new ReviewEntryPage(User, Product, clickedReview) );
-                //aaaaaa
-                //await Navigation.PushAsync(new ReviewEntryPage(clickedReview) { User = User, Product = Product });
-            }
+            if (clickedReview.UserID == User.ID || User.Admin) { await Navigation.PushAsync(new ReviewEntryPage(User, Product, clickedReview) ); }
             else { await DisplayAlert("Error", "You do not have permission to edit this review", "X"); }
         }
     }

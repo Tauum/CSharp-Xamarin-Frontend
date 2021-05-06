@@ -83,9 +83,6 @@ namespace GOV
         
         public async void SortList(string Selected)
         {
-
-            foreach (User x in UserList) { Console.WriteLine(x.ID); }
-
             if (Selected == "Username ASC") { listView.ItemsSource = UserList.OrderBy(x => x.Username); }//System.ArgumentNullException: 'Value cannot be null.Parameter name: source'
             else if (Selected == "Username DESC") { listView.ItemsSource = UserList.OrderByDescending(x => x.Username); }
             else if (Selected == "Score ASC") { listView.ItemsSource = UserList.OrderBy(x => x.ScoreTotal); }
@@ -96,14 +93,8 @@ namespace GOV
         async Task LoadList(string Selected) // obvously loading all seperate updates
         {
             UserList = await App.DataService.GetAllAsync<User>(); //grabbing all users on load
-            if (Selected != null) 
-            {
-                SortList(Selected); 
-            }
-            else 
-            {
-                listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); 
-            }
+            if (Selected != null) { SortList(Selected); }
+            else { listView.ItemsSource = UserList.OrderByDescending(u => u.ScoreTotal); }
             GenerateElements(); // calling generate elements on load
             foreach (User x in UserList) { Console.WriteLine(x.ID); }
         }

@@ -17,22 +17,31 @@ namespace GOV
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
-        public User User { set; get; }
+        private User _user;
+        public User User
+        {
+            get => _user;
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
         public User AdminUser { get; set; }
         private ISimpleAudioPlayer Player { get; }
-
         private string _viewStatus;
         public string ViewStatus
         {
-            get { return _viewStatus; } // equal to null on load??
+            get { return _viewStatus; }
             set
             {
-
-                this._viewStatus = value;
+                _viewStatus = value;
                 OnPropertyChanged(nameof(ViewStatus));
             }
         }
+
         public ProfilePage() { InitializeComponent(); }
+
         public ProfilePage(User user)
         {
             User = user;
@@ -40,6 +49,7 @@ namespace GOV
             BindingContext = this;
             InitializeComponent();
         }
+
         public ProfilePage(User adminUser, User user )
         {
             AdminUser = adminUser;
@@ -48,16 +58,22 @@ namespace GOV
             BindingContext = this;
             InitializeComponent();
         }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (User.Admin) { _viewStatus = "User"; }
-            else { _viewStatus = "Admin"; }
+            if (User == null) { await Navigation.PopToRootAsync(); }
+            else
+            {
+                if (User.Admin) { ViewStatus = "Admin"; }
+                else { ViewStatus = "User"; }
 
-            if (AdminUser == null ) { AccountStatus.IsEnabled = false; }
-            else { AccountStatus.IsEnabled = true; }
-            BindingContext = this;
+                if (AdminUser == null) { AccountStatus.IsEnabled = false; }
+
+                BindingContext = this;
+            }
         }
+
         private void AccountStatusButton(object sender, EventArgs e) //contents isnt working
         {
             var btn = (Button)sender;
@@ -95,6 +111,7 @@ namespace GOV
                     await App.DataService.UpdateAsync(User, User.ID);
                     PlaySound("bell");
                     await DisplayAlert("Profile", "Update Success", "X");
+                    Navigation.PopAsync(); // return to old page
                 }
                 //else if (User.ID != 0 && User.Username == UsernameInput.Text.ToString())
                 //{
@@ -107,8 +124,6 @@ namespace GOV
                 else { await DisplayAlert("Error", "An error occured.", "X"); }
             }
         }
-
-        async void MyProductsButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchResultsPage(User)); }
 
         async void MyReviewsButton(object sender, EventArgs e) { await Navigation.PushAsync(new ReviewPage(User)); }
 

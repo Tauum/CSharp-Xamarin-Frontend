@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GOV.ProductEntryPage" Title="Edit Product">
+             x:Class="GOV.ProductEntryPage" Title="Product Entry">
     <ScrollView>
         <StackLayout Margin="5">
   
@@ -30,7 +30,7 @@
                 </Frame>
 
 
-                <Frame Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2">
+                <Frame Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2">
                     <Label x:Name="lblDisplay" FontSize="15" Grid.Column="1"  Text="{Binding Product.Score}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                 </Frame>
             </Grid>
