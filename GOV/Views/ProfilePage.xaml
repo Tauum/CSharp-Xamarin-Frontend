@@ -27,10 +27,16 @@
         </Frame>
 
         <Frame>
-            <Grid ColumnDefinitions="80,100,150" HeightRequest="50">
+            <Grid ColumnDefinitions="80,110" HeightRequest="50">
                 <Label Text="Score Total:" Grid.Column="0" VerticalTextAlignment="Center"/>
                 <Label Text="{Binding User.ScoreTotal}" Grid.Column="1" VerticalTextAlignment="Center"/>
-                <Button Text="My Reviews" Clicked="MyReviewsButton" Grid.Column="2"/>
+            </Grid>
+        </Frame>
+
+        <Frame>
+            <Grid ColumnDefinitions="150,30,150" HeightRequest="50">
+                <Button Text="My Reviews" Clicked="MyReviewsButton" Grid.Column="0"/>
+                <Button Text="My Products" Clicked="MyProductsButton" Grid.Column="2"/>
             </Grid>
         </Frame>
 

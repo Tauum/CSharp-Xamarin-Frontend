@@ -50,7 +50,7 @@ namespace GOV.Views
             SortList(Selected);
         }
 
-        public async void SortList(string Selected) //obvious
+        public void SortList(string Selected) //obvious
         {
             if (Selected == "Title ASC") { listView.ItemsSource = CategoriesList.OrderBy(x => x.Name); }
             else if (Selected == "Title DESC") { listView.ItemsSource = CategoriesList.OrderByDescending(x => x.Name); }

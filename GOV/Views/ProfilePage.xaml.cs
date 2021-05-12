@@ -111,23 +111,18 @@ namespace GOV
                     await App.DataService.UpdateAsync(User, User.ID);
                     PlaySound("bell");
                     await DisplayAlert("Profile", "Update Success", "X");
-                    Navigation.PopAsync(); // return to old page
+                    await Navigation.PopAsync(); // return to old page
                 }
-                //else if (User.ID != 0 && User.Username == UsernameInput.Text.ToString())
-                //{
-                //    User.Password = Hashing.GetHash(PasswordInput.Text);
-                //    User.Username = UsernameInput.Text;
-                //    await App.DataService.UpdateAsync(User, User.ID);
-                //    PlaySound("bell");
-                //    await DisplayAlert("Profile", "Update Success", "X");
-                //}
                 else { await DisplayAlert("Error", "An error occured.", "X"); }
             }
         }
 
         async void MyReviewsButton(object sender, EventArgs e) { await Navigation.PushAsync(new ReviewPage(User)); }
 
-        async void PlaySound(string mp3)
+        async void MyProductsButton(object sender, EventArgs e) { await Navigation.PushAsync(new SearchResultsPage(User, SearchType.User)); }
+
+        
+        public void PlaySound(string mp3)
         {
             Player.Load($"{mp3}.mp3");
             Player.Play();

@@ -18,10 +18,6 @@ namespace GOV
         public SearchMethodPage(User user)
         {
             User = user;
-
-            //User.Email = null;
-            //User.Password = null;
-
             BindingContext = this;
             InitializeComponent();
         }
@@ -36,7 +32,7 @@ namespace GOV
         }
         private async void ManualSearch(object sender, EventArgs e) //search string or nothing to next page
         {
-            if (ProductInput.Text.IsNullOrEmpty()) { await Navigation.PushAsync(new SearchResultsPage(User)); } //global function to check contents
+            if (ProductInput.Text.IsNullOrEmpty()) { await Navigation.PushAsync(new SearchResultsPage(User, SearchType.Manual, ProductInput.Text)); } //global function to check contents
             else { await Navigation.PushAsync(new SearchResultsPage(User, SearchType.Manual, ProductInput.Text)); } //pushes manual search & bool to check version
         }
     }

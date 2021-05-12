@@ -57,6 +57,21 @@ namespace GOV.Data
             else { throw new Exception(response.ReasonPhrase); }
         }
 
+        public async Task<List<TEntity>> GetAllAsync<TEntity, T>(T id, string nonDefaultEndpoint = null) where TEntity : new() // form URI for the webservice GET request 
+        {
+            var endpoint = GetEntityEndpoint<TEntity>(nonDefaultEndpoint);
+            var url = $"{this.baseUrlAddress}/{endpoint}/{id}";
+            var uri = new Uri(string.Format(url));
+            HttpResponseMessage response = await client.GetAsync(uri); //GET request to the URI //expression not supported
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync(); // read content returned by GET request
+                var deserialisedContent = JsonConvert.DeserializeObject<IEnumerable<TEntity>>(content);// deserialise back to C# objects
+                return deserialisedContent.ToList<TEntity>(); // return deserialised objects to caller as List<TEntity> collection
+            }
+            else { throw new Exception(response.ReasonPhrase); }
+        }
+
         public async Task<TEntity> GetAsync<TEntity, T>(T id, string nonDefaultEndpoint = null) where TEntity : new()
         {
             var endpoint = GetEntityEndpoint<TEntity>(nonDefaultEndpoint); // form URI webservice GET request 

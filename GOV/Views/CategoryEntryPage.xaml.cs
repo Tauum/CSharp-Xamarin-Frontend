@@ -32,7 +32,7 @@ namespace GOV.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            if (Category == null) { Navigation.PopAsync(); }
+            if (Category == null) { await Navigation.PopAsync(); }
             else { BindingContext = this; }
         }
         
@@ -42,12 +42,12 @@ namespace GOV.Views
             if (Category.ID == 0)
             {
                 await App.DataService.InsertAsync(Category); //sends to data service 
-                Navigation.PopAsync(); // return to old page
+                await Navigation .PopAsync(); // return to old page
             }
             else
             {
                 await App.DataService.UpdateAsync(Category, Category.ID);
-                Navigation.PopAsync(); // return to old page
+                await Navigation .PopAsync(); // return to old page
             }
         }
 
@@ -55,19 +55,12 @@ namespace GOV.Views
         {
             if (Category.ID != 0)
             {
-                try
-                {
-                    await App.DataService.DeleteAsync(Category, Category.ID);
+                try { await App.DataService.DeleteAsync(Category, Category.ID); }
 
-                    //await App.DataService.DeleteAsync()
-                    //maybe make a deleteallasync like getallasync?
-                    //or linq to grab all reviews associated to product then delete in forloop?
-                    //then remove score from user accounts that have item
-                }
                 catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
             }
             else { await DisplayAlert("Error", "This category doesnt exist", "X"); }
-            Navigation.PopAsync(); // return to old page
+            await Navigation.PopAsync(); // return to old page
         }
     }
 }

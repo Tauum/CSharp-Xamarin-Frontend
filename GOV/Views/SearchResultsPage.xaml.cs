@@ -29,13 +29,17 @@ namespace GOV
         public SearchResultsPage(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
         {
             InitializeComponent();
-            SortBy.Items.Add("Title ASC"); //puts itms into sort by list in xaml
-            SortBy.Items.Add("Title DESC");
-            SortBy.Items.Add("Score ASC");
-            SortBy.Items.Add("Score DESC");
             User = user;
             SearchType = searchType; // setting input as local
             SearchTerm = searchTerm; // setting input as local
+            BindingContext = this;
+        }
+        public SearchResultsPage(User user, SearchType searchType = SearchType.User) // checks to see if search term has contents
+        {
+            InitializeComponent();
+            User = user;
+            SearchType = searchType; // setting input as local
+            SearchTerm = User.ID.ToString();
             BindingContext = this;
         }
         protected override async void OnAppearing()
@@ -44,17 +48,22 @@ namespace GOV
             if (User == null) { await Navigation.PopToRootAsync(); }
             else
             {
+                SortBy.Items.Add("Title ASC"); //puts itms into sort by list in xaml
+                SortBy.Items.Add("Title DESC");
+                SortBy.Items.Add("Score ASC");
+                SortBy.Items.Add("Score DESC");
+
                 MenuItem1.IsEnabled = User.Admin;
                 listView.BeginRefresh();
             }
         }
-        public void SortByChanged(object sender, EventArgs e) 
+        public void SortByChanged(object sender, EventArgs e)
         {
             Selected = SortBy.Items[SortBy.SelectedIndex]; //reads selected option
             SortList(Selected);
         }
 
-        public async void SortList(string Selected) //obvious
+        public void SortList(string Selected) //obvious
         {
             if (Selected == "Title ASC") { listView.ItemsSource = ProductList.OrderBy(x => x.Name); }
             else if (Selected == "Title DESC") { listView.ItemsSource = ProductList.OrderByDescending(x => x.Name); }
@@ -66,18 +75,27 @@ namespace GOV
         async Task LoadList(string Selected)
         {
             Expression<Func<Product, bool>> searchLambda = null; // instanciate searchLambda
-            if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
-            else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
-            else if (SearchType == SearchType.User) { } //searchLambda = x => x.} //CHANGE THIS TO GRAB ONLY PRODUCTS WHAT A USER OWNS???
-            // searchLambdaa = 
 
-            if (searchLambda != null)
+            if (SearchType == SearchType.QrCode) { searchLambda = x => x.PRef.Contains("SearchTerm"); }
+
+            else if (SearchType == SearchType.Manual) { searchLambda = x => x.Name.Contains("SearchTerm"); }
+
+            else if (SearchType == SearchType.User)
+            {
+                ProductList = await App.DataService.GetAllAsync<Product, int>(User.ID, "GetProductsForUser");
+            }
+
+            if (searchLambda != null && SearchType == SearchType.Manual || SearchType == SearchType.QrCode)
             {
                 var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{SearchTerm}");
                 searchLambda = DynamicExpressionParser.ParseLambda<Product, bool>(new ParsingConfig(), true, stringLambda);
                 ProductList = await App.DataService.GetAllAsync<Product>(searchLambda, "GetProductsWithRelatedData");
             }
-            else { ProductList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData"); }
+
+            else if (searchLambda == null && SearchType != SearchType.User)
+            {
+                ProductList = await App.DataService.GetAllAsync<Product>(null, "GetProductsWithRelatedData");
+            }
 
             if (Selected != null) { SortList(Selected); } //calls sort function if element selected
             else { listView.ItemsSource = ProductList; } //default loading list displayed
@@ -89,9 +107,7 @@ namespace GOV
         }
         async void AddProductButton(object sender, EventArgs e) { await Navigation.PushAsync(new ProductEntryPage { Product = new Product() }); }
 
-
         async void CategoriesButton(object sender, EventArgs e) { await Navigation.PushAsync(new CategoriesPage(User)); }
-
 
         public ICommand RefreshCommand => new Command(async () =>
         {

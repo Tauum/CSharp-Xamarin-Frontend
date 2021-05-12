@@ -72,7 +72,7 @@ namespace GOV.Views
             if (User == null) { await Navigation.PopToRootAsync(); }
             else if (Review == null) { await Navigation.PopAsync(); }
             else
-            {                            //  <return type,input type>
+            {                                                          //  <return type,input type>
                 if (Product == null) { Product = await App.DataService.GetAsync<Product, int>(Review.ProductID); } //needed if accessing via my reviews tab
 
                 if (Review.UserID == 0 || Review.UserID == null) { UsernameLabel.Text = User.Username.ToString(); } // if review doesnt exist show current username
@@ -105,16 +105,15 @@ namespace GOV.Views
         {
             if (Review.ID == 0)
             {
-                int productScore = Product.Score; 
                 Review.ProductID = Product.ID;
                 Review.Product = null; //needs to be null to prevent crash on webAPI end
-                Review.User = null;
+                Review.User = null; //needs to be null to prevent crash on webAPI end
                 Review.UserID = User.ID;
-                Review.Visible = true; //sets a new review to visable
+                Review.Visible = true; //sets new review to visable
 
-                await App.DataService.InsertAsync(Review); // internal server error
-                User.ScoreTotal += productScore;
-                await App.DataService.UpdateAsync(User, User.ID);
+              //  await App.DataService.UpdateAsync(User, User.ID);
+
+                await App.DataService.InsertAsync(Review);
             }
             else  { await App.DataService.UpdateAsync(Review, Review.ID); }
             await Navigation.PopAsync();

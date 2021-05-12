@@ -81,7 +81,7 @@ namespace GOV
             SortList(Selected);
         }
         
-        public async void SortList(string Selected)
+        public void SortList(string Selected)
         {
             if (Selected == "Username ASC") { listView.ItemsSource = UserList.OrderBy(x => x.Username); }//System.ArgumentNullException: 'Value cannot be null.Parameter name: source'
             else if (Selected == "Username DESC") { listView.ItemsSource = UserList.OrderByDescending(x => x.Username); }

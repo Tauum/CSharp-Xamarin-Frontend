@@ -81,13 +81,13 @@ namespace GOV
             if (Product.ID == 0)
             {
                 await App.DataService.InsertAsync(Product); //sends to data service
-                Navigation.PopAsync(); // return to old page
+                await Navigation .PopAsync(); // return to old page
             }
             else
             {
                 await App.DataService.UpdateAsync(Product, Product.ID);
                 Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
-                Navigation.PopAsync(); // return to old page
+                await Navigation .PopAsync(); // return to old page
             }
         }
 
@@ -109,7 +109,7 @@ namespace GOV
             }
             else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
             Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
-            Navigation.PopAsync(); // return to old page
+            await Navigation.PopAsync(); // return to old page
         }
 
         async void BarcodeScan(object sender, EventArgs e)// this uses a nuget package to work [not xamarin]

@@ -11,6 +11,8 @@ using Xamarin.Forms.Shapes;
 using GOV.Helpers; //for hashing functionality and other stuff
 using GOV.Extensions; //used to check if strings contain stuff
 using System.Diagnostics; //debug menu?
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
 
 namespace GOV
 {
@@ -21,7 +23,7 @@ namespace GOV
         {
             Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
             InitializeComponent();
-            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental"}); //need to be assigned to do other stuff
+            Device.SetFlags(new[] { "Brush_Experimental", "Shapes_Experimental", "SwipeView_Experimental" }); //need to be assigned to do other stuff
             Task.Run(AnimateBackground); //this is enabling the background
         }
 
@@ -60,9 +62,11 @@ namespace GOV
             }
             else
             {
-                var users = await App.DataService.GetAllAsync<User>(); //using data servic to request all users ||||||   V From user objct list only grab 1 result where an email AND password matches
-                if (users.SingleOrDefault(u => u.Email.ToLower() == EmailEntry.Text.ToLower() && Hashing.CheckHash(PasswordEntry.Text, u.Password) == true) is User user) // <<< pass user into the loop
+                User loginAttempt = await GetUserRequest(EmailEntry.Text.ToLower()); //check username inputted
+
+                if (loginAttempt != null && Hashing.CheckHash(PasswordEntry.Text, loginAttempt.Password) == true) // <<< pass user into the loop
                 {
+                    User user = loginAttempt as User;
                     PlaySound("bell");
                     await DisplayAlert("Login", "Login Success", "X");
                     await Navigation.PushAsync(new HomePage(user));//pass User from loop into homePage
@@ -80,14 +84,10 @@ namespace GOV
             }
             else
             {
-                var users = await App.DataService.GetAllAsync<User>(); //get all users from data service
-                bool foundEmail = users.Any(x => x.Email == EmailEntry.Text.ToLower()); //nice line-age reduce
-
-                if (foundEmail)//windex clean boys
+                if (await GetUserRequest(EmailEntry.Text.ToLower()) != null)
                 {
-                    User user = users.First(x => x.Email == EmailEntry.Text.ToLower()); //Only grab 1st because only 1 entry is needed
                     PlaySound("bell");
-                    await DisplayAlert("Reset", "Reset Success", "X");
+                    await DisplayAlert("Reset", "Reset Success - check email", "X");
                     //something here to send reset email!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
                 else
@@ -107,15 +107,7 @@ namespace GOV
             }
             else
             {
-                var users = await App.DataService.GetAllAsync<User>(); //grab all users from data service
-                bool foundEmail = users.Any(u => u.Email.ToLower() == EmailEntry.Text.ToLower()); //nice reduce using global
-
-                if (foundEmail) //windex clean boys
-                {
-                    PlaySound("ding98");
-                    await DisplayAlert("Sign up", "Email Taken", "X");
-                }
-                else
+                if (await GetUserRequest(EmailEntry.Text.ToLower()) == null)
                 {
                     string hashword = Hashing.GetHash(PasswordEntry.Text);// nice global class for generating & checking Bcrypt package hash
                     User user = new User(EmailEntry.Text, EmailEntry.Text.Split('@')[0], hashword); //nice split to set username same as email on default but can be changed in profile
@@ -123,7 +115,27 @@ namespace GOV
                     PlaySound("bell");
                     await DisplayAlert("Sign up", "Sign up Success", "X");
                 }
+                else
+                {
+                    PlaySound("ding98");
+                    await DisplayAlert("Sign up", "Email Taken", "X");
+                }
             }
+        }
+
+        private async Task<User> GetUserRequest(string email) // check username inputted against list
+        {
+            string SearchTerm = EmailEntry.Text.ToLower();
+            Expression<Func<User, bool>> searchLambda = null;
+            searchLambda = x => x.Email.Contains("SearchTerm");
+            var stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{SearchTerm}");
+            searchLambda = DynamicExpressionParser.ParseLambda<User, bool>(new ParsingConfig(), true, stringLambda);
+
+            var LoginAttempt = await App.DataService.GetAllAsync<User>(searchLambda); // getting only a list where email is stored
+
+            if (LoginAttempt.Count == 0) { return null; } // if the list is empty return null
+            else if (LoginAttempt.Count <= 1) { return LoginAttempt[0]; } // if there is an instance return the 1st
+            else { return null; } //this is here because if not it cries not all paths return a value
         }
 
         private void PlaySound(string mp3) //mp3 fucntions reference this 2 line reduce
@@ -131,5 +143,6 @@ namespace GOV
             Player.Load($"{mp3}.mp3");
             Player.Play();
         }
+
     }
 }

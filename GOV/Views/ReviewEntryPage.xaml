@@ -14,7 +14,7 @@
                         <Label Text="Username" HeightRequest="30" />
                     <Label x:Name="UsernameLabel" Text="{Binding Review.User.Username}" HeightRequest="30" TextColor="Black" FontSize="16"/>
                     <Label Text="Description" />
-                    <Editor x:Name="DescriptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" TextColor="Black" />
+                    <Editor x:Name="DescriptionInput" Text="{Binding Review.Description}" Placeholder="Description" MaxLength="300" FontSize="16" TextColor="Black" Completed="SaveButton"/>
                 </StackLayout>
             </Frame>
 

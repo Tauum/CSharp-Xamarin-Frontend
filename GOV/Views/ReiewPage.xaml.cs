@@ -24,7 +24,6 @@ namespace GOV
         public ReviewType ReviewType { get; set; } //needed to check the type and input into loadlist
         public Review Review { get; set; }
         public List<Review> ReviewList { get; set; }
-
         public List<Review> FilterdReviewList { get; set; }
         public ReviewPage(User user) // instanciates calling user
         {
