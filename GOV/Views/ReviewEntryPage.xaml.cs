@@ -6,12 +6,18 @@ using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using GOV.Models;
+using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
+
+using Plugin.SimpleAudioPlayer;
 
 namespace GOV.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewEntryPage : ContentPage
     {
+        private ISimpleAudioPlayer Player { get; }
         private User _user;
         public User User
         {
@@ -44,6 +50,16 @@ namespace GOV.Views
                 OnPropertyChanged(nameof(Product));
             }
         }
+        private UserProduct _userProduct;
+        public UserProduct UserProduct
+        {
+            get => _userProduct;
+            set
+            {
+                _userProduct = value;
+                OnPropertyChanged(nameof(UserProduct));
+            }
+        }
 
         private string _viewStatus;
         public string ViewStatus // instanciate shown/hide button
@@ -58,13 +74,15 @@ namespace GOV.Views
 
         public ReviewEntryPage() { }
 
-        public ReviewEntryPage(User user, Product product, Review review )
+        public ReviewEntryPage(User user, Product product, Review review)
         {
+         
+            InitializeComponent();
+            Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
             User = user;
             Product = product;
             Review = review;
-            InitializeComponent();
-        }
+            }
 
         protected override async void OnAppearing()
         {
@@ -94,8 +112,8 @@ namespace GOV.Views
                 Review.Visible = false;
                 btn.Text = "Hidden"; //change button text
             }
-            else 
-            {   
+            else
+            {
                 Review.Visible = true;
                 btn.Text = "Shown"; //change button text
             }
@@ -105,34 +123,50 @@ namespace GOV.Views
         {
             if (Review.ID == 0)
             {
-                Review.ProductID = Product.ID;
-                Review.Product = null; //needs to be null to prevent crash on webAPI end
-                Review.User = null; //needs to be null to prevent crash on webAPI end
-                Review.UserID = User.ID;
-                Review.Visible = true; //sets new review to visable
-
-              //  await App.DataService.UpdateAsync(User, User.ID);
-
+                Review.ProductID = Product.ID; Review.Product = null; Review.User = null; //needs to be null to prevent crash on webAPI end
+                Review.UserID = User.ID; Review.Visible = true; //sets new review to visable
                 await App.DataService.InsertAsync(Review);
+                UserProduct userProduct = new UserProduct { Product = null, ProductID = Product.ID, User = null, UserID = User.ID }; //generate new instanc
+                await App.DataService.InsertAsync(userProduct);
             }
-            else  { await App.DataService.UpdateAsync(Review, Review.ID); }
+            else { await App.DataService.UpdateAsync(Review, Review.ID); }
             await Navigation.PopAsync();
+            PlaySound("Whoosh"); //BUT THIS ONE S
         }
 
         async void DeleteButton(object sender, EventArgs e) //obvious
         {
-            int productScore = Product.Score;
+            string SearchTerm1; string SearchTerm2;
             if (Review.ID != 0)
             {
-                await App.DataService.DeleteAsync(Review, Review.ID);
-                if (User.ScoreTotal - productScore >= 0)
+                try
                 {
-                    User.ScoreTotal -= productScore;
-                    await App.DataService.UpdateAsync(User, User.ID);
+                    if (UserProduct == null) //find instance
+                    {
+                        Expression<Func<UserProduct, bool>> searchLambda = x => x.UserID.ToString().Equals("SearchTerm1") && x.ProductID.ToString().Equals("SearchTerm2"); // instanciate searchLambda
+                        if (searchLambda != null)
+                        {
+                            var stringLambda = searchLambda.ToString().Replace("SearchTerm1", $"{User.ID}").Replace("SearchTerm2", $"{Product.ID}");
+                            searchLambda = DynamicExpressionParser.ParseLambda<UserProduct, bool>(new ParsingConfig(), true, stringLambda);
+                            var UserProductList = await App.DataService.GetAllAsync<UserProduct>(searchLambda);
+                            UserProduct = UserProductList[0];
+                        }
+                    }
+                    await App.DataService.DeleteAsync(Review, Review.ID);
+                    await App.DataService.DeleteAsync(UserProduct, UserProduct.ID);
+                    await Navigation.PopAsync(); //kills page 
+                    PlaySound("Bin");
                 }
-                await Navigation.PopAsync();//kills page }
+                catch (Exception a) { await DisplayAlert("Error", a.Message.ToString(), "x"); }
             }
             else { await DisplayAlert("Error", "This review doesnt exist", "X"); }
+            
+        }
+        private void PlaySound(string mp3) //mp3 fucntions reference this 2 line reduce
+        {
+            Player.Load($"{mp3}.mp3");
+            Player.Play();
         }
     }
 }
+

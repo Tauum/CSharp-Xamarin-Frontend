@@ -26,6 +26,11 @@ namespace GOV
         public List<Product> ProductList { get; set; }
         public SearchResultsPage() { }
 
+        private const string SortTitleAsc = "Title ASC";
+        private const string SortTitleDesc = "Title DESC";
+        private const string SortScoreAsc = "Score ASC";
+        private const string SortScoreDesc = "Score DESC";
+
         public SearchResultsPage(User user, SearchType searchType = SearchType.None, string searchTerm = default) // checks to see if search term has contents
         {
             InitializeComponent();
@@ -37,22 +42,27 @@ namespace GOV
         public SearchResultsPage(User user, SearchType searchType = SearchType.User) // checks to see if search term has contents
         {
             InitializeComponent();
+            //SortBy.Items.Add(SortTitleAsc); //putting the on appearing items here
+            //SortBy.Items.Add(SortTitleDesc); //like in categories page
+            //SortBy.Items.Add(SortScoreAsc); //doesnt work
+            //SortBy.Items.Add(SortScoreDesc); //shows 0 elements in list selection
             User = user;
             SearchType = searchType; // setting input as local
             SearchTerm = User.ID.ToString();
             BindingContext = this;
         }
+
+
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
             if (User == null) { await Navigation.PopToRootAsync(); }
             else
             {
-                SortBy.Items.Add("Title ASC"); //puts itms into sort by list in xaml
-                SortBy.Items.Add("Title DESC");
-                SortBy.Items.Add("Score ASC");
-                SortBy.Items.Add("Score DESC");
-
+                SortBy.Items.Add(SortTitleAsc); //puts itms into sort by list in xaml
+                SortBy.Items.Add(SortTitleDesc); // these get added everytime page is loaded
+                SortBy.Items.Add(SortScoreAsc); // meaning that going to a new page and returning
+                SortBy.Items.Add(SortScoreDesc); // inserts all the elements again
+                                                 // to fix exit page and go back in
                 MenuItem1.IsEnabled = User.Admin;
                 listView.BeginRefresh();
             }
@@ -65,10 +75,10 @@ namespace GOV
 
         public void SortList(string Selected) //obvious
         {
-            if (Selected == "Title ASC") { listView.ItemsSource = ProductList.OrderBy(x => x.Name); }
-            else if (Selected == "Title DESC") { listView.ItemsSource = ProductList.OrderByDescending(x => x.Name); }
-            else if (Selected == "Score ASC") { listView.ItemsSource = ProductList.OrderBy(x => x.Score); }
-            else if (Selected == "Score DESC") { listView.ItemsSource = ProductList.OrderByDescending(x => x.Score); }
+            if (Selected == SortTitleAsc) { listView.ItemsSource = ProductList.OrderBy(x => x.Name); }
+            else if (Selected == SortTitleDesc) { listView.ItemsSource = ProductList.OrderByDescending(x => x.Name); }
+            else if (Selected == SortScoreAsc) { listView.ItemsSource = ProductList.OrderBy(x => x.Score); }
+            else if (Selected == SortScoreDesc) { listView.ItemsSource = ProductList.OrderByDescending(x => x.Score); }
             else { listView.ItemsSource = ProductList; }
         }
 

@@ -2,7 +2,6 @@
 {
     public enum SearchType
     {
-
         None,
         Manual,
         QrCode,

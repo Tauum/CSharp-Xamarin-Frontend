@@ -20,12 +20,14 @@
                     </ListView>
                 </ScrollView>
                 </Frame>
-
-                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" >
-                    <ScrollView Orientation="Horizontal" >
-                        <forms:ChartView x:Name="Chart1"  MinimumWidthRequest="250"  MinimumHeightRequest="200" BackgroundColor="Yellow"/>
+            
+                
+                <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10" >
+                    <ScrollView Orientation="Horizontal" MinimumWidthRequest="600" >
+                        <forms:ChartView x:Name="Chart1" MinimumWidthRequest="600" />
                     </ScrollView>
                 </Frame>
+                
                 
             </Grid>
         </StackLayout>

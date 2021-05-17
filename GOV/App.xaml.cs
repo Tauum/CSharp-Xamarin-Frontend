@@ -22,7 +22,8 @@ namespace GOV
                     .AddEntityModelEndpoint<Models.Image>("api/Images") //naming violation boycotted
                     .AddEntityModelEndpoint<User>("api/Users")
                     .AddEntityModelEndpoint<Category>("api/Categories")
-                    .AddEntityModelEndpoint<Review>("api/Reviews"); //these are obvious
+                    .AddEntityModelEndpoint<Review>("api/Reviews")
+                    .AddEntityModelEndpoint<UserProduct>("api/UserProducts"); //these are obvious
                 }
                 return dataService;
             }
@@ -32,9 +33,6 @@ namespace GOV
         {
             InitializeComponent();
             MainPage = new NavigationPage(new MainPage()); // load main page
-            //MainPage = new NavigationPage(new HomePage(new User(3, "a", "a", "a", 500, true)));
-
-            //MainPage = new NavigationPage(new HomePage(new User(3, "a", "a", "a", 500, false)));
         }
 
         protected override void OnStart() { }

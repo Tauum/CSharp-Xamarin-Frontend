@@ -23,13 +23,19 @@ namespace GOV.Views
         public List<Category> CategoriesList { get; set; }
         public string Selected { get; set; }
         public CategoriesPage() { }
+
+        private const string SortByTitleAsc = "Title ASC";
+        private const string SorByTiteDesc = "Title DESC";
+        private const string SortByIDAsc = "ID ASC";
+        private const string SortByIDDesc = "ID DESC";
+
         public CategoriesPage(User user)
         {
             InitializeComponent();
-            SortBy.Items.Add("Title ASC"); //puts itms into sort by list in xaml
-            SortBy.Items.Add("Title DESC");
-            SortBy.Items.Add("ID ASC");
-            SortBy.Items.Add("ID DESC");
+            SortBy2.Items.Add(SortByTitleAsc); //puts itms into sort by list in xaml
+            SortBy2.Items.Add(SorByTiteDesc);
+            SortBy2.Items.Add(SortByIDAsc);
+            SortBy2.Items.Add(SortByIDDesc);
             User = user;
             BindingContext = this;
         }
@@ -46,23 +52,22 @@ namespace GOV.Views
 
         public void SortByChanged(object sender, EventArgs e)
         {
-            Selected = SortBy.Items[SortBy.SelectedIndex]; //reads selected option
+            Selected = SortBy2.Items[SortBy2.SelectedIndex]; //reads selected option
             SortList(Selected);
         }
 
         public void SortList(string Selected) //obvious
         {
-            if (Selected == "Title ASC") { listView.ItemsSource = CategoriesList.OrderBy(x => x.Name); }
-            else if (Selected == "Title DESC") { listView.ItemsSource = CategoriesList.OrderByDescending(x => x.Name); }
-            else if (Selected == "ID ASC") { listView.ItemsSource = CategoriesList.OrderBy(x => x.ID); }
-            else if (Selected == "ID DESC") { listView.ItemsSource = CategoriesList.OrderByDescending(x => x.ID); }
+            if (Selected == SortByTitleAsc) { listView.ItemsSource = CategoriesList.OrderBy(x => x.Name); }
+            else if (Selected == SorByTiteDesc) { listView.ItemsSource = CategoriesList.OrderByDescending(x => x.Name); }
+            else if (Selected == SortByIDAsc) { listView.ItemsSource = CategoriesList.OrderBy(x => x.ID); }
+            else if (Selected == SortByIDDesc) { listView.ItemsSource = CategoriesList.OrderByDescending(x => x.ID); }
             else { listView.ItemsSource = CategoriesList; }
         }
 
         async Task LoadList(string Selected)
         {
             CategoriesList = await App.DataService.GetAllAsync<Category>();
-          //  SortList(Selected);  // this works but the below doesnt????????
             if (Selected != null) { SortList(Selected); }
             else { listView.ItemsSource = CategoriesList; }
         }

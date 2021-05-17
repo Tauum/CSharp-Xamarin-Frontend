@@ -6,11 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
-                    <Style TargetType="NavigationPage">
-            <Setter Property="BarBackgroundColor" Value="Accent" />
-            <Setter Property="BarTextColor" Value="White"/>
-                        
-        </Style>
+            
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="Accent" />
+                <Setter Property="BarTextColor" Value="White"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

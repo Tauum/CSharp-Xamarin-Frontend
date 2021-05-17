@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace GOV.Views
     public partial class UserManagementPage : ContentPage
     {
         public User User { get; set; } //recieve user object from preious page
+        public List<User> UserList { get; set; }
         public UserManagementPage() { }
         public UserManagementPage(User user)
         {
@@ -29,14 +31,16 @@ namespace GOV.Views
             else { listView.BeginRefresh(); }
         }
 
-
-        async Task<List<User>> LoadList()
+        async Task LoadList()
         {
-            List<User> userList;
-            userList = await App.DataService.GetAllAsync<User>();
-            listView.ItemsSource = userList;
+            string searchTerm = "";
+            Expression<Func<User, bool>> searchLambda = x => x.Username.Contains("SearchTerm"); // instanciate searchLambda
 
-            return userList;
+            string stringLambda = searchLambda.ToString().Replace("SearchTerm", $"{searchTerm}"); //crashes here
+            searchLambda = DynamicExpressionParser.ParseLambda<User, bool>(new ParsingConfig(), true, stringLambda);
+            UserList = await App.DataService.GetAllAsync<User>(searchLambda, "GetUsersWithRelatedData");
+
+            listView.ItemsSource = UserList;
         }
 
         async void ListItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GOV.Models;
+using Plugin.SimpleAudioPlayer;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +13,7 @@ namespace GOV.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CategoryEntryPage : ContentPage
     {
+        private ISimpleAudioPlayer Player { get; }
         private Category _category;
         public Category Category
         {
@@ -25,8 +27,9 @@ namespace GOV.Views
         public CategoryEntryPage() { InitializeComponent(); }
         public CategoryEntryPage(Category category)
         {
-            Category = category;
             InitializeComponent();
+            Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
+            Category = category;
         }
 
         protected override async void OnAppearing()
@@ -42,13 +45,16 @@ namespace GOV.Views
             if (Category.ID == 0)
             {
                 await App.DataService.InsertAsync(Category); //sends to data service 
-                await Navigation .PopAsync(); // return to old page
+                await Navigation.PopAsync(); // return to old page
             }
             else
             {
                 await App.DataService.UpdateAsync(Category, Category.ID);
-                await Navigation .PopAsync(); // return to old page
+                await Navigation.PopAsync(); // return to old page
+
+                PlaySound("Whoosh");
             }
+            //PlaySound("Whoosh"); // AGAIN CRASHES PROGRAM FOR LITERALLY NO REASON
         }
 
         async void DeleteButton(object sender, EventArgs e) //obvious
@@ -60,7 +66,15 @@ namespace GOV.Views
                 catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
             }
             else { await DisplayAlert("Error", "This category doesnt exist", "X"); }
+            PlaySound("Bin");
             await Navigation.PopAsync(); // return to old page
+
+        }
+        private void PlaySound(string mp3) //mp3 fucntions reference this 2 line reduce
+        {
+            Player.Load($"{mp3}.mp3");
+            Player.Play();
+
         }
     }
 }

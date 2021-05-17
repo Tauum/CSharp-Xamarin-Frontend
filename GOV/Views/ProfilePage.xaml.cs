@@ -65,6 +65,8 @@ namespace GOV
             if (User == null) { await Navigation.PopToRootAsync(); }
             else
             {
+               // Product = await App.DataService.GetAsync<Product, int>(Review.ProductID);
+                User = await App.DataService.GetAsync<User, int>(User.ID, "GetUserWithRelatedData");
                 if (User.Admin) { ViewStatus = "Admin"; }
                 else { ViewStatus = "User"; }
 

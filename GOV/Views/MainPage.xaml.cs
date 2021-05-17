@@ -18,6 +18,7 @@ namespace GOV
 {
     public partial class MainPage : ContentPage
     {
+        public Mp3Player Mp3Play { get; set; }
         private ISimpleAudioPlayer Player { get; }
         public MainPage()
         {
@@ -143,6 +144,5 @@ namespace GOV
             Player.Load($"{mp3}.mp3");
             Player.Play();
         }
-
     }
 }

@@ -4,8 +4,8 @@
              x:Class="GOV.Views.UserManagementPage" Title="User Management">
 
     <StackLayout Margin="10">
-        
-        <Frame Margin="10">
+
+        <Frame Margin="10" HeightRequest="550">
             <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
                         IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
                 <ListView.ItemTemplate>

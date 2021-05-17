@@ -16,39 +16,28 @@ namespace GOV
         public string Username { get; set; }
         public string Password { get; set; }
 
-        [JsonIgnore]
-        private int _scoreTotal;
-
-        public int ScoreTotal { get; set; }
         //public int ScoreTotal
         //{
-        //    get => _scoreTotal;
-        //    set
+        //    get
         //    {
-        //        this._scoreTotal = Convert.ToInt32(CalculateScore(ID));
-        //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScoreTotal)));
+        //        return Convert.ToInt32(CalculateScore(ID));
+        //        //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScoreTotal)));
         //    }
+
         //}
+        private int _scoreTotal;
+        public int ScoreTotal
+        {
+            get => _scoreTotal;
+            set
+            {
+                this._scoreTotal = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ScoreTotal)));
+            }
+        }
 
         public bool Admin { get; set; }
-
-        public User(int id, string email, string username, string password, int scoreTotal, bool admin)
-        {
-            ID = id;
-            Email = email;
-            Username = username;
-            Password = password;
-            ScoreTotal = scoreTotal;
-
-            Admin = admin;
-        }
-        public User(string email, string username, string password) //used for login because ID, score and admin shouldnt be generated front end
-        {
-            Email = email;
-            Username = username;
-            Password = password;
-        }
-        public User() { }
+        public ICollection<UserProduct> UserProducts { get; set; }
 
         [JsonIgnore]
         public string BasicInfo
@@ -65,18 +54,37 @@ namespace GOV
             }
         }
 
-        public async Task<int> CalculateScore(int ID) //Newtonsoft.Json.JsonSerializationException: 'Error setting value to 'ScoreTotal' on 'GOV.User'.'
+        public User(int id, string email, string username, string password,  bool admin)//int scoreTotal,
         {
-            int value = 0;
-            List<Product> productList;
-            try
-            {
-                productList = await App.DataService.GetAllAsync<Product, int>(ID, "GetProductsForUser");
-                foreach ( Product x in productList) { value += x.Score; }
-            }
-            catch { value = 0; }
+            ID = id;
+            Email = email;
+            Username = username;
+            Password = password;
+            //ScoreTotal = scoreTotal;
 
-            return value;
+            Admin = admin;
         }
+
+        public User(string email, string username, string password) //used for login because ID, score and admin shouldnt be generated front end
+        {
+            Email = email;
+            Username = username;
+            Password = password;
+        }
+        public User() { }
+        
+        //public async Task<int> CalculateScore(int ID)
+        //{
+        //    int value = 0;
+        //    List<Product> productList;
+        //    try
+        //    {
+        //        productList = await App.DataService.GetAllAsync<Product, int>(ID, "GetProductsForUser");
+        //        foreach ( Product x in productList) { value += x.Score; }
+        //    }
+        //    catch (SystemException) { value = 0; }
+
+        //    return value;
+        //} //System.Reflection.TargetInvocationException: 'Exception has been thrown by the target of an invocation.'
     }
 }

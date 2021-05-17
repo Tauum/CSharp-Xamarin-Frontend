@@ -12,7 +12,7 @@
         
         <Picker x:Name="SortBy" Title="Sort by" ItemsSource="{Binding Options}" SelectedItem="{Binding Option}" ItemDisplayBinding="{Binding Option}" HorizontalTextAlignment="Center" SelectedIndexChanged="SortByChanged" />
         
-        <Frame Margin="10">
+        <Frame Margin="10" HeightRequest="500">
             <ListView x:Name="listView" Margin="20" ItemSelected="ListItemSelected" RefreshCommand="{Binding RefreshCommand}"
                         IsRefreshing="{Binding IsRefreshing}" IsPullToRefreshEnabled="True">
 

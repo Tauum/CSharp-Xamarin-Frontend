@@ -11,12 +11,15 @@ using System.Linq;
 using System.Windows.Input;
 using System.Text;
 using System.IO;
+using Plugin.SimpleAudioPlayer;
 
 namespace GOV
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductEntryPage : ContentPage
     {
+        private ISimpleAudioPlayer Player { get; }
+
         private Product _product;
         public Product Product
         {
@@ -52,8 +55,9 @@ namespace GOV
         public ProductEntryPage() { InitializeComponent(); }
         public ProductEntryPage(Product product) 
         {
-            Product = product;
             InitializeComponent();
+            Player = CrossSimpleAudioPlayer.Current; //binds player variable to nuget package
+            Product = product;
         }
         protected override async void OnAppearing()
         {
@@ -81,14 +85,17 @@ namespace GOV
             if (Product.ID == 0)
             {
                 await App.DataService.InsertAsync(Product); //sends to data service
-                await Navigation .PopAsync(); // return to old page
+                await Navigation.PopAsync(); // return to old page
+                //PlaySound("Whoosh"); CRASHES FOR NO REASON
             }
             else
             {
                 await App.DataService.UpdateAsync(Product, Product.ID);
                 Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
-                await Navigation .PopAsync(); // return to old page
+                await Navigation.PopAsync(); // return to old page
+                PlaySound("Whoosh");
             }
+            //PlaySound("Whoosh");//crashes program here FOR LITERALLY NO REASON
         }
 
         async void DeleteButton(object sender, EventArgs e) //obvious
@@ -98,11 +105,6 @@ namespace GOV
                 try {
                 await App.DataService.DeleteAsync(Product, Product.ID);
 
-                //await App.DataService.DeleteAsync()
-                //maybe make a deleteallasync like getallasync?
-                //or linq to grab all reviews associated to product then delete in forloop?
-                //then remove score from user accounts that have item
-
                 if (Product.ImageID != null) await App.DataService.DeleteAsync(new Models.Image(), Product.ImageID); 
                 }
                 catch (System.Exception ex) { await DisplayAlert("Error", ex.ToString(), "X"); }
@@ -110,6 +112,7 @@ namespace GOV
             else { await DisplayAlert("Error", "This product doesnt exist", "X"); }
             Navigation.RemovePage(Navigation.NavigationStack[Navigation.NavigationStack.Count - 2]); // remove 2 pages from next pop async
             await Navigation.PopAsync(); // return to old page
+            PlaySound("Bin");
         }
 
         async void BarcodeScan(object sender, EventArgs e)// this uses a nuget package to work [not xamarin]
@@ -162,6 +165,12 @@ namespace GOV
         {
             lblDisplay.Text = ScoreStepper.Value.ToString(); //changing label to value of button
             Product.Score = Convert.ToInt32(ScoreStepper.Value); //setting product score to value of button
+        }
+
+        private void PlaySound(string mp3) //mp3 fucntions reference this 2 line reduce
+        {
+            Player.Load($"{mp3}.mp3");
+            Player.Play();
         }
     }
 }

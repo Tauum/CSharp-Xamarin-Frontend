@@ -150,4 +150,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ding98.mp3" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Whoosh.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Bin.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Pop.mp3" />
+  </ItemGroup>
 </Project>
